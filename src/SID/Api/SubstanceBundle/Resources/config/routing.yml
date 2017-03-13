@@ -1,0 +1,3 @@
+substance_homepage:
+    path:     /
+    defaults: { _controller: SubstanceBundle:Default:index }

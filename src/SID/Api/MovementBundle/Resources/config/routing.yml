@@ -1,0 +1,3 @@
+movement_homepage:
+    path:     /
+    defaults: { _controller: MovementBundle:Default:index }

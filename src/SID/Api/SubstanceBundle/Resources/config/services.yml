@@ -1,0 +1,4 @@
+services:
+#    substance.example:
+#        class: SID\Api\SubstanceBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

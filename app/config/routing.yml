@@ -1,0 +1,28 @@
+client:
+    resource: "@ClientBundle/Resources/config/routing.yml"
+    prefix:   /
+
+movement:
+    resource: "@MovementBundle/Resources/config/routing.yml"
+    prefix:   /
+
+provider:
+    resource: "@ProviderBundle/Resources/config/routing.yml"
+    prefix:   /
+
+drug:
+    resource: "@DrugBundle/Resources/config/routing.yml"
+    prefix:   /
+
+unity:
+    resource: "@UnityBundle/Resources/config/routing.yml"
+    prefix:   /
+
+substance:
+    resource: "@SubstanceBundle/Resources/config/routing.yml"
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /
+

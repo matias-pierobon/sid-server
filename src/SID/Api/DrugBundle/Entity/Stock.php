@@ -3,6 +3,7 @@
 namespace SID\Api\DrugBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\MovementBundle\Entity\Movimiento;
 
 /**
  * Stock
@@ -110,6 +111,12 @@ class Stock
      * @ORM\ManyToOne(targetEntity="Division", inversedBy="stocks")
      * @ORM\JoinColumn(name="division_id", referencedColumnName="id")
      */
-    private $product;
+    private $division;
+
+    /**
+     * One Movement has Many Users.
+     * @ORM\OneToMany(targetEntity="Movimiento", mappedBy="stock")
+     */
+    private $movimientos;
 
 }

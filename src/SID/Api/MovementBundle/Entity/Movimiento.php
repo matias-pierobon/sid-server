@@ -3,6 +3,8 @@
 namespace SID\Api\MovementBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\UserBundle\Entity\User;
+use SID\Api\DrugBundle\Entity\Stock;
 
 /**
  * Movimiento
@@ -49,6 +51,26 @@ class Movimiento
      */
     private $hasta;
 
+    /**
+     * Many Features have One Product.
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="movimientos")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $usuario;
+
+    /**
+     * Many Features have One Product.
+     * @ORM\ManyToOne(targetEntity="Stock", inversedBy="movimientos")
+     * @ORM\JoinColumn(name="movimiento_id", referencedColumnName="id")
+     */
+    private $stock;
+
+    /**
+     * Many Features have One Product.
+     * @ORM\ManyToOne(targetEntity="Motivo", inversedBy="movimientos")
+     * @ORM\JoinColumn(name="motivo_id", referencedColumnName="id")
+     */
+    private $motivo;
 
 
 }

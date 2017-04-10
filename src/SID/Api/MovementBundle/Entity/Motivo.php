@@ -35,6 +35,12 @@ class Motivo
      */
     private $detalle;
 
+    /**
+     * One Movement has Many Users.
+     * @ORM\OneToMany(targetEntity="Movimiento", mappedBy="motivo")
+     */
+    private $movimientos;
+
 
 }
 

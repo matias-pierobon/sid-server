@@ -4,6 +4,7 @@ namespace SID\Api\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use SID\Api\UserBundle\Model\UserInterface;
+use SID\Api\MovementBundle\Entity\Movimiento;
 
 /**
  * User
@@ -125,6 +126,12 @@ class User implements UserInterface{
      * @ORM\Column(name="image_mime", type="string", length=255, nullable=true)
      */
     private $imageMime;
+
+    /**
+     * One Movement has Many Users.
+     * @ORM\OneToMany(targetEntity="Movimiento", mappedBy="usuario")
+     */
+    private $movimientos;
 
 
     public function __construct(string $username){

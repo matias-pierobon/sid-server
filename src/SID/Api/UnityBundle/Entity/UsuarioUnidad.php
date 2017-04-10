@@ -3,6 +3,7 @@
 namespace SID\Api\UnityBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\UserBundle\Entity\User;
 
 /**
  * UsuarioUnidad
@@ -35,63 +36,18 @@ class UsuarioUnidad
      */
     private $hasta;
 
+    /**
+     * Many Features have One Product.
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="unidades")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     */
+    private $usuario;
 
     /**
-     * Get id
-     *
-     * @return int
+     * Many Features have One Product.
+     * @ORM\ManyToOne(targetEntity="UnidadEjecutora", inversedBy="integrantes")
+     * @ORM\JoinColumn(name="unidad_id", referencedColumnName="id")
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set desde
-     *
-     * @param \DateTime $desde
-     *
-     * @return UsuarioUnidad
-     */
-    public function setDesde($desde)
-    {
-        $this->desde = $desde;
-
-        return $this;
-    }
-
-    /**
-     * Get desde
-     *
-     * @return \DateTime
-     */
-    public function getDesde()
-    {
-        return $this->desde;
-    }
-
-    /**
-     * Set hasta
-     *
-     * @param \DateTime $hasta
-     *
-     * @return UsuarioUnidad
-     */
-    public function setHasta($hasta)
-    {
-        $this->hasta = $hasta;
-
-        return $this;
-    }
-
-    /**
-     * Get hasta
-     *
-     * @return \DateTime
-     */
-    public function getHasta()
-    {
-        return $this->hasta;
-    }
+    private $unidad;
 }
 

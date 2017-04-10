@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EntidadReguladora
  *
- * @ORM\Table(name="entidad_reguladora")
+ * @ORM\Table(name="entidades_reguladoras")
  * @ORM\Entity(repositoryClass="SID\Api\SubstanceBundle\Repository\EntidadReguladoraRepository")
  */
 class EntidadReguladora
@@ -34,5 +34,11 @@ class EntidadReguladora
      * @ORM\Column(name="detalle", type="text", nullable=true)
      */
     private $detalle;
+
+    /**
+     * Many Classes have Many Incompatibilities.
+     * @ORM\ManyToMany(targetEntity="Drogas", mappedBy="entidades")
+     */
+    private $drogas;
 }
 

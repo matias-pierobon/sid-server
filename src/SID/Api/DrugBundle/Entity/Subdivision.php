@@ -26,4 +26,9 @@ class Subdivision extends Division
      */
     private $parent;
 
+
+    public function getDroguero(){
+        return $this->parent->getDroguero();
+    }
+
 }

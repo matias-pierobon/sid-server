@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Motivo
  *
- * @ORM\Table(name="motivos")
+ * @ORM\Table(name="motivos_movimientos")
  * @ORM\Entity(repositoryClass="SID\Api\MovementBundle\Repository\MotivoRepository")
  */
 class Motivo

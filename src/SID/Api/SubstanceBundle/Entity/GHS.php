@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * GHS
  *
- * @ORM\Table(name="g_h_s")
+ * @ORM\Table(name="ghs")
  * @ORM\Entity(repositoryClass="SID\Api\SubstanceBundle\Repository\GHSRepository")
  */
 class GHS
@@ -42,87 +42,10 @@ class GHS
      */
     private $imageMime;
 
-
     /**
-     * Get id
-     *
-     * @return int
+     * Many Classes have Many Incompatibilities.
+     * @ORM\ManyToMany(targetEntity="Droga", mappedBy="ghs")
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set detalle
-     *
-     * @param string $detalle
-     *
-     * @return GHS
-     */
-    public function setDetalle($detalle)
-    {
-        $this->detalle = $detalle;
-
-        return $this;
-    }
-
-    /**
-     * Get detalle
-     *
-     * @return string
-     */
-    public function getDetalle()
-    {
-        return $this->detalle;
-    }
-
-    /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return GHS
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * Set mime
-     *
-     * @param string $mime
-     *
-     * @return GHS
-     */
-    public function setMime($mime)
-    {
-        $this->mime = $mime;
-
-        return $this;
-    }
-
-    /**
-     * Get mime
-     *
-     * @return string
-     */
-    public function getMime()
-    {
-        return $this->mime;
-    }
+    private $drogas;
 }
 

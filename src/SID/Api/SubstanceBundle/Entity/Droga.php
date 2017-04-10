@@ -3,11 +3,12 @@
 namespace SID\Api\SubstanceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\DrugBundle\Entity\Stock;
 
 /**
  * Droga
  *
- * @ORM\Table(name="droga")
+ * @ORM\Table(name="drogas")
  * @ORM\Entity(repositoryClass="SID\Api\SubstanceBundle\Repository\DrogaRepository")
  */
 class Droga
@@ -73,14 +74,14 @@ class Droga
     /**
      * @var string
      *
-     * @ORM\Column(name="densidad", type="string", length=255)
+     * @ORM\Column(name="densidad", type="string", length=255, nullable=true)
      */
     private $densidad;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="accionesEmergencia", type="text")
+     * @ORM\Column(name="accionesEmergencia", type="text", nullable=true)
      */
     private $accionesEmergencia;
 
@@ -105,303 +106,50 @@ class Droga
      */
     private $recAlm;
 
+    /**
+     * Many Incompatibilitis have many classes.
+     * @ORM\ManyToMany(targetEntity="Clase", inversedBy="drogas")
+     * @ORM\JoinTable(name="clase_droga",
+     *      joinColumns={@ORM\JoinColumn(name="clase_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="droga_id", referencedColumnName="id")}
+     *      )
+     */
+    private $clases;
 
     /**
-     * Get id
-     *
-     * @return int
+     * Many Incompatibilitis have many classes.
+     * @ORM\ManyToMany(targetEntity="GHS", inversedBy="drogas")
+     * @ORM\JoinTable(name="ghs_droga",
+     *      joinColumns={@ORM\JoinColumn(name="ghs_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="droga_id", referencedColumnName="id")}
+     *      )
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $ghs;
 
     /**
-     * Set desechos
-     *
-     * @param string $desechos
-     *
-     * @return Droga
+     * Many Incompatibilitis have many classes.
+     * @ORM\ManyToMany(targetEntity="EntidadReguladora", inversedBy="drogas")
+     * @ORM\JoinTable(name="entidad_reguladora_droga",
+     *      joinColumns={@ORM\JoinColumn(name="entidad_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="droga_id", referencedColumnName="id")}
+     *      )
      */
-    public function setDesechos($desechos)
-    {
-        $this->desechos = $desechos;
-
-        return $this;
-    }
+    private $entidades;
 
     /**
-     * Get desechos
-     *
-     * @return string
+     * Many Incompatibilitis have many classes.
+     * @ORM\ManyToMany(targetEntity="Sinonimo", inversedBy="drogas")
+     * @ORM\JoinTable(name="sinonimo_droga",
+     *      joinColumns={@ORM\JoinColumn(name="sinonimo_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="droga_id", referencedColumnName="id")}
+     *      )
      */
-    public function getDesechos()
-    {
-        return $this->desechos;
-    }
+    private $sinonimos;
 
     /**
-     * Set fichaSeguridad
-     *
-     * @param string $fichaSeguridad
-     *
-     * @return Droga
+     * One Movement has Many Users.
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="droga")
      */
-    public function setFichaSeguridad($fichaSeguridad)
-    {
-        $this->fichaSeguridad = $fichaSeguridad;
-
-        return $this;
-    }
-
-    /**
-     * Get fichaSeguridad
-     *
-     * @return string
-     */
-    public function getFichaSeguridad()
-    {
-        return $this->fichaSeguridad;
-    }
-
-    /**
-     * Set tipoMedida
-     *
-     * @param string $tipoMedida
-     *
-     * @return Droga
-     */
-    public function setTipoMedida($tipoMedida)
-    {
-        $this->tipoMedida = $tipoMedida;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoMedida
-     *
-     * @return string
-     */
-    public function getTipoMedida()
-    {
-        return $this->tipoMedida;
-    }
-
-    /**
-     * Set cid
-     *
-     * @param integer $cid
-     *
-     * @return Droga
-     */
-    public function setCid($cid)
-    {
-        $this->cid = $cid;
-
-        return $this;
-    }
-
-    /**
-     * Get cid
-     *
-     * @return int
-     */
-    public function getCid()
-    {
-        return $this->cid;
-    }
-
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Droga
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-
-    /**
-     * Set formulaMolecular
-     *
-     * @param string $formulaMolecular
-     *
-     * @return Droga
-     */
-    public function setFormulaMolecular($formulaMolecular)
-    {
-        $this->formulaMolecular = $formulaMolecular;
-
-        return $this;
-    }
-
-    /**
-     * Get formulaMolecular
-     *
-     * @return string
-     */
-    public function getFormulaMolecular()
-    {
-        return $this->formulaMolecular;
-    }
-
-    /**
-     * Set fechaIngreso
-     *
-     * @param \DateTime $fechaIngreso
-     *
-     * @return Droga
-     */
-    public function setFechaIngreso($fechaIngreso)
-    {
-        $this->fechaIngreso = $fechaIngreso;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaIngreso
-     *
-     * @return \DateTime
-     */
-    public function getFechaIngreso()
-    {
-        return $this->fechaIngreso;
-    }
-
-    /**
-     * Set densidad
-     *
-     * @param string $densidad
-     *
-     * @return Droga
-     */
-    public function setDensidad($densidad)
-    {
-        $this->densidad = $densidad;
-
-        return $this;
-    }
-
-    /**
-     * Get densidad
-     *
-     * @return string
-     */
-    public function getDensidad()
-    {
-        return $this->densidad;
-    }
-
-    /**
-     * Set accionesEmergencia
-     *
-     * @param string $accionesEmergencia
-     *
-     * @return Droga
-     */
-    public function setAccionesEmergencia($accionesEmergencia)
-    {
-        $this->accionesEmergencia = $accionesEmergencia;
-
-        return $this;
-    }
-
-    /**
-     * Get accionesEmergencia
-     *
-     * @return string
-     */
-    public function getAccionesEmergencia()
-    {
-        return $this->accionesEmergencia;
-    }
-
-    /**
-     * Set cas
-     *
-     * @param string $cas
-     *
-     * @return Droga
-     */
-    public function setCas($cas)
-    {
-        $this->cas = $cas;
-
-        return $this;
-    }
-
-    /**
-     * Get cas
-     *
-     * @return string
-     */
-    public function getCas()
-    {
-        return $this->cas;
-    }
-
-    /**
-     * Set smiles
-     *
-     * @param string $smiles
-     *
-     * @return Droga
-     */
-    public function setSmiles($smiles)
-    {
-        $this->smiles = $smiles;
-
-        return $this;
-    }
-
-    /**
-     * Get smiles
-     *
-     * @return string
-     */
-    public function getSmiles()
-    {
-        return $this->smiles;
-    }
-
-    /**
-     * Set recAlm
-     *
-     * @param boolean $recAlm
-     *
-     * @return Droga
-     */
-    public function setRecAlm($recAlm)
-    {
-        $this->recAlm = $recAlm;
-
-        return $this;
-    }
-
-    /**
-     * Get recAlm
-     *
-     * @return bool
-     */
-    public function getRecAlm()
-    {
-        return $this->recAlm;
-    }
+    private $stock;
 }
 

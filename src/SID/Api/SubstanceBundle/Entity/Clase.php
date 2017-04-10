@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Clase
  *
- * @ORM\Table(name="clase")
+ * @ORM\Table(name="clases_droga")
  * @ORM\Entity(repositoryClass="SID\Api\SubstanceBundle\Repository\ClaseRepository")
  */
 class Clase
@@ -34,6 +34,33 @@ class Clase
      * @ORM\Column(name="detalle", type="text", nullable=true)
      */
     private $detalle;
+
+    /**
+     * Many Classes have Many Drugs.
+     * @ORM\ManyToMany(targetEntity="droga", mappedBy="clases")
+     */
+    private $drogas;
+
+    /**
+     * Many Classes have Many Incompatibilities.
+     * @ORM\ManyToMany(targetEntity="Clase", mappedBy="incompatibleCon")
+     */
+    private $incompatibleConmigo;
+
+    /**
+     * Many Incompatibilitis have many classes.
+     * @ORM\ManyToMany(targetEntity="Clase", inversedBy="incompatibleConmigo")
+     * @ORM\JoinTable(name="incompatibilidades",
+     *      joinColumns={@ORM\JoinColumn(name="droga_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="droga_incompatible_id", referencedColumnName="id")}
+     *      )
+     */
+    private $incompatibleCon;
+
+
+    public function incompatibilidades(){
+        return;
+    }
 
 }
 

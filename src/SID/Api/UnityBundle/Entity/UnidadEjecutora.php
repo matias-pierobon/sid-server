@@ -8,7 +8,7 @@ use SID\Api\DrugBundle\Entity\DrogueroUnidad;
 /**
  * UnidadEjecutora
  *
- * @ORM\Table(name="unidad_ejecutora")
+ * @ORM\Table(name="unidades_ejecutoras")
  * @ORM\Entity(repositoryClass="SID\Api\UnityBundle\Repository\UnidadEjecutoraRepository")
  */
 class UnidadEjecutora
@@ -48,6 +48,19 @@ class UnidadEjecutora
      * @ORM\OneToMany(targetEntity="DrogueroUnidad", mappedBy="unidad")
      */
     private $drogueros;
+
+    /**
+     * Many Features have One Product.
+     * @ORM\ManyToOne(targetEntity="Tipo", inversedBy="unidades")
+     * @ORM\JoinColumn(name="tipo_id", referencedColumnName="id")
+     */
+    private $tipo;
+
+    /**
+     * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="UsuarioUnidad", mappedBy="unidad")
+     */
+    private $integrantes;
 
 
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Sinonimo
  *
- * @ORM\Table(name="sinonimo")
+ * @ORM\Table(name="sinonimos")
  * @ORM\Entity(repositoryClass="SID\Api\SubstanceBundle\Repository\SinonimoRepository")
  */
 class Sinonimo
@@ -29,11 +29,10 @@ class Sinonimo
     private $nombre;
 
     /**
-     * @var \stdClass
-     *
-     * @ORM\Column(name="droga", type="object")
+     * Many Classes have Many Incompatibilities.
+     * @ORM\ManyToMany(targetEntity="Droga", mappedBy="sinonimos")
      */
-    private $droga;
+    private $drogas;
 
 }
 

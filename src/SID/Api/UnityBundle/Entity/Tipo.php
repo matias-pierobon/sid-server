@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tipo
  *
- * @ORM\Table(name="tipo")
+ * @ORM\Table(name="tipo_unidades")
  * @ORM\Entity(repositoryClass="SID\Api\UnityBundle\Repository\TipoRepository")
  */
 class Tipo
@@ -34,6 +34,12 @@ class Tipo
      * @ORM\Column(name="detalle", type="text", nullable=true)
      */
     private $detalle;
+
+    /**
+     * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="UnidadEjecutora", mappedBy="tipo")
+     */
+    private $unidades;
 
 
 }

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"subdivision" = "Subdivision", "droguero" = "Droguero"})
  */
-class Division
+abstract class Division
 {
     /**
      * @var int
@@ -63,6 +63,9 @@ class Division
      * @ORM\OneToMany(targetEntity="Subdivision", mappedBy="padre")
      */
     protected $subdiviciones;
+
+
+    public abstract function getDroguero();
 
 
 }

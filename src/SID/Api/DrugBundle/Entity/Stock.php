@@ -116,13 +116,13 @@ class Stock
 
     /**
      * One Movement has Many Users.
-     * @ORM\OneToMany(targetEntity="Movimiento", mappedBy="stock")
+     * @ORM\OneToMany(targetEntity="SID\Api\MovementBundle\Entity\Movimiento", mappedBy="stock")
      */
     private $movimientos;
 
     /**
      * Many Stocks have One Divition.
-     * @ORM\ManyToOne(targetEntity="Droga", inversedBy="stocks")
+     * @ORM\ManyToOne(targetEntity="SID\Api\SubstanceBundle\Entity\Droga", inversedBy="stocks")
      * @ORM\JoinColumn(name="droga_id", referencedColumnName="id")
      */
     private $droga;

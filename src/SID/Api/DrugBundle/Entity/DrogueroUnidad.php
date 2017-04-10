@@ -45,7 +45,7 @@ class DrogueroUnidad
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToOne(targetEntity="UnidadEjecutora", inversedBy="drogueros")
+     * @ORM\ManyToOne(targetEntity="SID\Api\UnityBundle\Entity\UnidadEjecutora", inversedBy="drogueros")
      * @ORM\JoinColumn(name="unidad_id", referencedColumnName="id")
      */
     private $unidad;

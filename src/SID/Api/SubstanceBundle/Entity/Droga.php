@@ -148,7 +148,7 @@ class Droga
 
     /**
      * One Movement has Many Users.
-     * @ORM\OneToMany(targetEntity="Stock", mappedBy="droga")
+     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Stock", mappedBy="droga")
      */
     private $stock;
     /**

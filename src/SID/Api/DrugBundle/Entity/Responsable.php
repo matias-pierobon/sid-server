@@ -45,7 +45,7 @@ class Responsable
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="droguerosResponsables")
+     * @ORM\ManyToOne(targetEntity="SID\Api\UserBundle\Entity\User", inversedBy="droguerosResponsables")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

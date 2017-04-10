@@ -45,7 +45,7 @@ class UnidadEjecutora
 
     /**
      * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="DrogueroUnidad", mappedBy="unidad")
+     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\DrogueroUnidad", mappedBy="unidad")
      */
     private $drogueros;
 

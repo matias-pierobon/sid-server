@@ -38,7 +38,7 @@ class UsuarioUnidad
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="unidades")
+     * @ORM\ManyToOne(targetEntity="SID\Api\UserBundle\Entity\User", inversedBy="unidades")
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     private $usuario;

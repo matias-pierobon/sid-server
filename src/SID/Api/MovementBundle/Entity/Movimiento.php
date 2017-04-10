@@ -53,14 +53,14 @@ class Movimiento
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="movimientos")
+     * @ORM\ManyToOne(targetEntity="SID\Api\UserBundle\Entity\User", inversedBy="movimientos")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $usuario;
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToOne(targetEntity="Stock", inversedBy="movimientos")
+     * @ORM\ManyToOne(targetEntity="SID\Api\DrugBundle\Entity\Stock", inversedBy="movimientos")
      * @ORM\JoinColumn(name="movimiento_id", referencedColumnName="id")
      */
     private $stock;

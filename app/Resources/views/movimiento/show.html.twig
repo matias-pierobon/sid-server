@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Movimiento</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ movimiento.id }}</td>
+            </tr>
+            <tr>
+                <th>Comentario</th>
+                <td>{{ movimiento.comentario }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad</th>
+                <td>{{ movimiento.cantidad }}</td>
+            </tr>
+            <tr>
+                <th>Desde</th>
+                <td>{% if movimiento.desde %}{{ movimiento.desde|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Hasta</th>
+                <td>{% if movimiento.hasta %}{{ movimiento.hasta|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('movimiento_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('movimiento_edit', { 'id': movimiento.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

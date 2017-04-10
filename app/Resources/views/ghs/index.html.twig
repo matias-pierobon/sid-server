@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ghss list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Detalle</th>
+                <th>Image</th>
+                <th>Imagemime</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gH in gHSs %}
+            <tr>
+                <td><a href="{{ path('ghs_show', { 'id': gH.id }) }}">{{ gH.id }}</a></td>
+                <td>{{ gH.detalle }}</td>
+                <td>{{ gH.image }}</td>
+                <td>{{ gH.imageMime }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('ghs_show', { 'id': gH.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('ghs_edit', { 'id': gH.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('ghs_new') }}">Create a new gH</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,24 @@
+entidadreguladora_index:
+    path:     /
+    defaults: { _controller: "SubstanceBundle:EntidadReguladora:index" }
+    methods:  GET
+
+entidadreguladora_show:
+    path:     /{id}/show
+    defaults: { _controller: "SubstanceBundle:EntidadReguladora:show" }
+    methods:  GET
+
+entidadreguladora_new:
+    path:     /new
+    defaults: { _controller: "SubstanceBundle:EntidadReguladora:new" }
+    methods:  [GET, POST]
+
+entidadreguladora_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SubstanceBundle:EntidadReguladora:edit" }
+    methods:  [GET, POST]
+
+entidadreguladora_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SubstanceBundle:EntidadReguladora:delete" }
+    methods:  DELETE

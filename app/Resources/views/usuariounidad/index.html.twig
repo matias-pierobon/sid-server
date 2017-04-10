@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Usuariounidads list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Desde</th>
+                <th>Hasta</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for usuarioUnidad in usuarioUnidads %}
+            <tr>
+                <td><a href="{{ path('usuariounidad_show', { 'id': usuarioUnidad.id }) }}">{{ usuarioUnidad.id }}</a></td>
+                <td>{% if usuarioUnidad.desde %}{{ usuarioUnidad.desde|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if usuarioUnidad.hasta %}{{ usuarioUnidad.hasta|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('usuariounidad_show', { 'id': usuarioUnidad.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('usuariounidad_edit', { 'id': usuarioUnidad.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('usuariounidad_new') }}">Create a new usuarioUnidad</a>
+        </li>
+    </ul>
+{% endblock %}

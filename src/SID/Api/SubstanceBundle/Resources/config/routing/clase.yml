@@ -1,0 +1,24 @@
+clase_index:
+    path:     /
+    defaults: { _controller: "SubstanceBundle:Clase:index" }
+    methods:  GET
+
+clase_show:
+    path:     /{id}/show
+    defaults: { _controller: "SubstanceBundle:Clase:show" }
+    methods:  GET
+
+clase_new:
+    path:     /new
+    defaults: { _controller: "SubstanceBundle:Clase:new" }
+    methods:  [GET, POST]
+
+clase_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SubstanceBundle:Clase:edit" }
+    methods:  [GET, POST]
+
+clase_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SubstanceBundle:Clase:delete" }
+    methods:  DELETE

@@ -1,0 +1,24 @@
+droga_index:
+    path:     /
+    defaults: { _controller: "SubstanceBundle:Droga:index" }
+    methods:  GET
+
+droga_show:
+    path:     /{id}/show
+    defaults: { _controller: "SubstanceBundle:Droga:show" }
+    methods:  GET
+
+droga_new:
+    path:     /new
+    defaults: { _controller: "SubstanceBundle:Droga:new" }
+    methods:  [GET, POST]
+
+droga_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SubstanceBundle:Droga:edit" }
+    methods:  [GET, POST]
+
+droga_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SubstanceBundle:Droga:delete" }
+    methods:  DELETE

@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Droga</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ droga.id }}</td>
+            </tr>
+            <tr>
+                <th>Desechos</th>
+                <td>{{ droga.desechos }}</td>
+            </tr>
+            <tr>
+                <th>Fichaseguridad</th>
+                <td>{{ droga.fichaSeguridad }}</td>
+            </tr>
+            <tr>
+                <th>Tipomedida</th>
+                <td>{{ droga.tipoMedida }}</td>
+            </tr>
+            <tr>
+                <th>Cid</th>
+                <td>{{ droga.cid }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ droga.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Formulamolecular</th>
+                <td>{{ droga.formulaMolecular }}</td>
+            </tr>
+            <tr>
+                <th>Fechaingreso</th>
+                <td>{% if droga.fechaIngreso %}{{ droga.fechaIngreso|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Densidad</th>
+                <td>{{ droga.densidad }}</td>
+            </tr>
+            <tr>
+                <th>Accionesemergencia</th>
+                <td>{{ droga.accionesEmergencia }}</td>
+            </tr>
+            <tr>
+                <th>Cas</th>
+                <td>{{ droga.cas }}</td>
+            </tr>
+            <tr>
+                <th>Smiles</th>
+                <td>{{ droga.smiles }}</td>
+            </tr>
+            <tr>
+                <th>Recalm</th>
+                <td>{% if droga.recAlm %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('droga_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('droga_edit', { 'id': droga.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

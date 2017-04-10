@@ -1,0 +1,24 @@
+subdivision_index:
+    path:     /
+    defaults: { _controller: "DrugBundle:Subdivision:index" }
+    methods:  GET
+
+subdivision_show:
+    path:     /{id}/show
+    defaults: { _controller: "DrugBundle:Subdivision:show" }
+    methods:  GET
+
+subdivision_new:
+    path:     /new
+    defaults: { _controller: "DrugBundle:Subdivision:new" }
+    methods:  [GET, POST]
+
+subdivision_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DrugBundle:Subdivision:edit" }
+    methods:  [GET, POST]
+
+subdivision_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DrugBundle:Subdivision:delete" }
+    methods:  DELETE

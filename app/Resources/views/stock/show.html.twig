@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Stock</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stock.id }}</td>
+            </tr>
+            <tr>
+                <th>Marca</th>
+                <td>{{ stock.marca }}</td>
+            </tr>
+            <tr>
+                <th>Numeroevnase</th>
+                <td>{{ stock.numeroEvnase }}</td>
+            </tr>
+            <tr>
+                <th>Fechavencimiento</th>
+                <td>{% if stock.fechaVencimiento %}{{ stock.fechaVencimiento|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lote</th>
+                <td>{{ stock.lote }}</td>
+            </tr>
+            <tr>
+                <th>Pesobrutoactual</th>
+                <td>{{ stock.pesoBrutoActual }}</td>
+            </tr>
+            <tr>
+                <th>Imagen</th>
+                <td>{{ stock.imagen }}</td>
+            </tr>
+            <tr>
+                <th>Imagemime</th>
+                <td>{{ stock.imageMime }}</td>
+            </tr>
+            <tr>
+                <th>Pesobruto</th>
+                <td>{{ stock.pesoBruto }}</td>
+            </tr>
+            <tr>
+                <th>Numeroproducto</th>
+                <td>{{ stock.numeroProducto }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad</th>
+                <td>{{ stock.cantidad }}</td>
+            </tr>
+            <tr>
+                <th>Fechaingreso</th>
+                <td>{{ stock.fechaIngreso }}</td>
+            </tr>
+            <tr>
+                <th>Stockactual</th>
+                <td>{{ stock.stockActual }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('stock_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('stock_edit', { 'id': stock.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,24 @@
+motivo_index:
+    path:     /
+    defaults: { _controller: "MovementBundle:Motivo:index" }
+    methods:  GET
+
+motivo_show:
+    path:     /{id}/show
+    defaults: { _controller: "MovementBundle:Motivo:show" }
+    methods:  GET
+
+motivo_new:
+    path:     /new
+    defaults: { _controller: "MovementBundle:Motivo:new" }
+    methods:  [GET, POST]
+
+motivo_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MovementBundle:Motivo:edit" }
+    methods:  [GET, POST]
+
+motivo_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MovementBundle:Motivo:delete" }
+    methods:  DELETE

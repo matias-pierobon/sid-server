@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Gh</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ gH.id }}</td>
+            </tr>
+            <tr>
+                <th>Detalle</th>
+                <td>{{ gH.detalle }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ gH.image }}</td>
+            </tr>
+            <tr>
+                <th>Imagemime</th>
+                <td>{{ gH.imageMime }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('ghs_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('ghs_edit', { 'id': gH.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

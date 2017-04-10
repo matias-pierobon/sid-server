@@ -1,0 +1,24 @@
+droguero_index:
+    path:     /
+    defaults: { _controller: "DrugBundle:Droguero:index" }
+    methods:  GET
+
+droguero_show:
+    path:     /{id}/show
+    defaults: { _controller: "DrugBundle:Droguero:show" }
+    methods:  GET
+
+droguero_new:
+    path:     /new
+    defaults: { _controller: "DrugBundle:Droguero:new" }
+    methods:  [GET, POST]
+
+droguero_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DrugBundle:Droguero:edit" }
+    methods:  [GET, POST]
+
+droguero_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DrugBundle:Droguero:delete" }
+    methods:  DELETE

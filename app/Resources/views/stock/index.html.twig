@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Stocks list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Marca</th>
+                <th>Numeroevnase</th>
+                <th>Fechavencimiento</th>
+                <th>Lote</th>
+                <th>Pesobrutoactual</th>
+                <th>Imagen</th>
+                <th>Imagemime</th>
+                <th>Pesobruto</th>
+                <th>Numeroproducto</th>
+                <th>Cantidad</th>
+                <th>Fechaingreso</th>
+                <th>Stockactual</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td><a href="{{ path('stock_show', { 'id': stock.id }) }}">{{ stock.id }}</a></td>
+                <td>{{ stock.marca }}</td>
+                <td>{{ stock.numeroEvnase }}</td>
+                <td>{% if stock.fechaVencimiento %}{{ stock.fechaVencimiento|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ stock.lote }}</td>
+                <td>{{ stock.pesoBrutoActual }}</td>
+                <td>{{ stock.imagen }}</td>
+                <td>{{ stock.imageMime }}</td>
+                <td>{{ stock.pesoBruto }}</td>
+                <td>{{ stock.numeroProducto }}</td>
+                <td>{{ stock.cantidad }}</td>
+                <td>{{ stock.fechaIngreso }}</td>
+                <td>{{ stock.stockActual }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('stock_show', { 'id': stock.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('stock_edit', { 'id': stock.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('stock_new') }}">Create a new stock</a>
+        </li>
+    </ul>
+{% endblock %}

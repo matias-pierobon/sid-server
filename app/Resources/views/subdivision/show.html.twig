@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Subdivision</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Alias</th>
+                <td>{{ subdivision.alias }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ subdivision.id }}</td>
+            </tr>
+            <tr>
+                <th>Detalle</th>
+                <td>{{ subdivision.detalle }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ subdivision.image }}</td>
+            </tr>
+            <tr>
+                <th>Imagemime</th>
+                <td>{{ subdivision.imageMime }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ subdivision.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('subdivision_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('subdivision_edit', { 'id': subdivision.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

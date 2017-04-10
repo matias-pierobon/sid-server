@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Droguerounidads list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Desde</th>
+                <th>Hasta</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for drogueroUnidad in drogueroUnidads %}
+            <tr>
+                <td><a href="{{ path('droguerounidad_show', { 'id': drogueroUnidad.id }) }}">{{ drogueroUnidad.id }}</a></td>
+                <td>{% if drogueroUnidad.desde %}{{ drogueroUnidad.desde|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if drogueroUnidad.hasta %}{{ drogueroUnidad.hasta|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('droguerounidad_show', { 'id': drogueroUnidad.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('droguerounidad_edit', { 'id': drogueroUnidad.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('droguerounidad_new') }}">Create a new drogueroUnidad</a>
+        </li>
+    </ul>
+{% endblock %}

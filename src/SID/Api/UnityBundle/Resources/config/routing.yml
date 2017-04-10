@@ -1,3 +1,7 @@
+unity_tipo:
+    resource: "@UnityBundle/Resources/config/routing/tipo.yml"
+    prefix:   /tipo
+
 unity_homepage:
     path:     /
     defaults: { _controller: UnityBundle:Default:index }

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Entidadreguladoras list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Detalle</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entidadReguladora in entidadReguladoras %}
+            <tr>
+                <td><a href="{{ path('entidadreguladora_show', { 'id': entidadReguladora.id }) }}">{{ entidadReguladora.id }}</a></td>
+                <td>{{ entidadReguladora.nombre }}</td>
+                <td>{{ entidadReguladora.detalle }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('entidadreguladora_show', { 'id': entidadReguladora.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('entidadreguladora_edit', { 'id': entidadReguladora.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('entidadreguladora_new') }}">Create a new entidadReguladora</a>
+        </li>
+    </ul>
+{% endblock %}

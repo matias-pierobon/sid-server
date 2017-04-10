@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Unidadejecutoras list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cufe</th>
+                <th>Detalle</th>
+                <th>Nombre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for unidadEjecutora in unidadEjecutoras %}
+            <tr>
+                <td><a href="{{ path('unidadejecutora_show', { 'id': unidadEjecutora.id }) }}">{{ unidadEjecutora.id }}</a></td>
+                <td>{{ unidadEjecutora.cufe }}</td>
+                <td>{{ unidadEjecutora.detalle }}</td>
+                <td>{{ unidadEjecutora.nombre }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('unidadejecutora_show', { 'id': unidadEjecutora.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('unidadejecutora_edit', { 'id': unidadEjecutora.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('unidadejecutora_new') }}">Create a new unidadEjecutora</a>
+        </li>
+    </ul>
+{% endblock %}

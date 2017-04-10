@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sinonimos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sinonimo in sinonimos %}
+            <tr>
+                <td><a href="{{ path('sinonimo_show', { 'id': sinonimo.id }) }}">{{ sinonimo.id }}</a></td>
+                <td>{{ sinonimo.nombre }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('sinonimo_show', { 'id': sinonimo.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('sinonimo_edit', { 'id': sinonimo.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('sinonimo_new') }}">Create a new sinonimo</a>
+        </li>
+    </ul>
+{% endblock %}

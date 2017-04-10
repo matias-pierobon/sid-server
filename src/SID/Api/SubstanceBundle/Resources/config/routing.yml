@@ -1,3 +1,7 @@
+substance_clase:
+    resource: "@SubstanceBundle/Resources/config/routing/clase.yml"
+    prefix:   /clase
+
 substance_homepage:
     path:     /
     defaults: { _controller: SubstanceBundle:Default:index }

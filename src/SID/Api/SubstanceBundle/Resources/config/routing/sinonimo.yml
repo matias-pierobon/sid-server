@@ -1,0 +1,24 @@
+sinonimo_index:
+    path:     /
+    defaults: { _controller: "SubstanceBundle:Sinonimo:index" }
+    methods:  GET
+
+sinonimo_show:
+    path:     /{id}/show
+    defaults: { _controller: "SubstanceBundle:Sinonimo:show" }
+    methods:  GET
+
+sinonimo_new:
+    path:     /new
+    defaults: { _controller: "SubstanceBundle:Sinonimo:new" }
+    methods:  [GET, POST]
+
+sinonimo_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SubstanceBundle:Sinonimo:edit" }
+    methods:  [GET, POST]
+
+sinonimo_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SubstanceBundle:Sinonimo:delete" }
+    methods:  DELETE

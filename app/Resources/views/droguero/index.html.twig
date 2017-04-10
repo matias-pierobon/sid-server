@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Drogueros list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Fechaingreso</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Id</th>
+                <th>Detalle</th>
+                <th>Image</th>
+                <th>Imagemime</th>
+                <th>Nombre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for droguero in drogueros %}
+            <tr>
+                <td><a href="{{ path('droguero_show', { 'id': droguero.id }) }}">{{ droguero.fechaIngreso }}</a></td>
+                <td>{{ droguero.latitud }}</td>
+                <td>{{ droguero.longitud }}</td>
+                <td>{{ droguero.id }}</td>
+                <td>{{ droguero.detalle }}</td>
+                <td>{{ droguero.image }}</td>
+                <td>{{ droguero.imageMime }}</td>
+                <td>{{ droguero.nombre }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('droguero_show', { 'id': droguero.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('droguero_edit', { 'id': droguero.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('droguero_new') }}">Create a new droguero</a>
+        </li>
+    </ul>
+{% endblock %}

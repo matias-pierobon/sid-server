@@ -1,0 +1,24 @@
+ghs_index:
+    path:     /
+    defaults: { _controller: "SubstanceBundle:GHS:index" }
+    methods:  GET
+
+ghs_show:
+    path:     /{id}/show
+    defaults: { _controller: "SubstanceBundle:GHS:show" }
+    methods:  GET
+
+ghs_new:
+    path:     /new
+    defaults: { _controller: "SubstanceBundle:GHS:new" }
+    methods:  [GET, POST]
+
+ghs_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SubstanceBundle:GHS:edit" }
+    methods:  [GET, POST]
+
+ghs_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SubstanceBundle:GHS:delete" }
+    methods:  DELETE

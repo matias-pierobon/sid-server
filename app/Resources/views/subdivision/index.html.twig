@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Subdivisions list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Alias</th>
+                <th>Id</th>
+                <th>Detalle</th>
+                <th>Image</th>
+                <th>Imagemime</th>
+                <th>Nombre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subdivision in subdivisions %}
+            <tr>
+                <td><a href="{{ path('subdivision_show', { 'id': subdivision.id }) }}">{{ subdivision.alias }}</a></td>
+                <td>{{ subdivision.id }}</td>
+                <td>{{ subdivision.detalle }}</td>
+                <td>{{ subdivision.image }}</td>
+                <td>{{ subdivision.imageMime }}</td>
+                <td>{{ subdivision.nombre }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('subdivision_show', { 'id': subdivision.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('subdivision_edit', { 'id': subdivision.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('subdivision_new') }}">Create a new subdivision</a>
+        </li>
+    </ul>
+{% endblock %}

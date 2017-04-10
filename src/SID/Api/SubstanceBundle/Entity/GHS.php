@@ -38,9 +38,9 @@ class GHS
     /**
      * @var string
      *
-     * @ORM\Column(name="mime", type="string", length=255, nullable=true)
+     * @ORM\Column(name="image_mime", type="string", length=255, nullable=true)
      */
-    private $mime;
+    private $imageMime;
 
 
     /**

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Motivo
  *
- * @ORM\Table(name="motivo")
+ * @ORM\Table(name="motivos")
  * @ORM\Entity(repositoryClass="SID\Api\MovementBundle\Repository\MotivoRepository")
  */
 class Motivo
@@ -36,62 +36,5 @@ class Motivo
     private $detalle;
 
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Motivo
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-
-    /**
-     * Set detalle
-     *
-     * @param string $detalle
-     *
-     * @return Motivo
-     */
-    public function setDetalle($detalle)
-    {
-        $this->detalle = $detalle;
-
-        return $this;
-    }
-
-    /**
-     * Get detalle
-     *
-     * @return string
-     */
-    public function getDetalle()
-    {
-        return $this->detalle;
-    }
 }
 

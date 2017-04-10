@@ -7,8 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Division
  *
- * @ORM\Table(name="division")
+ * @ORM\Table(name="divisiones")
  * @ORM\Entity(repositoryClass="SID\Api\DrugBundle\Repository\DivisionRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"subdivision" = "Subdivision", "droguero" = "Droguero"})
  */
 class Division
 {
@@ -19,34 +22,47 @@ class Division
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="detalle", type="text", nullable=true)
      */
-    private $detalle;
+    protected $detalle;
 
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="blob", nullable=true)
      */
-    private $image;
+    protected $image;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="imageMime", type="string", length=255, nullable=true)
+     * @ORM\Column(name="image_mime", type="string", length=255, nullable=true)
      */
-    private $imageMime;
+    protected $imageMime;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
      */
-    private $nombre;
+    protected $nombre;
+
+    /**
+     * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="division")
+     */
+    protected $stocks;
+
+    /**
+     * One Category has Many Categories.
+     * @ORM\OneToMany(targetEntity="Subdivision", mappedBy="padre")
+     */
+    protected $subdiviciones;
+
 
 }

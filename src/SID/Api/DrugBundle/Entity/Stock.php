@@ -105,5 +105,11 @@ class Stock
      */
     private $stockActual;
 
+    /**
+     * Many Stocks have One Divition.
+     * @ORM\ManyToOne(targetEntity="Division", inversedBy="stocks")
+     * @ORM\JoinColumn(name="division_id", referencedColumnName="id")
+     */
+    private $product;
 
 }

@@ -24,43 +24,16 @@ class Clase
     /**
      * @var string
      *
-     * @ORM\Column(name="detalle", type="text")
+     * @ORM\Column(name="nombre", type="string", length=255)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="detalle", type="text", nullable=true)
      */
     private $detalle;
 
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set detalle
-     *
-     * @param string $detalle
-     *
-     * @return Clase
-     */
-    public function setDetalle($detalle)
-    {
-        $this->detalle = $detalle;
-
-        return $this;
-    }
-
-    /**
-     * Get detalle
-     *
-     * @return string
-     */
-    public function getDetalle()
-    {
-        return $this->detalle;
-    }
 }
 

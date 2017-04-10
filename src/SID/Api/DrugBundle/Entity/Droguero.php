@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Droguero
  *
- * @ORM\Table(name="droguero")
+ * @ORM\Table(name="drogueros")
  * @ORM\Entity(repositoryClass="SID\Api\DrugBundle\Repository\DrogueroRepository")
  */
 class Droguero extends Division
@@ -32,5 +32,11 @@ class Droguero extends Division
      * @ORM\Column(name="longitud", type="float")
      */
     private $longitud;
+
+    /**
+     * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="DrogueroUnidad", mappedBy="droguero")
+     */
+    private $unidades;
 
 }

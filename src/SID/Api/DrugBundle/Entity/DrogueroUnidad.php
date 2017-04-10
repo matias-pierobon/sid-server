@@ -3,6 +3,7 @@
 namespace SID\Api\DrugBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\UnityBundle\Entity\UnidadEjecutora;
 
 /**
  * DrogueroUnidad
@@ -24,74 +25,31 @@ class DrogueroUnidad
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaDesde", type="datetime")
+     * @ORM\Column(name="fecha_desde", type="datetime")
      */
-    private $fechaDesde;
+    private $desde;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaHasta", type="datetime", nullable=true)
+     * @ORM\Column(name="fecha_hasta", type="datetime", nullable=true)
      */
-    private $fechaHasta;
-
+    private $hasta;
 
     /**
-     * Get id
-     *
-     * @return int
+     * Many Features have One Product.
+     * @ORM\ManyToOne(targetEntity="Droguero", inversedBy="unidades")
+     * @ORM\JoinColumn(name="droguero_id", referencedColumnName="id")
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $droguero;
 
     /**
-     * Set fechaDesde
-     *
-     * @param \DateTime $fechaDesde
-     *
-     * @return DrogueroUnidad
+     * Many Features have One Product.
+     * @ORM\ManyToOne(targetEntity="UnidadEjecutora", inversedBy="drogueros")
+     * @ORM\JoinColumn(name="unidad_id", referencedColumnName="id")
      */
-    public function setFechaDesde($fechaDesde)
-    {
-        $this->fechaDesde = $fechaDesde;
+    private $unidad;
 
-        return $this;
-    }
 
-    /**
-     * Get fechaDesde
-     *
-     * @return \DateTime
-     */
-    public function getFechaDesde()
-    {
-        return $this->fechaDesde;
-    }
-
-    /**
-     * Set fechaHasta
-     *
-     * @param \DateTime $fechaHasta
-     *
-     * @return DrogueroUnidad
-     */
-    public function setFechaHasta($fechaHasta)
-    {
-        $this->fechaHasta = $fechaHasta;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaHasta
-     *
-     * @return \DateTime
-     */
-    public function getFechaHasta()
-    {
-        return $this->fechaHasta;
-    }
 }
 

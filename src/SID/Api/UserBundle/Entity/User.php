@@ -210,5 +210,425 @@ class User implements UserInterface{
         // TODO: Implement getUsername() method.
     }
 
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->droguerosResponsables = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->unidades = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     *
+     * @return User
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Set plainPassword
+     *
+     * @param string $plainPassword
+     *
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return User
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set sysDate
+     *
+     * @param \DateTime $sysDate
+     *
+     * @return User
+     */
+    public function setSysDate($sysDate)
+    {
+        $this->sysDate = $sysDate;
+
+        return $this;
+    }
+
+    /**
+     * Get sysDate
+     *
+     * @return \DateTime
+     */
+    public function getSysDate()
+    {
+        return $this->sysDate;
+    }
+
+    /**
+     * Set lastLogin
+     *
+     * @param \DateTime $lastLogin
+     *
+     * @return User
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    /**
+     * Get lastLogin
+     *
+     * @return \DateTime
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     *
+     * @return User
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set confirmationToken
+     *
+     * @param string $confirmationToken
+     *
+     * @return User
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationToken
+     *
+     * @return string
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * Set passwordRequestedAt
+     *
+     * @param \datetimet $passwordRequestedAt
+     *
+     * @return User
+     */
+    public function setPasswordRequestedAt(\datetimet $passwordRequestedAt)
+    {
+        $this->passwordRequestedAt = $passwordRequestedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get passwordRequestedAt
+     *
+     * @return \datetimet
+     */
+    public function getPasswordRequestedAt()
+    {
+        return $this->passwordRequestedAt;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return User
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set imageMime
+     *
+     * @param string $imageMime
+     *
+     * @return User
+     */
+    public function setImageMime($imageMime)
+    {
+        $this->imageMime = $imageMime;
+
+        return $this;
+    }
+
+    /**
+     * Get imageMime
+     *
+     * @return string
+     */
+    public function getImageMime()
+    {
+        return $this->imageMime;
+    }
+
+    /**
+     * Add movimiento
+     *
+     * @param \SID\Api\UserBundle\Entity\Movimiento $movimiento
+     *
+     * @return User
+     */
+    public function addMovimiento(\SID\Api\UserBundle\Entity\Movimiento $movimiento)
+    {
+        $this->movimientos[] = $movimiento;
+
+        return $this;
+    }
+
+    /**
+     * Remove movimiento
+     *
+     * @param \SID\Api\UserBundle\Entity\Movimiento $movimiento
+     */
+    public function removeMovimiento(\SID\Api\UserBundle\Entity\Movimiento $movimiento)
+    {
+        $this->movimientos->removeElement($movimiento);
+    }
+
+    /**
+     * Get movimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMovimientos()
+    {
+        return $this->movimientos;
+    }
+
+    /**
+     * Add droguerosResponsable
+     *
+     * @param \SID\Api\UserBundle\Entity\Responsable $droguerosResponsable
+     *
+     * @return User
+     */
+    public function addDroguerosResponsable(\SID\Api\UserBundle\Entity\Responsable $droguerosResponsable)
+    {
+        $this->droguerosResponsables[] = $droguerosResponsable;
+
+        return $this;
+    }
+
+    /**
+     * Remove droguerosResponsable
+     *
+     * @param \SID\Api\UserBundle\Entity\Responsable $droguerosResponsable
+     */
+    public function removeDroguerosResponsable(\SID\Api\UserBundle\Entity\Responsable $droguerosResponsable)
+    {
+        $this->droguerosResponsables->removeElement($droguerosResponsable);
+    }
+
+    /**
+     * Get droguerosResponsables
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDroguerosResponsables()
+    {
+        return $this->droguerosResponsables;
+    }
+
+    /**
+     * Add unidade
+     *
+     * @param \SID\Api\UserBundle\Entity\UsuarioUnidad $unidade
+     *
+     * @return User
+     */
+    public function addUnidade(\SID\Api\UserBundle\Entity\UsuarioUnidad $unidade)
+    {
+        $this->unidades[] = $unidade;
+
+        return $this;
+    }
+
+    /**
+     * Remove unidade
+     *
+     * @param \SID\Api\UserBundle\Entity\UsuarioUnidad $unidade
+     */
+    public function removeUnidade(\SID\Api\UserBundle\Entity\UsuarioUnidad $unidade)
+    {
+        $this->unidades->removeElement($unidade);
+    }
+
+    /**
+     * Get unidades
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUnidades()
+    {
+        return $this->unidades;
+    }
+}

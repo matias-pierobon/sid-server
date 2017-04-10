@@ -42,5 +42,103 @@ class Tipo
     private $unidades;
 
 
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->unidades = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Tipo
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set detalle
+     *
+     * @param string $detalle
+     *
+     * @return Tipo
+     */
+    public function setDetalle($detalle)
+    {
+        $this->detalle = $detalle;
+
+        return $this;
+    }
+
+    /**
+     * Get detalle
+     *
+     * @return string
+     */
+    public function getDetalle()
+    {
+        return $this->detalle;
+    }
+
+    /**
+     * Add unidade
+     *
+     * @param \SID\Api\UnityBundle\Entity\UnidadEjecutora $unidade
+     *
+     * @return Tipo
+     */
+    public function addUnidade(\SID\Api\UnityBundle\Entity\UnidadEjecutora $unidade)
+    {
+        $this->unidades[] = $unidade;
+
+        return $this;
+    }
+
+    /**
+     * Remove unidade
+     *
+     * @param \SID\Api\UnityBundle\Entity\UnidadEjecutora $unidade
+     */
+    public function removeUnidade(\SID\Api\UnityBundle\Entity\UnidadEjecutora $unidade)
+    {
+        $this->unidades->removeElement($unidade);
+    }
+
+    /**
+     * Get unidades
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUnidades()
+    {
+        return $this->unidades;
+    }
+}

@@ -51,4 +51,110 @@ class Responsable
     private $user;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set desde
+     *
+     * @param \DateTime $desde
+     *
+     * @return Responsable
+     */
+    public function setDesde($desde)
+    {
+        $this->desde = $desde;
+
+        return $this;
+    }
+
+    /**
+     * Get desde
+     *
+     * @return \DateTime
+     */
+    public function getDesde()
+    {
+        return $this->desde;
+    }
+
+    /**
+     * Set hasta
+     *
+     * @param \DateTime $hasta
+     *
+     * @return Responsable
+     */
+    public function setHasta($hasta)
+    {
+        $this->hasta = $hasta;
+
+        return $this;
+    }
+
+    /**
+     * Get hasta
+     *
+     * @return \DateTime
+     */
+    public function getHasta()
+    {
+        return $this->hasta;
+    }
+
+    /**
+     * Set droguero
+     *
+     * @param \SID\Api\DrugBundle\Entity\Droguero $droguero
+     *
+     * @return Responsable
+     */
+    public function setDroguero(\SID\Api\DrugBundle\Entity\Droguero $droguero = null)
+    {
+        $this->droguero = $droguero;
+
+        return $this;
+    }
+
+    /**
+     * Get droguero
+     *
+     * @return \SID\Api\DrugBundle\Entity\Droguero
+     */
+    public function getDroguero()
+    {
+        return $this->droguero;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \SID\Api\DrugBundle\Entity\User $user
+     *
+     * @return Responsable
+     */
+    public function setUser(\SID\Api\DrugBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \SID\Api\DrugBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

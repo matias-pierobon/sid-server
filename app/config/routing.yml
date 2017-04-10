@@ -4,25 +4,25 @@ client:
 
 movement:
     resource: "@MovementBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /movimientos
 
 provider:
     resource: "@ProviderBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /proveedores
 
 drug:
     resource: "@DrugBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /drogueros
 
 unity:
     resource: "@UnityBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /unidades
 
 substance:
     resource: "@SubstanceBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /drogas
 
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /usuarios
 

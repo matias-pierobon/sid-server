@@ -1,7 +1,15 @@
+substance_droga:
+    resource: "@SubstanceBundle/Resources/config/routing/droga.yml"
+    prefix:   /
 substance_clase:
     resource: "@SubstanceBundle/Resources/config/routing/clase.yml"
-    prefix:   /clase
-
-substance_homepage:
-    path:     /
-    defaults: { _controller: SubstanceBundle:Default:index }
+    prefix:   /clases
+substance_entidades:
+    resource: "@SubstanceBundle/Resources/config/routing/entidadreguladora.yml"
+    prefix:   /entidades
+substance_ghs:
+    resource: "@SubstanceBundle/Resources/config/routing/ghs.yml"
+    prefix:   /ghs
+substance_sinonimos:
+    resource: "@SubstanceBundle/Resources/config/routing/sinonimos.yml"
+    prefix:   /sinonimos

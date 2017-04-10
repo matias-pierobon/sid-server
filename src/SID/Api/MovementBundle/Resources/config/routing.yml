@@ -1,7 +1,6 @@
 movement_movimiento:
     resource: "@MovementBundle/Resources/config/routing/movimiento.yml"
-    prefix:   /movimiento
-
-movement_homepage:
-    path:     /
-    defaults: { _controller: MovementBundle:Default:index }
+    prefix:   /
+movement_motivos:
+    resource: "@MovementBundle/Resources/config/routing/motivo.yml"
+    prefix:   /motivos

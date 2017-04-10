@@ -1,7 +1,15 @@
 drug_droguero:
     resource: "@DrugBundle/Resources/config/routing/droguero.yml"
-    prefix:   /droguero
-
-drug_homepage:
-    path:     /
-    defaults: { _controller: DrugBundle:Default:index }
+    prefix:   /
+drug_unidades:
+    resource: "@DrugBundle/Resources/config/routing/droguerounidad.yml"
+    prefix:   /unidades
+drug_responsables:
+    resource: "@DrugBundle/Resources/config/routing/responsable.yml"
+    prefix:   /responsable
+drug_stock:
+    resource: "@DrugBundle/Resources/config/routing/stock.yml"
+    prefix:   /stock
+drug_subdivision:
+    resource: "@DrugBundle/Resources/config/routing/subdivision.yml"
+    prefix:   /subdivision

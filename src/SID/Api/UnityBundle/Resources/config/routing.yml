@@ -1,6 +1,12 @@
+unity_unidades:
+    resource: "@UnityBundle/Resources/config/routing/unidadejecutora.yml"
+    prefix:   /
 unity_tipo:
     resource: "@UnityBundle/Resources/config/routing/tipo.yml"
     prefix:   /tipo
+unity_usuarios:
+    resource: "@UnityBundle/Resources/config/routing/usuarios.yml"
+    prefix:   /usuarios
 
 unity_homepage:
     path:     /

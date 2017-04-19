@@ -47,5 +47,6 @@ class GHS
      * @ORM\ManyToMany(targetEntity="Droga", mappedBy="ghs")
      */
     private $drogas;
-}
 
+
+}

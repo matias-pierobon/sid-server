@@ -51,4 +51,110 @@ class UsuarioUnidad
     private $unidad;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set desde
+     *
+     * @param \DateTime $desde
+     *
+     * @return UsuarioUnidad
+     */
+    public function setDesde($desde)
+    {
+        $this->desde = $desde;
+
+        return $this;
+    }
+
+    /**
+     * Get desde
+     *
+     * @return \DateTime
+     */
+    public function getDesde()
+    {
+        return $this->desde;
+    }
+
+    /**
+     * Set hasta
+     *
+     * @param \DateTime $hasta
+     *
+     * @return UsuarioUnidad
+     */
+    public function setHasta($hasta)
+    {
+        $this->hasta = $hasta;
+
+        return $this;
+    }
+
+    /**
+     * Get hasta
+     *
+     * @return \DateTime
+     */
+    public function getHasta()
+    {
+        return $this->hasta;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \SID\Api\UserBundle\Entity\User $usuario
+     *
+     * @return UsuarioUnidad
+     */
+    public function setUsuario(\SID\Api\UserBundle\Entity\User $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \SID\Api\UserBundle\Entity\User
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set unidad
+     *
+     * @param \SID\Api\UnityBundle\Entity\UnidadEjecutora $unidad
+     *
+     * @return UsuarioUnidad
+     */
+    public function setUnidad(\SID\Api\UnityBundle\Entity\UnidadEjecutora $unidad = null)
+    {
+        $this->unidad = $unidad;
+
+        return $this;
+    }
+
+    /**
+     * Get unidad
+     *
+     * @return \SID\Api\UnityBundle\Entity\UnidadEjecutora
+     */
+    public function getUnidad()
+    {
+        return $this->unidad;
+    }
 }

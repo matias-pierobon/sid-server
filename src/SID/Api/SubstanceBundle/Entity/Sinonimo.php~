@@ -34,5 +34,6 @@ class Sinonimo
      */
     private $drogas;
 
-}
 
+
+}

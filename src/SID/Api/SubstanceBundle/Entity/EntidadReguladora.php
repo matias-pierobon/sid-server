@@ -42,4 +42,103 @@ class EntidadReguladora
     private $drogas;
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->drogas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return EntidadReguladora
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set detalle
+     *
+     * @param string $detalle
+     *
+     * @return EntidadReguladora
+     */
+    public function setDetalle($detalle)
+    {
+        $this->detalle = $detalle;
+
+        return $this;
+    }
+
+    /**
+     * Get detalle
+     *
+     * @return string
+     */
+    public function getDetalle()
+    {
+        return $this->detalle;
+    }
+
+    /**
+     * Add droga
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Droga $droga
+     *
+     * @return EntidadReguladora
+     */
+    public function addDroga(\SID\Api\SubstanceBundle\Entity\Droga $droga)
+    {
+        $this->drogas[] = $droga;
+
+        return $this;
+    }
+
+    /**
+     * Remove droga
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Droga $droga
+     */
+    public function removeDroga(\SID\Api\SubstanceBundle\Entity\Droga $droga)
+    {
+        $this->drogas->removeElement($droga);
+    }
+
+    /**
+     * Get drogas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDrogas()
+    {
+        return $this->drogas;
+    }
 }

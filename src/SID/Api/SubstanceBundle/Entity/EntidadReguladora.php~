@@ -37,8 +37,9 @@ class EntidadReguladora
 
     /**
      * Many Classes have Many Incompatibilities.
-     * @ORM\ManyToMany(targetEntity="Drogas", mappedBy="entidades")
+     * @ORM\ManyToMany(targetEntity="Droga", mappedBy="entidades")
      */
     private $drogas;
-}
 
+
+}

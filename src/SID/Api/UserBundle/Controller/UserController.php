@@ -4,7 +4,11 @@ namespace SID\Api\UserBundle\Controller;
 
 use SID\Api\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use SID\Api\UserBundle\Serializer\Normalizer\UserNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * User controller.
@@ -22,9 +26,11 @@ class UserController extends Controller
 
         $users = $em->getRepository('UserBundle:User')->findAll();
 
-        return $this->render('user/index.html.twig', array(
-            'users' => $users,
-        ));
+        $serializer = new Serializer(
+            array(new UserNormalizer()),
+            array(new JsonEncoder())
+        );
+        return new JsonResponse($serializer->serialize($users, 'json'));
     }
 
     /**

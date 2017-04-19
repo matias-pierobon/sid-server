@@ -52,4 +52,110 @@ class DrogueroUnidad
 
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set desde
+     *
+     * @param \DateTime $desde
+     *
+     * @return DrogueroUnidad
+     */
+    public function setDesde($desde)
+    {
+        $this->desde = $desde;
+
+        return $this;
+    }
+
+    /**
+     * Get desde
+     *
+     * @return \DateTime
+     */
+    public function getDesde()
+    {
+        return $this->desde;
+    }
+
+    /**
+     * Set hasta
+     *
+     * @param \DateTime $hasta
+     *
+     * @return DrogueroUnidad
+     */
+    public function setHasta($hasta)
+    {
+        $this->hasta = $hasta;
+
+        return $this;
+    }
+
+    /**
+     * Get hasta
+     *
+     * @return \DateTime
+     */
+    public function getHasta()
+    {
+        return $this->hasta;
+    }
+
+    /**
+     * Set droguero
+     *
+     * @param \SID\Api\DrugBundle\Entity\Droguero $droguero
+     *
+     * @return DrogueroUnidad
+     */
+    public function setDroguero(\SID\Api\DrugBundle\Entity\Droguero $droguero = null)
+    {
+        $this->droguero = $droguero;
+
+        return $this;
+    }
+
+    /**
+     * Get droguero
+     *
+     * @return \SID\Api\DrugBundle\Entity\Droguero
+     */
+    public function getDroguero()
+    {
+        return $this->droguero;
+    }
+
+    /**
+     * Set unidad
+     *
+     * @param \SID\Api\UnityBundle\Entity\UnidadEjecutora $unidad
+     *
+     * @return DrogueroUnidad
+     */
+    public function setUnidad(\SID\Api\UnityBundle\Entity\UnidadEjecutora $unidad = null)
+    {
+        $this->unidad = $unidad;
+
+        return $this;
+    }
+
+    /**
+     * Get unidad
+     *
+     * @return \SID\Api\UnityBundle\Entity\UnidadEjecutora
+     */
+    public function getUnidad()
+    {
+        return $this->unidad;
+    }
 }

@@ -25,14 +25,14 @@ class UnidadEjecutora
     /**
      * @var string
      *
-     * @ORM\Column(name="cufe", type="string", length=255)
+     * @ORM\Column(name="cufe", type="string", length=255, nullable=True)
      */
     private $cufe;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="detalle", type="text")
+     * @ORM\Column(name="detalle", type="text", nullable=True)
      */
     private $detalle;
 
@@ -195,7 +195,7 @@ class UnidadEjecutora
      *
      * @return UnidadEjecutora
      */
-    public function setTipo(\SID\Api\UnityBundle\Entity\Tipo $tipo = null)
+    public function setTipo(Tipo $tipo = null)
     {
         $this->tipo = $tipo;
 

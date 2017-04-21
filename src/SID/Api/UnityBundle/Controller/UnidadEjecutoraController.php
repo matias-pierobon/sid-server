@@ -2,8 +2,10 @@
 
 namespace SID\Api\UnityBundle\Controller;
 
+use SID\Api\UnityBundle\Entity\Tipo;
 use SID\Api\UnityBundle\Entity\UnidadEjecutora;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,11 +22,35 @@ class UnidadEjecutoraController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $unidadEjecutoras = $em->getRepository('UnityBundle:UnidadEjecutora')->findAll();
+        $unidadesEjecutoras = $em->getRepository('UnityBundle:UnidadEjecutora')->findAll();
 
-        return $this->render('unidadejecutora/index.html.twig', array(
-            'unidadEjecutoras' => $unidadEjecutoras,
-        ));
+        return new JsonResponse(array('data' => $this->serializeUnidades($unidadesEjecutoras)));
+    }
+
+    protected function serializeUnidades(array $unidades){
+        $data = array();
+        foreach ($unidades as $unidad){
+            $data[] = $this->serializeUnidad($unidad);
+        }
+        return $data;
+    }
+
+    public function serializeUnidad(UnidadEjecutora $unidad){
+        return array(
+            'id' => $unidad->getId(),
+            'nombre' => $unidad->getNombre(),
+            'detalle' => $unidad->getDetalle(),
+            'cufe' => $unidad->getCufe(),
+            'tipo' => $this->serializeTipo($unidad->getTipo())
+        );
+    }
+
+    public function serializeTipo(Tipo $tipo){
+        return array(
+            'id' => $tipo->getId(),
+            'nombre' => $tipo->getNombre(),
+            'detalle' => $tipo->getDetalle(),
+        );
     }
 
     /**
@@ -34,21 +60,24 @@ class UnidadEjecutoraController extends Controller
     public function newAction(Request $request)
     {
         $unidadEjecutora = new Unidadejecutora();
-        $form = $this->createForm('SID\Api\UnityBundle\Form\UnidadEjecutoraType', $unidadEjecutora);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($unidadEjecutora);
-            $em->flush($unidadEjecutora);
+        $em = $this->getDoctrine()->getManager();
+        $tipo = $em->getRepository('UnityBundle:Tipo')->find($request->get('tipo'));
 
-            return $this->redirectToRoute('unidadejecutora_show', array('id' => $unidadEjecutora->getId()));
-        }
+        $unidadEjecutora
+            ->setDetalle($request->get('detalle'))
+            ->setCufe($request->get('cufe'))
+            ->setTipo($tipo)
+            ->setNombre($request->get('nombre'));
 
-        return $this->render('unidadejecutora/new.html.twig', array(
-            'unidadEjecutora' => $unidadEjecutora,
-            'form' => $form->createView(),
-        ));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($unidadEjecutora);
+        $em->flush();
+
+        return new JsonResponse(array(
+            'status' => 'created',
+            'data' => $this->serializeUnidad($unidadEjecutora)
+        ), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -57,11 +86,8 @@ class UnidadEjecutoraController extends Controller
      */
     public function showAction(UnidadEjecutora $unidadEjecutora)
     {
-        $deleteForm = $this->createDeleteForm($unidadEjecutora);
-
-        return $this->render('unidadejecutora/show.html.twig', array(
-            'unidadEjecutora' => $unidadEjecutora,
-            'delete_form' => $deleteForm->createView(),
+        return new JsonResponse(array(
+            'data' => $this->serializeUnidad($unidadEjecutora)
         ));
     }
 
@@ -71,54 +97,31 @@ class UnidadEjecutoraController extends Controller
      */
     public function editAction(Request $request, UnidadEjecutora $unidadEjecutora)
     {
-        $deleteForm = $this->createDeleteForm($unidadEjecutora);
-        $editForm = $this->createForm('SID\Api\UnityBundle\Form\UnidadEjecutoraType', $unidadEjecutora);
-        $editForm->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $tipo = $em
+            ->getRepository('UnityBundle:Tipo')
+            ->find($request->get('tipo', $unidadEjecutora->getTipo()->getId()));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $unidadEjecutora
+            ->setDetalle($request->get('detalle', $unidadEjecutora->getDetalle()))
+            ->setCufe($request->get('cufe', $unidadEjecutora->getCufe()))
+            ->setTipo($tipo)
+            ->setNombre($request->get('nombre', $unidadEjecutora->getNombre()));
 
-            return $this->redirectToRoute('unidadejecutora_edit', array('id' => $unidadEjecutora->getId()));
-        }
+        $em->flush();
 
-        return $this->render('unidadejecutora/edit.html.twig', array(
-            'unidadEjecutora' => $unidadEjecutora,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return new JsonResponse(array(
+            'status' => 'updated',
+            'data' => $this->serializeUnidad($unidadEjecutora)
+        ), JsonResponse::HTTP_ACCEPTED);
     }
 
     /**
      * Deletes a unidadEjecutora entity.
      *
      */
-    public function deleteAction(Request $request, UnidadEjecutora $unidadEjecutora)
+    public function deleteAction(UnidadEjecutora $unidadEjecutora)
     {
-        $form = $this->createDeleteForm($unidadEjecutora);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($unidadEjecutora);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('unidadejecutora_index');
-    }
-
-    /**
-     * Creates a form to delete a unidadEjecutora entity.
-     *
-     * @param UnidadEjecutora $unidadEjecutora The unidadEjecutora entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(UnidadEjecutora $unidadEjecutora)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('unidadejecutora_delete', array('id' => $unidadEjecutora->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return new JsonResponse();
     }
 }

@@ -4,9 +4,6 @@ namespace SID\Api\UserBundle\Controller;
 
 use SID\Api\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use SID\Api\UserBundle\Serializer\Normalizer\UserNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -26,11 +23,26 @@ class UserController extends Controller
 
         $users = $em->getRepository('UserBundle:User')->findAll();
 
-        $serializer = new Serializer(
-            array(new UserNormalizer()),
-            array(new JsonEncoder())
+        return new JsonResponse(array('data' => $this->serializeUsers($users)));
+    }
+
+    protected function serializeUsers(array $users){
+        $data = array();
+        foreach ($users as $user){
+            $data[] = $this->serializeUser($user);
+        }
+        return $data;
+    }
+
+    public function serializeUser(User $user){
+        return array(
+            'id' => $user->getId(),
+            'nombre' => $user->getName(),
+            'apellido' => $user->getLastname(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'enabled' => $user->isEnabled()
         );
-        return new JsonResponse($serializer->serialize($users, 'json'));
     }
 
     /**
@@ -40,21 +52,24 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm('SID\Api\UserBundle\Form\UserType', $user);
-        $form->handleRequest($request);
+        $user
+            ->setUsername($request->get('username'))
+            ->setEmail($request->get('email'))
+            ->setName($request->get('name'))
+            ->setLastname($request->get('lastname'))
+            ->setPlainPassword($request->get('password'));
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush($user);
+        $user->setPassword('chunk');
+        $user->setSalt('chunk');
 
-            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
-        }
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
 
-        return $this->render('user/new.html.twig', array(
-            'user' => $user,
-            'form' => $form->createView(),
-        ));
+        return new JsonResponse(array(
+            'status' => 'created',
+            'data' => $this->serializeUser($user)
+        ), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -63,11 +78,8 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
-
-        return $this->render('user/show.html.twig', array(
-            'user' => $user,
-            'delete_form' => $deleteForm->createView(),
+        return new JsonResponse(array(
+            'data' => $this->serializeUser($user)
         ));
     }
 
@@ -77,21 +89,18 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('SID\Api\UserBundle\Form\UserType', $user);
-        $editForm->handleRequest($request);
+        $user
+            ->setEmail($request->get('email', $user->getEmail()))
+            ->setName($request->get('name', $user->getName()))
+            ->setLastname($request->get('lastname', $user->getLastname()))
+            ->setPlainPassword($request->get('password', null));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
-        }
-
-        return $this->render('user/edit.html.twig', array(
-            'user' => $user,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return new JsonResponse(array(
+            'status' => 'updated',
+            'data' => $this->serializeUser($user)
+        ), JsonResponse::HTTP_ACCEPTED);
     }
 
     /**
@@ -100,31 +109,6 @@ class UserController extends Controller
      */
     public function deleteAction(Request $request, User $user)
     {
-        $form = $this->createDeleteForm($user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('user_index');
-    }
-
-    /**
-     * Creates a form to delete a user entity.
-     *
-     * @param User $user The user entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(User $user)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_delete', array('id' => $user->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return new JsonResponse();
     }
 }

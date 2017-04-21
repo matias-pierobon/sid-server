@@ -22,7 +22,7 @@ class SubdivisionController extends Controller
 
         $subdivisions = $em->getRepository('DrugBundle:Subdivision')->findAll();
 
-        return $this->render('subdivision/index.html.twig', array(
+        return $this->render('subdivision/index.html.twig.twig', array(
             'subdivisions' => $subdivisions,
         ));
     }

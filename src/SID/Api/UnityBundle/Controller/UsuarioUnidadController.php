@@ -22,7 +22,7 @@ class UsuarioUnidadController extends Controller
 
         $usuarioUnidads = $em->getRepository('UnityBundle:UsuarioUnidad')->findAll();
 
-        return $this->render('usuariounidad/index.html.twig', array(
+        return $this->render('usuariounidad/index.html.twig.twig', array(
             'usuarioUnidads' => $usuarioUnidads,
         ));
     }

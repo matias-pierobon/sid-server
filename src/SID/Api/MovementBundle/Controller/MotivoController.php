@@ -22,7 +22,7 @@ class MotivoController extends Controller
 
         $motivos = $em->getRepository('MovementBundle:Motivo')->findAll();
 
-        return $this->render('motivo/index.html.twig', array(
+        return $this->render('motivo/index.html.twig.twig', array(
             'motivos' => $motivos,
         ));
     }

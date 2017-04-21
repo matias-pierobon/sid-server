@@ -22,7 +22,7 @@ class MovimientoController extends Controller
 
         $movimientos = $em->getRepository('MovementBundle:Movimiento')->findAll();
 
-        return $this->render('movimiento/index.html.twig', array(
+        return $this->render('movimiento/index.html.twig.twig', array(
             'movimientos' => $movimientos,
         ));
     }

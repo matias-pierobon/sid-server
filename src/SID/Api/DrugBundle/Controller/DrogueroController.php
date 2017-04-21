@@ -4,6 +4,7 @@ namespace SID\Api\DrugBundle\Controller;
 
 use SID\Api\DrugBundle\Entity\Droguero;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,9 +23,30 @@ class DrogueroController extends Controller
 
         $drogueros = $em->getRepository('DrugBundle:Droguero')->findAll();
 
-        return $this->render('droguero/index.html.twig', array(
-            'drogueros' => $drogueros,
-        ));
+        return new JsonResponse(array('data' => $this->serializeDrogueros($drogueros)));
+    }
+
+    protected function serializeDrogueros(array $drogueros, boolean $populate = false){
+        $data = array();
+        foreach ($drogueros as $droguero){
+            $data[] = $this->serializeClase($droguero, $populate);
+        }
+        return $data;
+    }
+
+    public function serializeDroguero(Droguero $droguero, boolean $populate = true){
+        $data = array(
+            'id' => $droguero->getId(),
+            'nombre' => $droguero->getNombre(),
+            'apellido' => $droguero->getFechaIngreso(),
+            'email' => $droguero->get(),
+            'enabled' => $droguero->isEnabled()
+        );
+        if ($populate) {
+            $data['incompatibilidades'] = $this->serializeClases($droguero->incompatibilidades());
+            $data['drogas'] = $this->serializeDroga($droguero->getDrogas());
+        }
+        return $data;
     }
 
     /**

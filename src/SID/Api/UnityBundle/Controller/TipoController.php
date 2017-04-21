@@ -4,6 +4,7 @@ namespace SID\Api\UnityBundle\Controller;
 
 use SID\Api\UnityBundle\Entity\Tipo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,9 +23,23 @@ class TipoController extends Controller
 
         $tipos = $em->getRepository('UnityBundle:Tipo')->findAll();
 
-        return $this->render('tipo/index.html.twig', array(
-            'tipos' => $tipos,
-        ));
+        return new JsonResponse(array('data' => $this->serializeTipos($tipos)));
+    }
+
+    protected function serializeTipos(array $tipos){
+        $data = array();
+        foreach ($tipos as $tipo){
+            $data[] = $this->serializeTipo($tipo);
+        }
+        return $data;
+    }
+
+    public function serializeTipo(Tipo $tipo){
+        return array(
+            'id' => $tipo->getId(),
+            'nombre' => $tipo->getNombre(),
+            'detalle' => $tipo->getDetalle(),
+        );
     }
 
     /**
@@ -34,21 +49,18 @@ class TipoController extends Controller
     public function newAction(Request $request)
     {
         $tipo = new Tipo();
-        $form = $this->createForm('SID\Api\UnityBundle\Form\TipoType', $tipo);
-        $form->handleRequest($request);
+        $tipo
+            ->setDetalle($request->get('detalle'))
+            ->setNombre($request->get('nombre'));
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($tipo);
-            $em->flush($tipo);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($tipo);
+        $em->flush();
 
-            return $this->redirectToRoute('tipo_show', array('id' => $tipo->getId()));
-        }
-
-        return $this->render('tipo/new.html.twig', array(
-            'tipo' => $tipo,
-            'form' => $form->createView(),
-        ));
+        return new JsonResponse(array(
+            'status' => 'created',
+            'data' => $this->serializeTipo($tipo)
+        ), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -57,11 +69,8 @@ class TipoController extends Controller
      */
     public function showAction(Tipo $tipo)
     {
-        $deleteForm = $this->createDeleteForm($tipo);
-
-        return $this->render('tipo/show.html.twig', array(
-            'tipo' => $tipo,
-            'delete_form' => $deleteForm->createView(),
+        return new JsonResponse(array(
+            'data' => $this->serializeTipo($tipo)
         ));
     }
 
@@ -71,21 +80,16 @@ class TipoController extends Controller
      */
     public function editAction(Request $request, Tipo $tipo)
     {
-        $deleteForm = $this->createDeleteForm($tipo);
-        $editForm = $this->createForm('SID\Api\UnityBundle\Form\TipoType', $tipo);
-        $editForm->handleRequest($request);
+        $tipo
+            ->setDetalle($request->get('detalle', $tipo->getDetalle()))
+            ->setNombre($request->get('nombre', $tipo->getNombre()));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tipo_edit', array('id' => $tipo->getId()));
-        }
-
-        return $this->render('tipo/edit.html.twig', array(
-            'tipo' => $tipo,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return new JsonResponse(array(
+            'status' => 'updated',
+            'data' => $this->serializeTipo($tipo)
+        ), JsonResponse::HTTP_ACCEPTED);
     }
 
     /**
@@ -94,31 +98,6 @@ class TipoController extends Controller
      */
     public function deleteAction(Request $request, Tipo $tipo)
     {
-        $form = $this->createDeleteForm($tipo);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($tipo);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('tipo_index');
-    }
-
-    /**
-     * Creates a form to delete a tipo entity.
-     *
-     * @param Tipo $tipo The tipo entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Tipo $tipo)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('tipo_delete', array('id' => $tipo->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return new JsonResponse();
     }
 }

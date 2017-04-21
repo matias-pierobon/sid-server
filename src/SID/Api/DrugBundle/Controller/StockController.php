@@ -22,7 +22,7 @@ class StockController extends Controller
 
         $stocks = $em->getRepository('DrugBundle:Stock')->findAll();
 
-        return $this->render('stock/index.html.twig', array(
+        return $this->render('stock/index.html.twig.twig', array(
             'stocks' => $stocks,
         ));
     }

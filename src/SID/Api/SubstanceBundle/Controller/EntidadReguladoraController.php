@@ -4,6 +4,7 @@ namespace SID\Api\SubstanceBundle\Controller;
 
 use SID\Api\SubstanceBundle\Entity\EntidadReguladora;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,9 +23,23 @@ class EntidadReguladoraController extends Controller
 
         $entidadReguladoras = $em->getRepository('SubstanceBundle:EntidadReguladora')->findAll();
 
-        return $this->render('entidadreguladora/index.html.twig', array(
-            'entidadReguladoras' => $entidadReguladoras,
-        ));
+        return new JsonResponse(array('data' => $this->serializeEntidades($entidadReguladoras)));
+    }
+
+    protected function serializeDrogas(array $entidades){
+        $data = array();
+        foreach ($entidades as $entidad){
+            $data[] = $this->serializeEntidad($entidad);
+        }
+        return $data;
+    }
+
+    public function serializeEntidad(EntidadReguladora $entidad){
+        return array(
+            'id' => $entidad->getId(),
+            'nombre' => $entidad->getNombre(),
+            'detalle' => $entidad->getDetalle()
+        );
     }
 
     /**
@@ -33,59 +48,46 @@ class EntidadReguladoraController extends Controller
      */
     public function newAction(Request $request)
     {
-        $entidadReguladora = new Entidadreguladora();
-        $form = $this->createForm('SID\Api\SubstanceBundle\Form\EntidadReguladoraType', $entidadReguladora);
-        $form->handleRequest($request);
+        $entidad = new Entidadreguladora();
+        $entidad
+            ->setDetalle($request->get('detalle'))
+            ->setNombre($request->get('nombre'));
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entidadReguladora);
-            $em->flush($entidadReguladora);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entidad);
+        $em->flush();
 
-            return $this->redirectToRoute('entidadreguladora_show', array('id' => $entidadReguladora->getId()));
-        }
-
-        return $this->render('entidadreguladora/new.html.twig', array(
-            'entidadReguladora' => $entidadReguladora,
-            'form' => $form->createView(),
-        ));
+        return new JsonResponse(array(
+            'status' => 'created',
+            'data' => $this->serializeEntidad($entidad)
+        ), JsonResponse::HTTP_CREATED);
     }
 
     /**
      * Finds and displays a entidadReguladora entity.
      *
      */
-    public function showAction(EntidadReguladora $entidadReguladora)
+    public function showAction(EntidadReguladora $entida)
     {
-        $deleteForm = $this->createDeleteForm($entidadReguladora);
-
-        return $this->render('entidadreguladora/show.html.twig', array(
-            'entidadReguladora' => $entidadReguladora,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return new JsonResponse(array('data' => $this->serializeEntidad($entida)));
     }
 
     /**
      * Displays a form to edit an existing entidadReguladora entity.
      *
      */
-    public function editAction(Request $request, EntidadReguladora $entidadReguladora)
+    public function editAction(Request $request, EntidadReguladora $entidad)
     {
-        $deleteForm = $this->createDeleteForm($entidadReguladora);
-        $editForm = $this->createForm('SID\Api\SubstanceBundle\Form\EntidadReguladoraType', $entidadReguladora);
-        $editForm->handleRequest($request);
+        $entidad
+            ->setDetalle($request->get('detalle'))
+            ->setNombre($request->get('nombre'));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('entidadreguladora_edit', array('id' => $entidadReguladora->getId()));
-        }
-
-        return $this->render('entidadreguladora/edit.html.twig', array(
-            'entidadReguladora' => $entidadReguladora,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return new JsonResponse(array(
+            'status' => 'updated',
+            'data' => $this->serializeEntidad($entidad)
+        ), JsonResponse::HTTP_ACCEPTED);
     }
 
     /**
@@ -94,31 +96,6 @@ class EntidadReguladoraController extends Controller
      */
     public function deleteAction(Request $request, EntidadReguladora $entidadReguladora)
     {
-        $form = $this->createDeleteForm($entidadReguladora);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($entidadReguladora);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('entidadreguladora_index');
-    }
-
-    /**
-     * Creates a form to delete a entidadReguladora entity.
-     *
-     * @param EntidadReguladora $entidadReguladora The entidadReguladora entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(EntidadReguladora $entidadReguladora)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('entidadreguladora_delete', array('id' => $entidadReguladora->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return new JsonResponse();
     }
 }

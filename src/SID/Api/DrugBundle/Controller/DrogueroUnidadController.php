@@ -22,7 +22,7 @@ class DrogueroUnidadController extends Controller
 
         $drogueroUnidads = $em->getRepository('DrugBundle:DrogueroUnidad')->findAll();
 
-        return $this->render('droguerounidad/index.html.twig', array(
+        return $this->render('droguerounidad/index.html.twig.twig', array(
             'drogueroUnidads' => $drogueroUnidads,
         ));
     }

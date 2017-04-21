@@ -22,7 +22,7 @@ class GHSController extends Controller
 
         $gHSs = $em->getRepository('SubstanceBundle:GHS')->findAll();
 
-        return $this->render('ghs/index.html.twig', array(
+        return $this->render('ghs/index.html.twig.twig', array(
             'gHSs' => $gHSs,
         ));
     }

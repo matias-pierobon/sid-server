@@ -22,7 +22,7 @@ class ResponsableController extends Controller
 
         $responsables = $em->getRepository('DrugBundle:Responsable')->findAll();
 
-        return $this->render('responsable/index.html.twig', array(
+        return $this->render('responsable/index.html.twig.twig', array(
             'responsables' => $responsables,
         ));
     }

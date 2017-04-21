@@ -22,7 +22,7 @@ class SinonimoController extends Controller
 
         $sinonimos = $em->getRepository('SubstanceBundle:Sinonimo')->findAll();
 
-        return $this->render('sinonimo/index.html.twig', array(
+        return $this->render('sinonimo/index.html.twig.twig', array(
             'sinonimos' => $sinonimos,
         ));
     }

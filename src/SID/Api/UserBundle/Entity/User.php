@@ -2,6 +2,7 @@
 
 namespace SID\Api\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use SID\Api\UserBundle\Model\UserInterface;
 use SID\Api\MovementBundle\Entity\Movimiento;
@@ -177,32 +178,32 @@ class User implements UserInterface{
 
     public function isEnabled()
     {
-        // TODO: Implement isEnabled() method.
+        return $this->getEnabled();
     }
 
     public function getEmail(): string
     {
-        // TODO: Implement getEmail() method.
+        return $this->email;
     }
 
     public function getPlainPassword(): string
     {
-        // TODO: Implement getPlainPassword() method.
+        return $this->plainPassword;
     }
 
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
+        return $this->roles;
     }
 
     public function getPassword()
     {
-        // TODO: Implement getPassword() method.
+        return $this->password;
     }
 
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+        return $this->salt;
     }
 
     public function getUsername()
@@ -216,9 +217,12 @@ class User implements UserInterface{
      */
     public function __construct()
     {
-        $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->droguerosResponsables = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->unidades = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->enabled = true;
+        $this->roles = array();
+        $this->sysDate = new \DateTime();
+        $this->movimientos = new ArrayCollection();
+        $this->droguerosResponsables = new ArrayCollection();
+        $this->unidades = new ArrayCollection();
     }
 
     /**
@@ -538,7 +542,7 @@ class User implements UserInterface{
      *
      * @return User
      */
-    public function addMovimiento(\SID\Api\MovementBundle\Entity\Movimiento $movimiento)
+    public function addMovimiento(Movimiento $movimiento)
     {
         $this->movimientos[] = $movimiento;
 
@@ -550,7 +554,7 @@ class User implements UserInterface{
      *
      * @param \SID\Api\MovementBundle\Entity\Movimiento $movimiento
      */
-    public function removeMovimiento(\SID\Api\MovementBundle\Entity\Movimiento $movimiento)
+    public function removeMovimiento(Movimiento $movimiento)
     {
         $this->movimientos->removeElement($movimiento);
     }
@@ -572,7 +576,7 @@ class User implements UserInterface{
      *
      * @return User
      */
-    public function addDroguerosResponsable(\SID\Api\DrugBundle\Entity\Responsable $droguerosResponsable)
+    public function addDroguerosResponsable(Responsable $droguerosResponsable)
     {
         $this->droguerosResponsables[] = $droguerosResponsable;
 
@@ -584,7 +588,7 @@ class User implements UserInterface{
      *
      * @param \SID\Api\DrugBundle\Entity\Responsable $droguerosResponsable
      */
-    public function removeDroguerosResponsable(\SID\Api\DrugBundle\Entity\Responsable $droguerosResponsable)
+    public function removeDroguerosResponsable(Responsable $droguerosResponsable)
     {
         $this->droguerosResponsables->removeElement($droguerosResponsable);
     }
@@ -606,9 +610,9 @@ class User implements UserInterface{
      *
      * @return User
      */
-    public function addUnidade(\SID\Api\UnityBundle\Entity\UsuarioUnidad $unidade)
+    public function addUnidade(UsuarioUnidad $unidad)
     {
-        $this->unidades[] = $unidade;
+        $this->unidades[] = $unidad;
 
         return $this;
     }
@@ -618,9 +622,9 @@ class User implements UserInterface{
      *
      * @param \SID\Api\UnityBundle\Entity\UsuarioUnidad $unidade
      */
-    public function removeUnidade(\SID\Api\UnityBundle\Entity\UsuarioUnidad $unidade)
+    public function removeUnidade(UsuarioUnidad $unidad)
     {
-        $this->unidades->removeElement($unidade);
+        $this->unidades->removeElement($unidad);
     }
 
     /**

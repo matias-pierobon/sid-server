@@ -4,21 +4,27 @@ unidadejecutora_index:
     methods:  GET
 
 unidadejecutora_show:
-    path:     /{id}/show
+    path:     /{id}
     defaults: { _controller: "UnityBundle:UnidadEjecutora:show" }
     methods:  GET
+    requirements:
+        id: '\d+'
 
 unidadejecutora_new:
-    path:     /new
+    path:     /
     defaults: { _controller: "UnityBundle:UnidadEjecutora:new" }
-    methods:  [GET, POST]
+    methods:  POST
 
 unidadejecutora_edit:
-    path:     /{id}/edit
+    path:     /{id}
     defaults: { _controller: "UnityBundle:UnidadEjecutora:edit" }
-    methods:  [GET, POST]
+    methods:  POST
+    requirements:
+        id: '\d+'
 
 unidadejecutora_delete:
-    path:     /{id}/delete
+    path:     /{id}
     defaults: { _controller: "UnityBundle:UnidadEjecutora:delete" }
     methods:  DELETE
+    requirements:
+        id: '\d+'

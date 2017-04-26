@@ -163,17 +163,17 @@ class User implements UserInterface{
 
     public function isAccountNonExpired()
     {
-        // TODO: Implement isAccountNonExpired() method.
+        return true;
     }
 
     public function isAccountNonLocked()
     {
-        // TODO: Implement isAccountNonLocked() method.
+        return true;
     }
 
     public function isCredentialsNonExpired()
     {
-        // TODO: Implement isCredentialsNonExpired() method.
+        return true;
     }
 
     public function isEnabled()
@@ -193,7 +193,14 @@ class User implements UserInterface{
 
     public function getRoles()
     {
-        return $this->roles;
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function hasRole($role)
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
     public function getPassword()
@@ -210,7 +217,6 @@ class User implements UserInterface{
     {
         return $this->username;
     }
-
     
     /**
      * Constructor
@@ -218,7 +224,7 @@ class User implements UserInterface{
     public function __construct()
     {
         $this->enabled = true;
-        $this->roles = array();
+        $this->roles = array('ROLE_USER');
         $this->sysDate = new \DateTime();
         $this->movimientos = new ArrayCollection();
         $this->droguerosResponsables = new ArrayCollection();
@@ -482,8 +488,22 @@ class User implements UserInterface{
      */
     public function setRoles($roles)
     {
-        $this->roles = $roles;
+        $this->roles = array();
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
+        return $this;
+    }
 
+    public function addRole($role)
+    {
+        $role = strtoupper($role);
+        if ($role === 'ROLE_USER') {
+            return $this;
+        }
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
         return $this;
     }
 

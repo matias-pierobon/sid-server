@@ -51,6 +51,12 @@ class UsuarioUnidad
     private $unidad;
 
 
+    public function __construct(User $usuario, UnidadEjecutora $unidadEjecutora)
+    {
+        $this->desde = new \DateTime();
+        $this->unidad = $unidadEjecutora;
+        $this->usuario = $usuario;
+    }
 
     /**
      * Get id

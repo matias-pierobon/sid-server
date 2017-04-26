@@ -1,6 +1,5 @@
-client:
-    resource: "@ClientBundle/Resources/config/routing.yml"
-    prefix:   /
+api_login_check:
+    path: /api/login_check
 
 movement:
     resource: "@MovementBundle/Resources/config/routing.yml"
@@ -26,3 +25,6 @@ user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /api/usuarios
 
+client:
+    resource: "@ClientBundle/Resources/config/routing.yml"
+    prefix:   /

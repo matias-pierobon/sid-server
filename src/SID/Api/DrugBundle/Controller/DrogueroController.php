@@ -26,7 +26,7 @@ class DrogueroController extends Controller
         return new JsonResponse(array('data' => $this->serializeDrogueros($drogueros)));
     }
 
-    protected function serializeDrogueros(array $drogueros, boolean $populate = false){
+    protected function serializeDrogueros(array $drogueros, $populate = false){
         $data = array();
         foreach ($drogueros as $droguero){
             $data[] = $this->serializeClase($droguero, $populate);
@@ -34,7 +34,7 @@ class DrogueroController extends Controller
         return $data;
     }
 
-    public function serializeDroguero(Droguero $droguero, boolean $populate = true){
+    public function serializeDroguero(Droguero $droguero, $populate = true){
         $data = array(
             'id' => $droguero->getId(),
             'nombre' => $droguero->getNombre(),

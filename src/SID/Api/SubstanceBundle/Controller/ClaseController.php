@@ -27,7 +27,7 @@ class ClaseController extends Controller
         return new JsonResponse(array('data' => $this->serializeClases($clases)));
     }
 
-    protected function serializeClases(array $clases, boolean $populate = false){
+    protected function serializeClases(array $clases, $populate = false){
         $data = array();
         foreach ($clases as $clase){
             $data[] = $this->serializeClase($clase, $populate);
@@ -35,7 +35,7 @@ class ClaseController extends Controller
         return $data;
     }
 
-    public function serializeClase(Clase $clase, boolean $populate = true){
+    public function serializeClase(Clase $clase, $populate = true){
         $data = array(
             'id' => $clase->getId(),
             'nombre' => $clase->getNombre(),

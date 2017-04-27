@@ -2,6 +2,7 @@
 
 namespace SID\Api\UserBundle\Controller;
 
+use SID\Api\UnityBundle\Entity\UsuarioUnidad;
 use SID\Api\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +64,12 @@ class UserController extends Controller
         $user->setSalt('chunk');
 
         $em = $this->getDoctrine()->getManager();
+
+        $unidad = $em->getRepository('UnityBundle:UnidadEjecutora')->find($request->get('unidad'));
+        $usuarioUnidad = new UsuarioUnidad($user, $unidad);
+
         $em->persist($user);
+        $em->persist($usuarioUnidad);
         $em->flush();
 
         return new JsonResponse(array(

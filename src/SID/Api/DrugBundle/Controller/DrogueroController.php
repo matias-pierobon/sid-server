@@ -39,7 +39,13 @@ class DrogueroController extends Controller
             'id' => $droguero->getId(),
             'nombre' => $droguero->getNombre(),
             'apellido' => $droguero->getFechaIngreso(),
-            'email' => $droguero->get(),
+            'email' => $droguero->getDetalle(),
+            'responsable' => array(
+                'id' => $droguero->isEnabled(),
+                'nombre' => $droguero->isEnabled(),
+                'appellido' => $droguero->isEnabled(),
+                'enabled' => $droguero->isEnabled()
+            ),
             'enabled' => $droguero->isEnabled()
         );
         if ($populate) {

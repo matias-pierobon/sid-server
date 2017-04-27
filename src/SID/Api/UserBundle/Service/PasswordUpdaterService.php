@@ -3,7 +3,6 @@
 namespace SID\Api\UserBundle\Service;
 
 use SID\Api\UserBundle\Model\UserInterface;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class PasswordUpdaterService{
@@ -19,6 +18,11 @@ class PasswordUpdaterService{
     public function hashPassword(UserInterface $user)
     {
         $plainPassword = $user->getPlainPassword();
+
+        if (0 === strlen($plainPassword)) {
+            return;
+        }
+
         $encoder = $this->encoderFactory->getEncoder($user);
 
         $user->setSalt(rtrim(str_replace('+', '.', base64_encode(random_bytes(32))), '='));

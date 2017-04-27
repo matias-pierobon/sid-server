@@ -3,15 +3,15 @@ tipo_index:
     defaults: { _controller: "UnityBundle:Tipo:index" }
     methods:  GET
 
-tipo_show:
-    path:     /{id}
-    defaults: { _controller: "UnityBundle:Tipo:show" }
-    methods:  GET
-
 tipo_new:
     path:     /
     defaults: { _controller: "UnityBundle:Tipo:new" }
     methods:  POST
+
+tipo_show:
+    path:     /{id}
+    defaults: { _controller: "UnityBundle:Tipo:show" }
+    methods:  GET
 
 tipo_edit:
     path:     /{id}

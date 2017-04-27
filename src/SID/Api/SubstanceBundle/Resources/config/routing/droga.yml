@@ -3,22 +3,22 @@ droga_index:
     defaults: { _controller: "SubstanceBundle:Droga:index" }
     methods:  GET
 
+droga_new:
+    path:     /
+    defaults: { _controller: "SubstanceBundle:Droga:new" }
+    methods:  POST
+
 droga_show:
-    path:     /{id}/show
+    path:     /{id}
     defaults: { _controller: "SubstanceBundle:Droga:show" }
     methods:  GET
 
-droga_new:
-    path:     /new
-    defaults: { _controller: "SubstanceBundle:Droga:new" }
-    methods:  [GET, POST]
-
 droga_edit:
-    path:     /{id}/edit
+    path:     /{id}
     defaults: { _controller: "SubstanceBundle:Droga:edit" }
-    methods:  [GET, POST]
+    methods:  POST
 
 droga_delete:
-    path:     /{id}/delete
+    path:     /{id}
     defaults: { _controller: "SubstanceBundle:Droga:delete" }
     methods:  DELETE

@@ -1,6 +1,3 @@
-substance_droga:
-    resource: "@SubstanceBundle/Resources/config/routing/droga.yml"
-    prefix:   /
 substance_clase:
     resource: "@SubstanceBundle/Resources/config/routing/clase.yml"
     prefix:   /clases
@@ -13,3 +10,6 @@ substance_ghs:
 substance_sinonimos:
     resource: "@SubstanceBundle/Resources/config/routing/sinonimo.yml"
     prefix:   /sinonimos
+substance_droga:
+    resource: "@SubstanceBundle/Resources/config/routing/droga.yml"
+    prefix:   /

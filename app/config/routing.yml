@@ -19,7 +19,7 @@ unity:
 
 substance:
     resource: "@SubstanceBundle/Resources/config/routing.yml"
-    prefix:   /api/drogas
+    prefix:   /api/sustancias
 
 user:
     resource: "@UserBundle/Resources/config/routing.yml"

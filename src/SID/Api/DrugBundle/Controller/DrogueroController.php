@@ -3,6 +3,7 @@
 namespace SID\Api\DrugBundle\Controller;
 
 use SID\Api\DrugBundle\Entity\Droguero;
+use SID\Api\DrugBundle\Entity\Responsable;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,23 +35,39 @@ class DrogueroController extends Controller
         return $data;
     }
 
+    protected function serializeUnidades(array $unidades){
+        $data = array();
+        foreach ($unidades as $unidad){
+            $data[] = $this->serializeUnidad($unidad);
+        }
+        return $data;
+    }
+
+    public function serializeUnidad(UnidadEjecutora $unidad){
+        return array(
+            'id' => $unidad->getId(),
+            'nombre' => $unidad->getNombre(),
+            'tipo' => $unidad->getTipo()->getNombre()
+        );
+    }
+
     public function serializeDroguero(Droguero $droguero, $populate = true){
+
         $data = array(
             'id' => $droguero->getId(),
             'nombre' => $droguero->getNombre(),
-            'apellido' => $droguero->getFechaIngreso(),
-            'email' => $droguero->getDetalle(),
+            'fecha' => $droguero->getFechaIngreso(),
+            'detalle' => $droguero->getDetalle(),
             'responsable' => array(
-                'id' => $droguero->isEnabled(),
-                'nombre' => $droguero->isEnabled(),
-                'appellido' => $droguero->isEnabled(),
-                'enabled' => $droguero->isEnabled()
+                'id' => $droguero->getResponsable()->getUser()->getId(),
+                'nombre' => $droguero->getResponsable()->getUser()->getNombre(),
+                'apellido' => $droguero->getResponsable()->getUser()->getApellido(),
+                'enabled' => $droguero->getResponsable()->getUser()->isEnabled()
             ),
-            'enabled' => $droguero->isEnabled()
+            'unidades' => $this->serializeUnidades($droguero->getUnidades())
         );
         if ($populate) {
-            $data['incompatibilidades'] = $this->serializeClases($droguero->incompatibilidades());
-            $data['drogas'] = $this->serializeDroga($droguero->getDrogas());
+            $data['drogas'] = $droguero->getDrogas();
         }
         return $data;
     }
@@ -61,22 +78,31 @@ class DrogueroController extends Controller
      */
     public function newAction(Request $request)
     {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $unidad = $em->getRepository('UnityBundle:Unidad')->find($request->get('unidad'));
+        $user = $em->getRepository('UserBundle:User')->find($request->get('responsable'));
+        
         $droguero = new Droguero();
-        $form = $this->createForm('SID\Api\DrugBundle\Form\DrogueroType', $droguero);
-        $form->handleRequest($request);
+        $droguero
+            ->setDetalle($request->get('detalle'))
+            ->setNombre($request->get('nombre'))
+            ->addUnidad($unidad);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($droguero);
-            $em->flush($droguero);
+        $responsable = new Responsable();
+        $responsable
+            ->setDroguero($droguero)
+            ->setUser($user);
 
-            return $this->redirectToRoute('droguero_show', array('id' => $droguero->getId()));
-        }
+        $em->persist($droguero);
+        $em->persist($droguero);
+        $em->flush();
 
-        return $this->render('droguero/new.html.twig', array(
-            'droguero' => $droguero,
-            'form' => $form->createView(),
-        ));
+        return new JsonResponse(array(
+            'status' => 'created',
+            'data' => $this->serializeDroguero($droguero)
+        ), JsonResponse::HTTP_CREATED);
     }
 
     /**

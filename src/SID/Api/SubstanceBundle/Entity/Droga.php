@@ -158,7 +158,7 @@ class Droga
      */
     public function __construct()
     {
-        $this->fechaIngreso = new \DateTime()
+        $this->fechaIngreso = new \DateTime();
         $this->clases = new \Doctrine\Common\Collections\ArrayCollection();
         $this->ghs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->entidades = new \Doctrine\Common\Collections\ArrayCollection();

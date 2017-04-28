@@ -50,12 +50,18 @@ class Droguero extends Division
         return $this;
     }
 
-    public function getResponsable(){
-        return;
+    public function getDrogas()
+    {
+        return array();
     }
 
-    public function getUsuarios(){
-        return;
+    public function getResponsable(){
+        foreach ($this->getResponsables() as $responsable) {
+            if($responsable->getHasta() == null){
+                return $responsable;
+            }
+        }
+        return null;
     }
 
 
@@ -64,6 +70,7 @@ class Droguero extends Division
      */
     public function __construct()
     {
+        $this->fechaIngreso = new \DateTime();
         $this->unidades = new \Doctrine\Common\Collections\ArrayCollection();
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
         $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
@@ -255,9 +262,9 @@ class Droguero extends Division
      *
      * @return Droguero
      */
-    public function addUnidade(\SID\Api\DrugBundle\Entity\DrogueroUnidad $unidade)
+    public function addUnidad(\SID\Api\DrugBundle\Entity\DrogueroUnidad $unidad)
     {
-        $this->unidades[] = $unidade;
+        $this->unidades[] = $unidad;
 
         return $this;
     }
@@ -267,9 +274,9 @@ class Droguero extends Division
      *
      * @param \SID\Api\DrugBundle\Entity\DrogueroUnidad $unidade
      */
-    public function removeUnidade(\SID\Api\DrugBundle\Entity\DrogueroUnidad $unidade)
+    public function removeUnidad(\SID\Api\DrugBundle\Entity\DrogueroUnidad $unidad)
     {
-        $this->unidades->removeElement($unidade);
+        $this->unidades->removeElement($unidad);
     }
 
     /**
@@ -357,9 +364,9 @@ class Droguero extends Division
      *
      * @return Droguero
      */
-    public function addSubdivicione(\SID\Api\DrugBundle\Entity\Subdivision $subdivicione)
+    public function addSubdivicion(\SID\Api\DrugBundle\Entity\Subdivision $subdivicion)
     {
-        $this->subdiviciones[] = $subdivicione;
+        $this->subdiviciones[] = $subdivicion;
 
         return $this;
     }
@@ -369,9 +376,9 @@ class Droguero extends Division
      *
      * @param \SID\Api\DrugBundle\Entity\Subdivision $subdivicione
      */
-    public function removeSubdivicione(\SID\Api\DrugBundle\Entity\Subdivision $subdivicione)
+    public function removeSubdivicion(\SID\Api\DrugBundle\Entity\Subdivision $subdivicion)
     {
-        $this->subdiviciones->removeElement($subdivicione);
+        $this->subdiviciones->removeElement($subdivicion);
     }
 
     /**

@@ -50,7 +50,10 @@ class Responsable
      */
     private $user;
 
-
+    public function __construct()
+    {
+        $this->desde = new \DateTime();
+    }
 
     /**
      * Get id

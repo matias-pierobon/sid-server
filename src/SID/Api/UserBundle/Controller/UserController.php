@@ -42,7 +42,25 @@ class UserController extends Controller
             'apellido' => $user->getLastname(),
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
-            'enabled' => $user->isEnabled()
+            'unidad' => $this->serializeUnidades($user->getUnidades()->toArray()),
+            'enabled' => $user->isEnabled(),
+            'fecha' => $user->getSysDate()
+        );
+    }
+
+    protected function serializeUnidades($unidades){
+        $data = array();
+        foreach ($unidades as $unidad){
+            $data[] = $this->serializeUnidad($unidad->getUnidad());
+        }
+        return $data;
+    }
+
+    public function serializeUnidad($unidad){
+        return array(
+            'id' => $unidad->getId(),
+            'nombre' => $unidad->getNombre(),
+            'detalle' => $unidad->getDetalle()
         );
     }
 

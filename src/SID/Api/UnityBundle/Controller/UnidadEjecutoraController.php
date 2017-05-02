@@ -4,6 +4,7 @@ namespace SID\Api\UnityBundle\Controller;
 
 use SID\Api\UnityBundle\Entity\Tipo;
 use SID\Api\UnityBundle\Entity\UnidadEjecutora;
+use SID\Api\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,7 +42,8 @@ class UnidadEjecutoraController extends Controller
             'nombre' => $unidad->getNombre(),
             'detalle' => $unidad->getDetalle(),
             'cufe' => $unidad->getCufe(),
-            'tipo' => $this->serializeTipo($unidad->getTipo())
+            'tipo' => $this->serializeTipo($unidad->getTipo()),
+            'usuarios' => $this->serializeIntegrantes($unidad->getIntegrantes()->toArray())
         );
     }
 
@@ -50,6 +52,29 @@ class UnidadEjecutoraController extends Controller
             'id' => $tipo->getId(),
             'nombre' => $tipo->getNombre(),
             'detalle' => $tipo->getDetalle(),
+        );
+    }
+
+    protected function serializeIntegrantes(array $integrantes){
+        $data = array();
+        foreach ($integrantes as $integrante){
+            if($integrante->getHasta() != null){
+                continue;
+            }
+            $data[] = $this->serializeUsuario($integrante->getUsuario());
+        }
+        return $data;
+    }
+
+    public function serializeUsuario(User $user){
+        return array(
+            'id' => $user->getId(),
+            'nombre' => $user->getName(),
+            'apellido' => $user->getLastname(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'enabled' => $user->isEnabled(),
+            'fecha' => $user->getSysDate()
         );
     }
 

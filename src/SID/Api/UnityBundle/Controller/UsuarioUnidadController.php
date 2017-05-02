@@ -4,6 +4,7 @@ namespace SID\Api\UnityBundle\Controller;
 
 use SID\Api\UnityBundle\Entity\UsuarioUnidad;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,13 +19,7 @@ class UsuarioUnidadController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $usuarioUnidads = $em->getRepository('UnityBundle:UsuarioUnidad')->findAll();
-
-        return $this->render('usuariounidad/index.html.twig.twig', array(
-            'usuarioUnidads' => $usuarioUnidads,
-        ));
+        return new JsonResponse();
     }
 
     /**
@@ -33,22 +28,17 @@ class UsuarioUnidadController extends Controller
      */
     public function newAction(Request $request)
     {
-        $usuarioUnidad = new Usuariounidad();
-        $form = $this->createForm('SID\Api\UnityBundle\Form\UsuarioUnidadType', $usuarioUnidad);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('UserBundle:User')->find($request->get('usuario'));
+        $unidad = $em->getRepository('UnityBundle:UnidadEjecutora')->find($request->get('unidad'));
+        $usuarioUnidad = new UsuarioUnidad($usuario, $unidad);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($usuarioUnidad);
-            $em->flush($usuarioUnidad);
+        $em->persist($usuarioUnidad);
+        $em->flush();
 
-            return $this->redirectToRoute('usuariounidad_show', array('id' => $usuarioUnidad->getId()));
-        }
-
-        return $this->render('usuariounidad/new.html.twig', array(
-            'usuarioUnidad' => $usuarioUnidad,
-            'form' => $form->createView(),
-        ));
+        return new JsonResponse(array(
+            'status' => 'created'
+        ), JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -57,12 +47,7 @@ class UsuarioUnidadController extends Controller
      */
     public function showAction(UsuarioUnidad $usuarioUnidad)
     {
-        $deleteForm = $this->createDeleteForm($usuarioUnidad);
-
-        return $this->render('usuariounidad/show.html.twig', array(
-            'usuarioUnidad' => $usuarioUnidad,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return new JsonResponse();
     }
 
     /**
@@ -71,21 +56,7 @@ class UsuarioUnidadController extends Controller
      */
     public function editAction(Request $request, UsuarioUnidad $usuarioUnidad)
     {
-        $deleteForm = $this->createDeleteForm($usuarioUnidad);
-        $editForm = $this->createForm('SID\Api\UnityBundle\Form\UsuarioUnidadType', $usuarioUnidad);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('usuariounidad_edit', array('id' => $usuarioUnidad->getId()));
-        }
-
-        return $this->render('usuariounidad/edit.html.twig', array(
-            'usuarioUnidad' => $usuarioUnidad,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return new JsonResponse();
     }
 
     /**
@@ -94,31 +65,6 @@ class UsuarioUnidadController extends Controller
      */
     public function deleteAction(Request $request, UsuarioUnidad $usuarioUnidad)
     {
-        $form = $this->createDeleteForm($usuarioUnidad);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($usuarioUnidad);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('usuariounidad_index');
-    }
-
-    /**
-     * Creates a form to delete a usuarioUnidad entity.
-     *
-     * @param UsuarioUnidad $usuarioUnidad The usuarioUnidad entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(UsuarioUnidad $usuarioUnidad)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('usuariounidad_delete', array('id' => $usuarioUnidad->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return new JsonResponse();
     }
 }

@@ -83,11 +83,7 @@ class UserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $unidad = $em->getRepository('UnityBundle:UnidadEjecutora')->find($request->get('unidad'));
-        $usuarioUnidad = new UsuarioUnidad($user, $unidad);
-
         $em->persist($user);
-        $em->persist($usuarioUnidad);
         $em->flush();
 
         return new JsonResponse(array(

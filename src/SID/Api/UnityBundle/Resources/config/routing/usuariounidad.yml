@@ -3,22 +3,22 @@ usuariounidad_index:
     defaults: { _controller: "UnityBundle:UsuarioUnidad:index" }
     methods:  GET
 
+usuariounidad_new:
+    path:     /
+    defaults: { _controller: "UnityBundle:UsuarioUnidad:new" }
+    methods:  POST
+
 usuariounidad_show:
-    path:     /{id}/show
+    path:     /{id}
     defaults: { _controller: "UnityBundle:UsuarioUnidad:show" }
     methods:  GET
 
-usuariounidad_new:
-    path:     /new
-    defaults: { _controller: "UnityBundle:UsuarioUnidad:new" }
-    methods:  [GET, POST]
-
 usuariounidad_edit:
-    path:     /{id}/edit
+    path:     /{id}
     defaults: { _controller: "UnityBundle:UsuarioUnidad:edit" }
-    methods:  [GET, POST]
+    methods:  POST
 
 usuariounidad_delete:
-    path:     /{id}/delete
+    path:     /{id}
     defaults: { _controller: "UnityBundle:UsuarioUnidad:delete" }
     methods:  DELETE

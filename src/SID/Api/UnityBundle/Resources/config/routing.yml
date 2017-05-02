@@ -3,7 +3,7 @@ unity_tipo:
     prefix:   /tipos
 unity_usuarios:
     resource: "@UnityBundle/Resources/config/routing/usuariounidad.yml"
-    prefix:   /usuarios
+    prefix:   /integrantes
 unity_unidades:
     resource: "@UnityBundle/Resources/config/routing/unidadejecutora.yml"
     prefix:   /

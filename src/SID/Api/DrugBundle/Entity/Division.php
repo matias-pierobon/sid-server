@@ -60,7 +60,7 @@ abstract class Division
 
     /**
      * One Category has Many Categories.
-     * @ORM\OneToMany(targetEntity="Subdivision", mappedBy="padre")
+     * @ORM\OneToMany(targetEntity="Subdivision", mappedBy="parent")
      */
     protected $subdiviciones;
 

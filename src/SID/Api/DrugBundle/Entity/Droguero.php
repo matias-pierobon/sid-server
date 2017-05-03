@@ -60,7 +60,7 @@ class Droguero extends Division
 
     public function getDrogas()
     {
-        return array();
+        return $this->stocks->toArray();
     }
 
     public function getResponsable(){

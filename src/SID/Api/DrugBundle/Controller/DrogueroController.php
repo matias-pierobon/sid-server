@@ -3,8 +3,10 @@
 namespace SID\Api\DrugBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use SID\Api\DrugBundle\Entity\Division;
 use SID\Api\DrugBundle\Entity\Droguero;
 use SID\Api\DrugBundle\Entity\Responsable;
+use SID\Api\DrugBundle\Entity\Subdivision;
 use SID\Api\UnityBundle\Entity\UnidadEjecutora;
 use SID\Api\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -83,8 +85,27 @@ class DrogueroController extends Controller
         );
         if ($populate) {
             $data['drogas'] = $droguero->getDrogas();
+            $data['subdivisiones'] = $this->serializeSubdivisiones($droguero->getSubdiviciones()->toArray());
         }
         return $data;
+    }
+
+    protected function serializeSubdivisiones(array $subdivisiones){
+        $data = array();
+        foreach ($subdivisiones as $subdivision){
+            $data[] = $this->serializeSubdivision($subdivision);
+        }
+        return $data;
+    }
+
+    public function serializeSubdivision(Subdivision $subdivision){
+
+        return array(
+            'id' => $subdivision->getId(),
+            'nombre' => $subdivision->getNombre(),
+            'detalle' => $subdivision->getDetalle(),
+            'subdivisiones' => $this->serializeSubdivisiones($subdivision->getSubdiviciones()->toArray())
+        );
     }
 
     /**
@@ -136,11 +157,17 @@ class DrogueroController extends Controller
      */
     public function showAction(Droguero $droguero)
     {
-        $deleteForm = $this->createDeleteForm($droguero);
-
-        return $this->render('droguero/show.html.twig', array(
-            'droguero' => $droguero,
-            'delete_form' => $deleteForm->createView(),
+        if( !$droguero->hasAccess($this->getUser()) ){
+            return new JsonResponse(array(
+                'status' => 'error',
+                'error' => array(
+                    'code' => JsonResponse::HTTP_UNAUTHORIZED,
+                    'message' => 'No tiene permisos para ver este droguero'
+                )
+            ), JsonResponse::HTTP_UNAUTHORIZED);
+        }
+        return new JsonResponse(array(
+            'data' => $this->serializeDroguero($droguero)
         ));
     }
 

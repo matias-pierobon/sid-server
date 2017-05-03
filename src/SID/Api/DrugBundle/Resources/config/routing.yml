@@ -1,6 +1,3 @@
-drug_droguero:
-    resource: "@DrugBundle/Resources/config/routing/droguero.yml"
-    prefix:   /
 drug_unidades:
     resource: "@DrugBundle/Resources/config/routing/droguerounidad.yml"
     prefix:   /unidades
@@ -13,3 +10,6 @@ drug_stock:
 drug_subdivision:
     resource: "@DrugBundle/Resources/config/routing/subdivision.yml"
     prefix:   /subdivision
+drug_droguero:
+    resource: "@DrugBundle/Resources/config/routing/droguero.yml"
+    prefix:   /

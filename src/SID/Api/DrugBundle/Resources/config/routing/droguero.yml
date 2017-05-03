@@ -3,22 +3,22 @@ droguero_index:
     defaults: { _controller: "DrugBundle:Droguero:index" }
     methods:  GET
 
+droguero_new:
+    path:     /
+    defaults: { _controller: "DrugBundle:Droguero:new" }
+    methods:  POST
+
 droguero_show:
-    path:     /{id}/show
+    path:     /{id}
     defaults: { _controller: "DrugBundle:Droguero:show" }
     methods:  GET
 
-droguero_new:
-    path:     /new
-    defaults: { _controller: "DrugBundle:Droguero:new" }
-    methods:  [GET, POST]
-
 droguero_edit:
-    path:     /{id}/edit
+    path:     /{id}
     defaults: { _controller: "DrugBundle:Droguero:edit" }
-    methods:  [GET, POST]
+    methods:  POST
 
 droguero_delete:
-    path:     /{id}/delete
+    path:     /{id}
     defaults: { _controller: "DrugBundle:Droguero:delete" }
     methods:  DELETE

@@ -3,6 +3,8 @@
 namespace SID\Api\DrugBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\UnityBundle\Entity\UnidadEjecutora;
+use SID\Api\UserBundle\Entity\User;
 
 /**
  * Droguero
@@ -35,15 +37,21 @@ class Droguero extends Division
 
     /**
      * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="DrogueroUnidad", mappedBy="droguero")
+     * @ORM\OneToMany(targetEntity="DrogueroUnidad", mappedBy="droguero", cascade={"persist"})
      */
     private $unidades;
 
     /**
      * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="Responsable", mappedBy="droguero")
+     * @ORM\OneToMany(targetEntity="Responsable", mappedBy="droguero", cascade={"persist"})
      */
     private $responsables;
+
+    /**
+     * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="Acceso", mappedBy="droguero", cascade={"persist"})
+     */
+    private $accesos;
 
 
     public function getDroguero(){
@@ -64,6 +72,16 @@ class Droguero extends Division
         return null;
     }
 
+    public function hasAccess(User $user){
+        if($this->getResponsable()->getId() == $user->getId()){
+            return true;
+        }
+
+        return $this->accesos->exists(function ($key, $acceso) use ($user){
+            return ($acceso->getUser()->getId() == $user->getId() and $acceso->getHasta() == null);
+        });
+    }
+
 
     /**
      * Constructor
@@ -73,6 +91,7 @@ class Droguero extends Division
         $this->fechaIngreso = new \DateTime();
         $this->unidades = new \Doctrine\Common\Collections\ArrayCollection();
         $this->responsables = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->accesos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subdiviciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -262,9 +281,9 @@ class Droguero extends Division
      *
      * @return Droguero
      */
-    public function addUnidad(\SID\Api\DrugBundle\Entity\DrogueroUnidad $unidad)
+    public function addUnidad(UnidadEjecutora $unidad)
     {
-        $this->unidades[] = $unidad;
+        $this->unidades->add(new DrogueroUnidad($this, $unidad));
 
         return $this;
     }
@@ -321,6 +340,42 @@ class Droguero extends Division
     public function getResponsables()
     {
         return $this->responsables;
+    }
+
+    /**
+     * Add acceso
+     *
+     * @param \SID\Api\UserBundle\Entity\User $user
+     *
+     * @return Droguero
+     */
+    public function addAcceso(User $user)
+    {
+        $this->accesos->add(new Acceso($this, $user));
+
+        return $this;
+    }
+
+    /**
+     * Remove acceso
+     *
+     * @param \SID\Api\DrugBundle\Entity\Acceso $acceso
+     */
+    public function removeAcceso(\SID\Api\DrugBundle\Entity\Acceso $acceso)
+    {
+        if($this->accesos->contains($acceso)){
+            $acceso->setHasta(new \DateTime());
+        }
+    }
+
+    /**
+     * Get accesos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAccesos()
+    {
+        return $this->accesos;
     }
 
     /**

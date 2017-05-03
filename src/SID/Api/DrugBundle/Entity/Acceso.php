@@ -3,15 +3,14 @@
 namespace SID\Api\DrugBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use SID\Api\UnityBundle\Entity\UnidadEjecutora;
 
 /**
- * DrogueroUnidad
+ * Acceso
  *
- * @ORM\Table(name="droguero_unidad")
- * @ORM\Entity(repositoryClass="SID\Api\DrugBundle\Repository\DrogueroUnidadRepository")
+ * @ORM\Table(name="acceso")
+ * @ORM\Entity(repositoryClass="SID\Api\DrugBundle\Repository\AccesoRepository")
  */
-class DrogueroUnidad
+class Acceso
 {
     /**
      * @var int
@@ -25,43 +24,36 @@ class DrogueroUnidad
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_desde", type="datetime")
+     * @ORM\Column(name="desde", type="datetime")
      */
     private $desde;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_hasta", type="datetime", nullable=true)
+     * @ORM\Column(name="hasta", type="datetime", nullable=true)
      */
     private $hasta;
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToOne(targetEntity="Droguero", inversedBy="unidades")
+     * @ORM\ManyToOne(targetEntity="Droguero", inversedBy="accesos")
      * @ORM\JoinColumn(name="droguero_id", referencedColumnName="id")
      */
     private $droguero;
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToOne(targetEntity="SID\Api\UnityBundle\Entity\UnidadEjecutora", inversedBy="drogueros")
-     * @ORM\JoinColumn(name="unidad_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="SID\Api\UserBundle\Entity\User", inversedBy="misDrogueros")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $unidad;
+    private $user;
 
-
-    public function __construct($droguero, $unidad)
-    {
-        $this->droguero = $droguero;
-        $this->unidad = $unidad;
-        $this->desde = new \DateTime();
-    }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -73,7 +65,7 @@ class DrogueroUnidad
      *
      * @param \DateTime $desde
      *
-     * @return DrogueroUnidad
+     * @return Acceso
      */
     public function setDesde($desde)
     {
@@ -97,7 +89,7 @@ class DrogueroUnidad
      *
      * @param \DateTime $hasta
      *
-     * @return DrogueroUnidad
+     * @return Acceso
      */
     public function setHasta($hasta)
     {
@@ -121,7 +113,7 @@ class DrogueroUnidad
      *
      * @param \SID\Api\DrugBundle\Entity\Droguero $droguero
      *
-     * @return DrogueroUnidad
+     * @return Responsable
      */
     public function setDroguero(\SID\Api\DrugBundle\Entity\Droguero $droguero = null)
     {
@@ -141,26 +133,27 @@ class DrogueroUnidad
     }
 
     /**
-     * Set unidad
+     * Set user
      *
-     * @param \SID\Api\UnityBundle\Entity\UnidadEjecutora $unidad
+     * @param \SID\Api\UserBundle\Entity\User $user
      *
-     * @return DrogueroUnidad
+     * @return Responsable
      */
-    public function setUnidad(\SID\Api\UnityBundle\Entity\UnidadEjecutora $unidad = null)
+    public function setUser(\SID\Api\UserBundle\Entity\User $user = null)
     {
-        $this->unidad = $unidad;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get unidad
+     * Get user
      *
-     * @return \SID\Api\UnityBundle\Entity\UnidadEjecutora
+     * @return \SID\Api\UserBundle\Entity\User
      */
-    public function getUnidad()
+    public function getUser()
     {
-        return $this->unidad;
+        return $this->user;
     }
 }
+

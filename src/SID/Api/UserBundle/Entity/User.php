@@ -4,6 +4,8 @@ namespace SID\Api\UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\DrugBundle\Entity\Acceso;
+use SID\Api\UnityBundle\Entity\UnidadEjecutora;
 use SID\Api\UserBundle\Model\UserInterface;
 use SID\Api\MovementBundle\Entity\Movimiento;
 use SID\Api\DrugBundle\Entity\Responsable;
@@ -143,6 +145,12 @@ class User implements UserInterface{
     private $droguerosResponsables;
 
     /**
+     * One Movement has Many Users.
+     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Acceso", mappedBy="usuario")
+     */
+    private $misDrogueros;
+
+    /**
      * One Product has Many Features.
      * @ORM\OneToMany(targetEntity="SID\Api\UnityBundle\Entity\UsuarioUnidad", mappedBy="usuario")
      */
@@ -155,6 +163,26 @@ class User implements UserInterface{
         $this->roles = array();
         $this->sysDate = new \DateTime();
     }*/
+
+    public function getActiveUnities(){
+        $unidades = new ArrayCollection();
+        foreach ($this->getUnidades() as $unidad){
+            if($unidad->getHasta() == null){
+                $unidades->add($unidad);
+            }
+        }
+        return $unidades;
+    }
+
+    public function hasUnity(UnidadEjecutora $unidadEjecutora){
+        return $this->getActiveUnities()->exists(function ($key, $trabajo) use($unidadEjecutora){
+            return $trabajo->getUnidad()->getId() == $unidadEjecutora->getId();
+        });
+    }
+
+    public function isAdmin(){
+        return in_array('ROLE_ADMIN', $this->roles);
+    }
 
     public function eraseCredentials()
     {
@@ -621,6 +649,30 @@ class User implements UserInterface{
     public function getDroguerosResponsables()
     {
         return $this->droguerosResponsables;
+    }
+
+    /**
+     * Add misDrogueros
+     *
+     * @param \SID\Api\DrugBundle\Entity\Acceso $droguero
+     *
+     * @return User
+     */
+    public function addAccesoDroguero(Acceso $droguero)
+    {
+        $this->misDrogueros->add($droguero);
+
+        return $this;
+    }
+
+    /**
+     * Get misDrogueros
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMisDrogueros()
+    {
+        return $this->misDrogueros;
     }
 
     /**

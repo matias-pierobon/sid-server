@@ -38,7 +38,7 @@ class Responsable
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToOne(targetEntity="Droguero", inversedBy="unidades")
+     * @ORM\ManyToOne(targetEntity="Droguero", inversedBy="responsables")
      * @ORM\JoinColumn(name="droguero_id", referencedColumnName="id")
      */
     private $droguero;

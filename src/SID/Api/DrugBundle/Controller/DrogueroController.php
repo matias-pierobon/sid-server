@@ -2,11 +2,15 @@
 
 namespace SID\Api\DrugBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use SID\Api\DrugBundle\Entity\Droguero;
 use SID\Api\DrugBundle\Entity\Responsable;
+use SID\Api\UnityBundle\Entity\UnidadEjecutora;
+use SID\Api\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Droguero controller.
@@ -24,13 +28,23 @@ class DrogueroController extends Controller
 
         $drogueros = $em->getRepository('DrugBundle:Droguero')->findAll();
 
+        if(!$this->getUser()->isAdmin()){
+            $drogueros2 = new ArrayCollection();
+            foreach ($drogueros as $droguero){
+                if($droguero->hasAccess($this->getUser())){
+                    $drogueros2->add($droguero);
+                }
+            }
+            $drogueros = $drogueros2->toArray();
+        }
+
         return new JsonResponse(array('data' => $this->serializeDrogueros($drogueros)));
     }
 
     protected function serializeDrogueros(array $drogueros, $populate = false){
         $data = array();
         foreach ($drogueros as $droguero){
-            $data[] = $this->serializeClase($droguero, $populate);
+            $data[] = $this->serializeDroguero($droguero, $populate);
         }
         return $data;
     }
@@ -38,7 +52,7 @@ class DrogueroController extends Controller
     protected function serializeUnidades(array $unidades){
         $data = array();
         foreach ($unidades as $unidad){
-            $data[] = $this->serializeUnidad($unidad);
+            $data[] = $this->serializeUnidad($unidad->getUnidad());
         }
         return $data;
     }
@@ -60,11 +74,12 @@ class DrogueroController extends Controller
             'detalle' => $droguero->getDetalle(),
             'responsable' => array(
                 'id' => $droguero->getResponsable()->getUser()->getId(),
-                'nombre' => $droguero->getResponsable()->getUser()->getNombre(),
-                'apellido' => $droguero->getResponsable()->getUser()->getApellido(),
+                'nombre' => $droguero->getResponsable()->getUser()->getName(),
+                'apellido' => $droguero->getResponsable()->getUser()->getLastname(),
+                'email' => $droguero->getResponsable()->getUser()->getEmail(),
                 'enabled' => $droguero->getResponsable()->getUser()->isEnabled()
             ),
-            'unidades' => $this->serializeUnidades($droguero->getUnidades())
+            'unidades' => $this->serializeUnidades($droguero->getUnidades()->toArray())
         );
         if ($populate) {
             $data['drogas'] = $droguero->getDrogas();
@@ -78,12 +93,22 @@ class DrogueroController extends Controller
      */
     public function newAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
 
-        $unidad = $em->getRepository('UnityBundle:Unidad')->find($request->get('unidad'));
+        $unidad = $em->getRepository('UnityBundle:UnidadEjecutora')->find($request->get('unidad'));
         $user = $em->getRepository('UserBundle:User')->find($request->get('responsable'));
-        
+        if(!$user->hasUnity($unidad)){
+            return new JsonResponse(array(
+                'status' => 'error',
+                'error' => array(
+                    'code' => JsonResponse::HTTP_BAD_REQUEST,
+                    'message' => 'Responsable no trabaja en la Unidad Ejecutora'
+                )
+            ), JsonResponse::HTTP_BAD_REQUEST);
+        }
+
         $droguero = new Droguero();
         $droguero
             ->setDetalle($request->get('detalle'))
@@ -95,7 +120,7 @@ class DrogueroController extends Controller
             ->setDroguero($droguero)
             ->setUser($user);
 
-        $em->persist($droguero);
+        $em->persist($responsable);
         $em->persist($droguero);
         $em->flush();
 

@@ -85,7 +85,7 @@ class DrogueroController extends Controller
         );
         if ($populate) {
             $data['drogas'] = $droguero->getDrogas();
-            $data['subdivisiones'] = $this->serializeSubdivisiones($droguero->getSubdiviciones()->toArray());
+            $data['subdivisiones'] = $this->serializeSubdivisiones($droguero->getSubdivisiones()->toArray());
         }
         return $data;
     }
@@ -104,7 +104,7 @@ class DrogueroController extends Controller
             'id' => $subdivision->getId(),
             'nombre' => $subdivision->getNombre(),
             'detalle' => $subdivision->getDetalle(),
-            'subdivisiones' => $this->serializeSubdivisiones($subdivision->getSubdiviciones()->toArray())
+            'subdivisiones' => $this->serializeSubdivisiones($subdivision->getSubdivisiones()->toArray())
         );
     }
 

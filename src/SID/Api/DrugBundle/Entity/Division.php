@@ -62,7 +62,7 @@ abstract class Division
      * One Category has Many Categories.
      * @ORM\OneToMany(targetEntity="Subdivision", mappedBy="parent")
      */
-    protected $subdiviciones;
+    protected $subdivisiones;
 
 
     public abstract function getDroguero();
@@ -74,7 +74,7 @@ abstract class Division
     public function __construct()
     {
         $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->subdiviciones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subdivisiones = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -218,36 +218,36 @@ abstract class Division
     }
 
     /**
-     * Add subdivicione
+     * Add Subdivisione
      *
-     * @param \SID\Api\DrugBundle\Entity\Subdivision $subdivicione
+     * @param \SID\Api\DrugBundle\Entity\Subdivision $Subdivisione
      *
      * @return Division
      */
-    public function addSubdivicione(\SID\Api\DrugBundle\Entity\Subdivision $subdivicione)
+    public function addSubdivision(\SID\Api\DrugBundle\Entity\Subdivision $subdivision)
     {
-        $this->subdiviciones[] = $subdivicione;
+        $this->subdivisiones[] = $subdivision;
 
         return $this;
     }
 
     /**
-     * Remove subdivicione
+     * Remove Subdivisione
      *
-     * @param \SID\Api\DrugBundle\Entity\Subdivision $subdivicione
+     * @param \SID\Api\DrugBundle\Entity\Subdivision $Subdivisione
      */
-    public function removeSubdivicione(\SID\Api\DrugBundle\Entity\Subdivision $subdivicione)
+    public function removeSubdivision(\SID\Api\DrugBundle\Entity\Subdivision $subdivision)
     {
-        $this->subdiviciones->removeElement($subdivicione);
+        $this->subdivisiones->removeElement($subdivision);
     }
 
     /**
-     * Get subdiviciones
+     * Get Subdivisiones
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSubdiviciones()
+    public function getSubdivisiones()
     {
-        return $this->subdiviciones;
+        return $this->subdivisiones;
     }
 }

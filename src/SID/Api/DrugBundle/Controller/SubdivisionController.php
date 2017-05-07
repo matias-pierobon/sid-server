@@ -4,6 +4,7 @@ namespace SID\Api\DrugBundle\Controller;
 
 use SID\Api\DrugBundle\Entity\Subdivision;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -33,22 +34,15 @@ class SubdivisionController extends Controller
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $subdivision = new Subdivision();
-        $form = $this->createForm('SID\Api\DrugBundle\Form\SubdivisionType', $subdivision);
-        $form->handleRequest($request);
+        $subdivision
+            ->setNombre($request->get('nombre'))
+            ->setDetalle($request->get('detalle'));
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($subdivision);
-            $em->flush($subdivision);
 
-            return $this->redirectToRoute('subdivision_show', array('id' => $subdivision->getId()));
-        }
-
-        return $this->render('subdivision/new.html.twig', array(
-            'subdivision' => $subdivision,
-            'form' => $form->createView(),
-        ));
+        return new JsonResponse();
     }
 
     /**

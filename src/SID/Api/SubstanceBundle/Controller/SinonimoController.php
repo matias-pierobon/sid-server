@@ -2,123 +2,122 @@
 
 namespace SID\Api\SubstanceBundle\Controller;
 
+use SID\Api\SubstanceBundle\Entity\Droga;
 use SID\Api\SubstanceBundle\Entity\Sinonimo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Sinonimo controller.
+ * Clase controller.
  *
  */
 class SinonimoController extends Controller
 {
     /**
-     * Lists all sinonimo entities.
+     * Lists all clase entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $sinonimos = $em->getRepository('SubstanceBundle:Sinonimo')->findAll();
+        $clases = $em->getRepository('SubstanceBundle:Sinonimo')->findAll();
 
-        return $this->render('sinonimo/index.html.twig.twig', array(
-            'sinonimos' => $sinonimos,
-        ));
+        return new JsonResponse(array('data' => $this->serializeClases($clases)));
+    }
+
+    protected function serializeClases(array $clases, $populate = false){
+        $data = array();
+        foreach ($clases as $clase){
+            $data[] = $this->serializeClase($clase, $populate);
+        }
+        return $data;
+    }
+
+    public function serializeClase(Sinonimo $clase, $populate = true){
+        $data = array(
+            'id' => $clase->getId(),
+            'nombre' => $clase->getNombre(),
+            'detalle' => $this->serializeDroga($clase->getDrogas()->toArray())
+        );
+        return $data;
+    }
+
+    protected function serializeDrogas(array $drogas){
+        $data = array();
+        foreach ($drogas as $droga){
+            $data[] = $this->serializeDroga($droga);
+        }
+        return $data;
+    }
+
+    public function serializeDroga(Droga $droga){
+        return array(
+            'id' => $droga->getId(),
+            'nombre' => $droga->getNombre(),
+            'formula' => $droga->getFormulaMolecular(),
+            'cas' => $droga->getCas()
+        );
     }
 
     /**
-     * Creates a new sinonimo entity.
+     * Creates a new clase entity.
      *
      */
     public function newAction(Request $request)
     {
-        $sinonimo = new Sinonimo();
-        $form = $this->createForm('SID\Api\SubstanceBundle\Form\SinonimoType', $sinonimo);
-        $form->handleRequest($request);
+        $clase = new Sinonimo();
+        $clase
+            ->setNombre($request->get('nombre'));
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($sinonimo);
-            $em->flush($sinonimo);
+        $em = $this->getDoctrine()->getManager();
+        $droga = $em->getRepository('SubstanceBundle:Droga')->find($request->get('droga'));
 
-            return $this->redirectToRoute('sinonimo_show', array('id' => $sinonimo->getId()));
-        }
+        $droga->addSinonimo($clase);
+        $em->persist($clase);
+        $em->flush();
 
-        return $this->render('sinonimo/new.html.twig', array(
-            'sinonimo' => $sinonimo,
-            'form' => $form->createView(),
+        return new JsonResponse(array(
+            'status' => 'created',
+            'data' => $this->serializeClase($clase)
+        ), JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * Finds and displays a clase entity.
+     *
+     */
+    public function showAction(Sinonimo $clase)
+    {
+        return new JsonResponse(array(
+            'data' => $this->serializeClase($clase)
         ));
     }
 
     /**
-     * Finds and displays a sinonimo entity.
+     * Displays a form to edit an existing clase entity.
      *
      */
-    public function showAction(Sinonimo $sinonimo)
+    public function editAction(Request $request, Sinonimo $clase)
     {
-        $deleteForm = $this->createDeleteForm($sinonimo);
+        $clase
+            ->setNombre($request->get('nombre', $clase->getNombre()));
 
-        return $this->render('sinonimo/show.html.twig', array(
-            'sinonimo' => $sinonimo,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse(array(
+            'status' => 'updated',
+            'data' => $this->serializeClase($clase)
+        ), JsonResponse::HTTP_ACCEPTED);
     }
 
     /**
-     * Displays a form to edit an existing sinonimo entity.
+     * Deletes a clase entity.
      *
      */
-    public function editAction(Request $request, Sinonimo $sinonimo)
+    public function deleteAction(Request $request, Sinonimo $clase)
     {
-        $deleteForm = $this->createDeleteForm($sinonimo);
-        $editForm = $this->createForm('SID\Api\SubstanceBundle\Form\SinonimoType', $sinonimo);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('sinonimo_edit', array('id' => $sinonimo->getId()));
-        }
-
-        return $this->render('sinonimo/edit.html.twig', array(
-            'sinonimo' => $sinonimo,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a sinonimo entity.
-     *
-     */
-    public function deleteAction(Request $request, Sinonimo $sinonimo)
-    {
-        $form = $this->createDeleteForm($sinonimo);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($sinonimo);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('sinonimo_index');
-    }
-
-    /**
-     * Creates a form to delete a sinonimo entity.
-     *
-     * @param Sinonimo $sinonimo The sinonimo entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Sinonimo $sinonimo)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('sinonimo_delete', array('id' => $sinonimo->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return new JsonResponse();
     }
 }

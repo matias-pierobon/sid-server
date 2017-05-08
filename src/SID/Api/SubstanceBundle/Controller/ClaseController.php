@@ -42,8 +42,7 @@ class ClaseController extends Controller
             'detalle' => $clase->getDetalle()
         );
         if ($populate) {
-            $data['incompatibilidades'] = $this->serializeClases($clase->incompatibilidades());
-            $data['drogas'] = $this->serializeDroga($clase->getDrogas());
+            $data['drogas'] = $this->serializeDroga($clase->getDrogas()->toArray());
         }
         return $data;
     }

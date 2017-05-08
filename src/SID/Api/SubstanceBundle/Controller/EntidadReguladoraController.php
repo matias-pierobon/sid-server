@@ -26,7 +26,7 @@ class EntidadReguladoraController extends Controller
         return new JsonResponse(array('data' => $this->serializeEntidades($entidadReguladoras)));
     }
 
-    protected function serializeDrogas(array $entidades){
+    protected function serializeEntidades(array $entidades){
         $data = array();
         foreach ($entidades as $entidad){
             $data[] = $this->serializeEntidad($entidad);

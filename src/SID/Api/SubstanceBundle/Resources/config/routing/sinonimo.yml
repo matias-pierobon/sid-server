@@ -3,22 +3,22 @@ sinonimo_index:
     defaults: { _controller: "SubstanceBundle:Sinonimo:index" }
     methods:  GET
 
+sinonimo_new:
+    path:     /
+    defaults: { _controller: "SubstanceBundle:Sinonimo:new" }
+    methods:  POST
+
 sinonimo_show:
-    path:     /{id}/show
+    path:     /{id}
     defaults: { _controller: "SubstanceBundle:Sinonimo:show" }
     methods:  GET
 
-sinonimo_new:
-    path:     /new
-    defaults: { _controller: "SubstanceBundle:Sinonimo:new" }
-    methods:  [GET, POST]
-
 sinonimo_edit:
-    path:     /{id}/edit
+    path:     /{id}
     defaults: { _controller: "SubstanceBundle:Sinonimo:edit" }
-    methods:  [GET, POST]
+    methods:  POST
 
 sinonimo_delete:
-    path:     /{id}/delete
+    path:     /{id}
     defaults: { _controller: "SubstanceBundle:Sinonimo:delete" }
     methods:  DELETE

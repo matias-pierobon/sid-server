@@ -3,22 +3,22 @@ motivo_index:
     defaults: { _controller: "MovementBundle:Motivo:index" }
     methods:  GET
 
+motivo_new:
+    path:     /
+    defaults: { _controller: "MovementBundle:Motivo:new" }
+    methods:  POST
+
 motivo_show:
-    path:     /{id}/show
+    path:     /{id}
     defaults: { _controller: "MovementBundle:Motivo:show" }
     methods:  GET
 
-motivo_new:
-    path:     /new
-    defaults: { _controller: "MovementBundle:Motivo:new" }
-    methods:  [GET, POST]
-
 motivo_edit:
-    path:     /{id}/edit
+    path:     /{id}
     defaults: { _controller: "MovementBundle:Motivo:edit" }
-    methods:  [GET, POST]
+    methods:  POST
 
 motivo_delete:
-    path:     /{id}/delete
+    path:     /{id}
     defaults: { _controller: "MovementBundle:Motivo:delete" }
     methods:  DELETE

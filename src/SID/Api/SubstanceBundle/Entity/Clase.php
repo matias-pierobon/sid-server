@@ -37,7 +37,7 @@ class Clase
 
     /**
      * Many Classes have Many Drugs.
-     * @ORM\ManyToMany(targetEntity="droga", mappedBy="clases")
+     * @ORM\ManyToMany(targetEntity="Droga", mappedBy="clases")
      */
     private $drogas;
 
@@ -139,7 +139,7 @@ class Clase
      *
      * @return Clase
      */
-    public function addDroga(\SID\Api\SubstanceBundle\Entity\droga $droga)
+    public function addDroga(\SID\Api\SubstanceBundle\Entity\Droga $droga)
     {
         $this->drogas[] = $droga;
 
@@ -149,9 +149,9 @@ class Clase
     /**
      * Remove droga
      *
-     * @param \SID\Api\SubstanceBundle\Entity\droga $droga
+     * @param \SID\Api\SubstanceBundle\Entity\Droga $droga
      */
-    public function removeDroga(\SID\Api\SubstanceBundle\Entity\droga $droga)
+    public function removeDroga(\SID\Api\SubstanceBundle\Entity\Droga $droga)
     {
         $this->drogas->removeElement($droga);
     }

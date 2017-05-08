@@ -3,122 +3,103 @@
 namespace SID\Api\MovementBundle\Controller;
 
 use SID\Api\MovementBundle\Entity\Motivo;
+use SID\Api\SubstanceBundle\Entity\Clase;
+use SID\Api\SubstanceBundle\Entity\Droga;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Motivo controller.
+ * Clase controller.
  *
  */
 class MotivoController extends Controller
 {
     /**
-     * Lists all motivo entities.
+     * Lists all clase entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $motivos = $em->getRepository('MovementBundle:Motivo')->findAll();
+        $clases = $em->getRepository('MovementBundle:Motivo')->findAll();
 
-        return $this->render('motivo/index.html.twig.twig', array(
-            'motivos' => $motivos,
-        ));
+        return new JsonResponse(array('data' => $this->serializeClases($clases)));
+    }
+
+    protected function serializeClases(array $clases){
+        $data = array();
+        foreach ($clases as $clase){
+            $data[] = $this->serializeClase($clase);
+        }
+        return $data;
+    }
+
+    public function serializeClase(Motivo $clase){
+        return array(
+            'id' => $clase->getId(),
+            'nombre' => $clase->getNombre(),
+            'detalle' => $clase->getDetalle()
+        );
     }
 
     /**
-     * Creates a new motivo entity.
+     * Creates a new clase entity.
      *
      */
     public function newAction(Request $request)
     {
-        $motivo = new Motivo();
-        $form = $this->createForm('SID\Api\MovementBundle\Form\MotivoType', $motivo);
-        $form->handleRequest($request);
+        $clase = new Motivo();
+        $clase
+            ->setNombre($request->get('nombre'))
+            ->setDetalle($request->get('detalle'));
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($motivo);
-            $em->flush($motivo);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($clase);
+        $em->flush();
 
-            return $this->redirectToRoute('motivo_show', array('id' => $motivo->getId()));
-        }
+        return new JsonResponse(array(
+            'status' => 'created',
+            'data' => $this->serializeClase($clase)
+        ), JsonResponse::HTTP_CREATED);
+    }
 
-        return $this->render('motivo/new.html.twig', array(
-            'motivo' => $motivo,
-            'form' => $form->createView(),
+    /**
+     * Finds and displays a clase entity.
+     *
+     */
+    public function showAction(Motivo $clase)
+    {
+        return new JsonResponse(array(
+            'data' => $this->serializeClase($clase)
         ));
     }
 
     /**
-     * Finds and displays a motivo entity.
+     * Displays a form to edit an existing clase entity.
      *
      */
-    public function showAction(Motivo $motivo)
+    public function editAction(Request $request, Motivo $clase)
     {
-        $deleteForm = $this->createDeleteForm($motivo);
+        $clase
+            ->setNombre($request->get('nombre', $clase->getNombre()))
+            ->setDetalle($request->get('detalle', $clase->getDetalle()));
 
-        return $this->render('motivo/show.html.twig', array(
-            'motivo' => $motivo,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse(array(
+            'status' => 'updated',
+            'data' => $this->serializeClase($clase)
+        ), JsonResponse::HTTP_ACCEPTED);
     }
 
     /**
-     * Displays a form to edit an existing motivo entity.
+     * Deletes a clase entity.
      *
      */
-    public function editAction(Request $request, Motivo $motivo)
+    public function deleteAction(Request $request, Clase $clase)
     {
-        $deleteForm = $this->createDeleteForm($motivo);
-        $editForm = $this->createForm('SID\Api\MovementBundle\Form\MotivoType', $motivo);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('motivo_edit', array('id' => $motivo->getId()));
-        }
-
-        return $this->render('motivo/edit.html.twig', array(
-            'motivo' => $motivo,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a motivo entity.
-     *
-     */
-    public function deleteAction(Request $request, Motivo $motivo)
-    {
-        $form = $this->createDeleteForm($motivo);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($motivo);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('motivo_index');
-    }
-
-    /**
-     * Creates a form to delete a motivo entity.
-     *
-     * @param Motivo $motivo The motivo entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Motivo $motivo)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('motivo_delete', array('id' => $motivo->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return new JsonResponse();
     }
 }

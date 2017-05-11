@@ -8,7 +8,6 @@ droguero_new:
     defaults: { _controller: "DrugBundle:Droguero:new" }
     methods:  POST
 
-
 drouero_divisiones_new:
     path: /divisiones/
     defaults: { _controller: "DrugBundle:Division:new" }
@@ -18,6 +17,22 @@ drouero_division_show:
     path: /divisiones/{id}
     defaults: { _controller: "DrugBundle:Division:show" }
     methods:  GET
+
+
+droguero_users:
+    path:     /{id}/usuarios/
+    defaults: { _controller: "DrugBundle:Droguero:users" }
+    methods:  GET
+
+droguero_grant:
+    path:     /{id}/usuarios/
+    defaults: { _controller: "DrugBundle:Droguero:grant" }
+    methods:  POST
+
+droguero_revoke:
+    path:     /{id}/usuarios/
+    defaults: { _controller: "DrugBundle:Droguero:revoke" }
+    methods:  DELETE
 
 droguero_show:
     path:     /{id}

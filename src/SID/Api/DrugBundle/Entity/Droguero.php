@@ -2,6 +2,7 @@
 
 namespace SID\Api\DrugBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use SID\Api\UnityBundle\Entity\UnidadEjecutora;
 use SID\Api\UserBundle\Entity\User;
@@ -56,6 +57,11 @@ class Droguero extends Division
 
     public function getDroguero(){
         return $this;
+    }
+
+    public function getPath(): ArrayCollection
+    {
+        return new ArrayCollection(array($this));
     }
 
     public function getDrogas()

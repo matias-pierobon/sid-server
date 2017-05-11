@@ -3,11 +3,13 @@
 namespace SID\Api\DrugBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use SID\Api\DrugBundle\Entity\Acceso;
 use SID\Api\DrugBundle\Entity\Division;
 use SID\Api\DrugBundle\Entity\Droguero;
 use SID\Api\DrugBundle\Entity\Responsable;
 use SID\Api\DrugBundle\Entity\Subdivision;
 use SID\Api\UnityBundle\Entity\UnidadEjecutora;
+use SID\Api\UnityBundle\Entity\UsuarioUnidad;
 use SID\Api\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -74,13 +76,7 @@ class DrogueroController extends Controller
             'nombre' => $droguero->getNombre(),
             'fecha' => $droguero->getFechaIngreso(),
             'detalle' => $droguero->getDetalle(),
-            'responsable' => array(
-                'id' => $droguero->getResponsable()->getUser()->getId(),
-                'nombre' => $droguero->getResponsable()->getUser()->getName(),
-                'apellido' => $droguero->getResponsable()->getUser()->getLastname(),
-                'email' => $droguero->getResponsable()->getUser()->getEmail(),
-                'enabled' => $droguero->getResponsable()->getUser()->isEnabled()
-            ),
+            'responsable' => $this->serializeUser($droguero->getResponsable()->getUser()),
             'unidades' => $this->serializeUnidades($droguero->getUnidades()->toArray())
         );
         if ($populate) {
@@ -88,6 +84,17 @@ class DrogueroController extends Controller
             $data['subdivisiones'] = $this->serializeSubdivisiones($droguero->getSubdivisiones()->toArray());
         }
         return $data;
+    }
+
+    public function serializeUser(User $user){
+
+        return array(
+            'id' => $user->getId(),
+            'nombre' => $user->getName(),
+            'apellido' => $user->getLastname(),
+            'email' => $user->getEmail(),
+            'enabled' => $user->isEnabled()
+        );
     }
 
     protected function serializeSubdivisiones(array $subdivisiones){
@@ -157,7 +164,10 @@ class DrogueroController extends Controller
      */
     public function showAction(Droguero $droguero)
     {
-        if( !$droguero->hasAccess($this->getUser()) ){
+        if(
+            !$droguero->hasAccess($this->getUser()) ||
+            !( $droguero->getResponsable()->getId() == $this->getUser()->getId() )
+        ){
             return new JsonResponse(array(
                 'status' => 'error',
                 'error' => array(
@@ -171,60 +181,53 @@ class DrogueroController extends Controller
         ));
     }
 
-    /**
-     * Displays a form to edit an existing droguero entity.
-     *
-     */
-    public function editAction(Request $request, Droguero $droguero)
-    {
-        $deleteForm = $this->createDeleteForm($droguero);
-        $editForm = $this->createForm('SID\Api\DrugBundle\Form\DrogueroType', $droguero);
-        $editForm->handleRequest($request);
+    public function serializeAccesos($accesos){
+        $data = array();
+        foreach ($accesos as $acceso){
+            $data[] = $this->serializeAcceso($acceso);
+        }
+        return $data;
+    }
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+    public function serializeAcceso(Acceso $acceso){
 
-            return $this->redirectToRoute('droguero_edit', array('id' => $droguero->getId()));
+        return array(
+            'id' => $acceso->getId(),
+            'desde' => $acceso->getDesde(),
+            'hasta' => $acceso->getHasta(),
+            'usuario' => $this->serializeUser($acceso->getUser())
+        );
+    }
+
+    public function usersAction(Droguero $droguero){
+        if( !( $droguero->getResponsable()->getId() == $this->getUser()->getId() ) ){
+            return new JsonResponse(array(
+                'status' => 'error',
+                'error' => array(
+                    'code' => JsonResponse::HTTP_UNAUTHORIZED,
+                    'message' => 'No tiene permisos para ver este droguero'
+                )
+            ), JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        return $this->render('droguero/edit.html.twig', array(
-            'droguero' => $droguero,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+        return new JsonResponse(array(
+            'data' => $this->serializeAccesos($droguero->getAccesos()->toArray())
         ));
     }
 
-    /**
-     * Deletes a droguero entity.
-     *
-     */
-    public function deleteAction(Request $request, Droguero $droguero)
-    {
-        $form = $this->createDeleteForm($droguero);
-        $form->handleRequest($request);
+    public function grantAction(Request $request, Droguero $droguero){
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('UserBundle:User')->find($request->get('usuario'));
+        $droguero->addAcceso($usuario);
+        $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($droguero);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('droguero_index');
+        return new JsonResponse(array(
+            'status' => 'created',
+            'data' => $this->serializeAccesos($droguero->getAccesos()->toArray())
+        ), JsonResponse::HTTP_CREATED);
     }
 
-    /**
-     * Creates a form to delete a droguero entity.
-     *
-     * @param Droguero $droguero The droguero entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Droguero $droguero)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('droguero_delete', array('id' => $droguero->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+    public function revoke(Request $request, Droguero $droguero){
+        return new JsonResponse();
     }
 }

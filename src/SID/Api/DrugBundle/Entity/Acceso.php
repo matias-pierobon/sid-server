@@ -3,6 +3,7 @@
 namespace SID\Api\DrugBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\UserBundle\Entity\User;
 
 /**
  * Acceso
@@ -48,6 +49,13 @@ class Acceso
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
+    public function __construct(Droguero $droguero, User $user)
+    {
+        $this->desde = new \DateTime();
+        $this->droguero = $droguero;
+        $this->user = $user;
+    }
 
 
     /**

@@ -21,13 +21,14 @@ class DivisionController extends Controller
             'id' => $division->getId(),
             'nombre' => $division->getNombre(),
             'detalle' => $division->getDetalle(),
-            'droguero' => $division->getDroguero()->getId()
+            'droguero' => $division->getDroguero()->getId(),
         );
         if($division instanceof Subdivision){
             $data['alias'] = $division->getAlias();
         }
         if($populate){
             $data['subdivisiones'] = $this->serializeDivisiones($division->getSubdivisiones()->toArray());
+            $data['path'] = $this->serializeDivisiones($division->getPath()->toArray());
         }
 
         return $data;

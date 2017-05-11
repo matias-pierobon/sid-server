@@ -2,6 +2,7 @@
 
 namespace SID\Api\DrugBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -66,6 +67,8 @@ abstract class Division
 
 
     public abstract function getDroguero();
+
+    public abstract function getPath() : ArrayCollection;
 
 
     /**

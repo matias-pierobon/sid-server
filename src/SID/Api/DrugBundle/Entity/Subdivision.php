@@ -2,6 +2,7 @@
 
 namespace SID\Api\DrugBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +32,12 @@ class Subdivision extends Division
         return $this->parent->getDroguero();
     }
 
+    public function getPath(): ArrayCollection
+    {
+        $path = $this->parent->getPath();
+        $path->add($this);
+        return $path;
+    }
 
 
     /**

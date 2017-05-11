@@ -61,6 +61,16 @@ class DivisionController extends Controller
 
         $parent = $em->getRepository('DrugBundle:Division')->find($request->get('division'));
 
+        if( ! $parent->getDroguero()->isResponsable($this->getUser()) ){
+            return new JsonResponse(array(
+                'status' => 'error',
+                'error' => array(
+                    'code' => JsonResponse::HTTP_UNAUTHORIZED,
+                    'message' => 'No tiene permisos para insertar una subdivision en este droguero'
+                )
+            ), JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
         $subdivision = new Subdivision();
 
         $subdivision
@@ -84,7 +94,7 @@ class DivisionController extends Controller
      */
     public function showAction(Division $division)
     {
-        if( !$division->getDroguero()->hasAccess($this->getUser()) ){
+        if( !$division->getDroguero()->hasInclusiveAccess($this->getUser()) ){
             return new JsonResponse(array(
                 'status' => 'error',
                 'error' => array(

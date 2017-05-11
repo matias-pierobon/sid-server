@@ -78,14 +78,20 @@ class Droguero extends Division
         return null;
     }
 
-    public function hasAccess(User $user){
-        if($this->getResponsable()->getId() == $user->getId()){
-            return true;
-        }
+    public function isResponsable(User $user) : boolean
+    {
+        return $this->getResponsable() == $user;
+    }
 
+    public function hasAccess(User $user){
         return $this->accesos->exists(function ($key, $acceso) use ($user){
             return ($acceso->getUser()->getId() == $user->getId() and $acceso->getHasta() == null);
         });
+    }
+
+    public function hasInclusiveAccess(User $user)
+    {
+        return $this->hasAccess($user) || $this->isResponsable($user);
     }
 
 

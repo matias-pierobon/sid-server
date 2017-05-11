@@ -35,7 +35,7 @@ class DrogueroController extends Controller
         if(!$this->getUser()->isAdmin()){
             $drogueros2 = new ArrayCollection();
             foreach ($drogueros as $droguero){
-                if($droguero->hasAccess($this->getUser())){
+                if($droguero->hasInclusiveAccess($this->getUser())){
                     $drogueros2->add($droguero);
                 }
             }
@@ -164,10 +164,7 @@ class DrogueroController extends Controller
      */
     public function showAction(Droguero $droguero)
     {
-        if(
-            !$droguero->hasAccess($this->getUser()) ||
-            !( $droguero->getResponsable()->getId() == $this->getUser()->getId() )
-        ){
+        if( !$droguero->hasInclusiveAccess($this->getUser()) ){
             return new JsonResponse(array(
                 'status' => 'error',
                 'error' => array(
@@ -200,7 +197,7 @@ class DrogueroController extends Controller
     }
 
     public function usersAction(Droguero $droguero){
-        if( !( $droguero->getResponsable()->getId() == $this->getUser()->getId() ) ){
+        if( ! $droguero->hasInclusiveAccess($this->getUser()) ){
             return new JsonResponse(array(
                 'status' => 'error',
                 'error' => array(
@@ -216,6 +213,17 @@ class DrogueroController extends Controller
     }
 
     public function grantAction(Request $request, Droguero $droguero){
+
+        if( ! $droguero->isResponsable($this->getUser()) ){
+            return new JsonResponse(array(
+                'status' => 'error',
+                'error' => array(
+                    'code' => JsonResponse::HTTP_UNAUTHORIZED,
+                    'message' => 'No tiene permisos para agregar un acceso a este droguero'
+                )
+            ), JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $usuario = $em->getRepository('UserBundle:User')->find($request->get('usuario'));
         $droguero->addAcceso($usuario);
@@ -228,6 +236,17 @@ class DrogueroController extends Controller
     }
 
     public function revoke(Request $request, Droguero $droguero){
+
+        if( ! $droguero->isResponsable($this->getUser()) ){
+            return new JsonResponse(array(
+                'status' => 'error',
+                'error' => array(
+                    'code' => JsonResponse::HTTP_UNAUTHORIZED,
+                    'message' => 'No tiene permisos para eliminar un acceso a este droguero'
+                )
+            ), JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
         return new JsonResponse();
     }
 }

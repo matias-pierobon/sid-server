@@ -78,9 +78,8 @@ class Droguero extends Division
         return null;
     }
 
-    public function isResponsable(User $user) : boolean
-    {
-        return $this->getResponsable() == $user;
+    public function isResponsable(User $user){
+        return $this->getResponsable()->getId() == $user->getId();
     }
 
     public function hasAccess(User $user){
@@ -89,7 +88,7 @@ class Droguero extends Division
         });
     }
 
-    public function hasInclusiveAccess(User $user)
+    public function hasInclusiveAccess($user)
     {
         return $this->hasAccess($user) || $this->isResponsable($user);
     }

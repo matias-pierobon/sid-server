@@ -209,12 +209,12 @@ class User implements UserInterface{
         return $this->getEnabled();
     }
 
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function getPlainPassword(): string
+    public function getPlainPassword()
     {
         return $this->plainPassword;
     }

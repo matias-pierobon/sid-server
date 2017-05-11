@@ -6,6 +6,6 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 interface UserInterface extends AdvancedUserInterface{
     
-    public function getEmail(): string;
-    public function getPlainPassword(): string;
+    public function getEmail();
+    public function getPlainPassword();
 }

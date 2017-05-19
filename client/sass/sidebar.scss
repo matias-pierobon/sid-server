@@ -1,0 +1,19 @@
+#main-page > .sidebar {
+  z-index: 1;
+  position: fixed;
+  width: 240px;
+  padding-top: 56px;
+  height: 100%;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease-in-out;
+  background: #303340;
+
+  li > a{
+    color: #fcfcfc;
+  }
+
+  li > a.active {
+    background-color: #1b1d23;
+    color: #458ab6;
+  }
+}

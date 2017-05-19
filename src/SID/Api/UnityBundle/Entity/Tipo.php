@@ -37,7 +37,7 @@ class Tipo
 
     /**
      * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="UnidadEjecutora", mappedBy="tipo")
+     * @ORM\OneToMany(targetEntity="UnidadEjecutora", mappedBy="Tipos")
      */
     private $unidades;
 

@@ -189,7 +189,7 @@ class UnidadEjecutora
     }
 
     /**
-     * Set tipo
+     * Set Tipos
      *
      * @param \SID\Api\UnityBundle\Entity\Tipo $tipo
      *
@@ -203,7 +203,7 @@ class UnidadEjecutora
     }
 
     /**
-     * Get tipo
+     * Get Tipos
      *
      * @return \SID\Api\UnityBundle\Entity\Tipo
      */

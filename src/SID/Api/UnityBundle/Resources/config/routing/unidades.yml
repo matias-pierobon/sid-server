@@ -1,0 +1,24 @@
+unidades_index:
+    path:     /
+    defaults: { _controller: "UnityBundle:UnidadEjecutora:index" }
+    methods:  GET
+
+unidades_show:
+    path:     /{id}
+    defaults: { _controller: "UnityBundle:UnidadEjecutora:show" }
+    methods:  GET
+
+unidades_new:
+    path:     /new
+    defaults: { _controller: "UnityBundle:UnidadEjecutora:new" }
+    methods:  [GET, POST]
+
+unidades_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "UnityBundle:UnidadEjecutora:edit" }
+    methods:  [GET, POST]
+
+unidades_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "UnityBundle:UnidadEjecutora:delete" }
+    methods:  DELETE

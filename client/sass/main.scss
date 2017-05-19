@@ -1,4 +1,19 @@
+@import "bootstrap/scss/bootstrap";
+
 html, body{
-  margin: 0;
-  padding: 0;
+  height: 100%;
+  width: 100%;
 }
+
+body{
+  background: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+  color: #686868;
+  background-color: #f1f2f7;
+}
+
+@import "./mainpage";
+
+@import "./titles";

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class TipoController extends Controller
 {
     /**
-     * Lists all tipo entities.
+     * Lists all Tipos entities.
      *
      */
     public function indexAction()
@@ -22,13 +22,13 @@ class TipoController extends Controller
 
         $tipos = $em->getRepository('UnityBundle:Tipo')->findAll();
 
-        return $this->render('tipo/index.html.twig', array(
+        return $this->render('UnityBundle:Tipos:index.html.twig', array(
             'tipos' => $tipos,
         ));
     }
 
     /**
-     * Creates a new tipo entity.
+     * Creates a new Tipos entity.
      *
      */
     public function newAction(Request $request)
@@ -45,28 +45,28 @@ class TipoController extends Controller
             return $this->redirectToRoute('tipo_show', array('id' => $tipo->getId()));
         }
 
-        return $this->render('tipo/new.html.twig', array(
+        return $this->render('UnityBundle:Tipos:new.html.twig', array(
             'tipo' => $tipo,
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a tipo entity.
+     * Finds and displays a Tipos entity.
      *
      */
     public function showAction(Tipo $tipo)
     {
         $deleteForm = $this->createDeleteForm($tipo);
 
-        return $this->render('tipo/show.html.twig', array(
+        return $this->render('UnityBundle:Tipos:show.html.twig', array(
             'tipo' => $tipo,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing tipo entity.
+     * Displays a form to edit an existing Tipos entity.
      *
      */
     public function editAction(Request $request, Tipo $tipo)
@@ -81,7 +81,7 @@ class TipoController extends Controller
             return $this->redirectToRoute('tipo_edit', array('id' => $tipo->getId()));
         }
 
-        return $this->render('tipo/edit.html.twig', array(
+        return $this->render('UnityBundle:Tipos:edit.html.twig', array(
             'tipo' => $tipo,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -89,7 +89,7 @@ class TipoController extends Controller
     }
 
     /**
-     * Deletes a tipo entity.
+     * Deletes a Tipos entity.
      *
      */
     public function deleteAction(Request $request, Tipo $tipo)
@@ -107,9 +107,9 @@ class TipoController extends Controller
     }
 
     /**
-     * Creates a form to delete a tipo entity.
+     * Creates a form to delete a Tipos entity.
      *
-     * @param Tipo $tipo The tipo entity
+     * @param Tipo $tipo The Tipos entity
      *
      * @return \Symfony\Component\Form\Form The form
      */

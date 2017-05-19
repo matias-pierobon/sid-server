@@ -22,6 +22,7 @@
   "homepage": "https://github.com/matias-pierobon/sid-server#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
     "gulp-csso": "^3.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-uglyfly": "^1.4.2"

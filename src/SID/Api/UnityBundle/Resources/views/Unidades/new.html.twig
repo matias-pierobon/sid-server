@@ -1,0 +1,17 @@
+{% extends 'UnityBundle:Unidades:layout.html.twig' %}
+
+{% set pageTitle = "Agregar Unidad Ejecutora" %}
+
+{% block content %}
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Agregar" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('unidades_index') }}">Lista de Unidades</a>
+        </li>
+    </ul>
+{% endblock %}

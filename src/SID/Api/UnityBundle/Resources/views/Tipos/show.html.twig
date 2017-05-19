@@ -1,0 +1,32 @@
+{% extends 'UnityBundle:Tipos:layout.html.twig' %}
+
+{% set pageTitle = "Tipo de Unidad" %}
+
+{% block content %}
+
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tipo.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ tipo.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Detalle</th>
+                <td>{{ tipo.detalle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('tipo_index') }}">Lista de Tipos</a>
+        </li>
+        <li>
+            <a href="{{ path('tipo_edit', { 'id': tipo.id }) }}">Editar</a>
+        </li>
+    </ul>
+{% endblock %}

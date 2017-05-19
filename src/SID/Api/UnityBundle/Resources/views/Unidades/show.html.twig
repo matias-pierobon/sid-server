@@ -1,0 +1,36 @@
+{% extends 'UnityBundle:Unidades:layout.html.twig' %}
+
+{% set pageTitle = "Unidad Ejecutora" %}
+
+{% block content %}
+
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ unidadEjecutora.id }}</td>
+            </tr>
+            <tr>
+                <th>Cufe</th>
+                <td>{{ unidadEjecutora.cufe }}</td>
+            </tr>
+            <tr>
+                <th>Detalle</th>
+                <td>{{ unidadEjecutora.detalle }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ unidadEjecutora.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('unidades_index') }}">Lista de Unidades</a>
+        </li>
+        <li>
+            <a href="{{ path('unidades_edit', { 'id': unidadEjecutora.id }) }}">Editar</a>
+        </li>
+    </ul>
+{% endblock %}

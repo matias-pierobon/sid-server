@@ -1,4 +1,7 @@
 unity_tipo:
-    resource: "@UnityBundle/Resources/config/routing/tipo.yml"
+    resource: "@UnityBundle/Resources/config/routing/tipos.yml"
     prefix:   /tipos
 
+unity_unidades:
+        resource: "@UnityBundle/Resources/config/routing/unidades.yml"
+        prefix:   /

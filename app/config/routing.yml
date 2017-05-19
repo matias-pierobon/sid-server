@@ -15,7 +15,7 @@ drug:
 
 unity:
     resource: "@UnityBundle/Resources/config/routing.yml"
-    prefix:   /api/unidades
+    prefix:   /unidades
 
 substance:
     resource: "@SubstanceBundle/Resources/config/routing.yml"

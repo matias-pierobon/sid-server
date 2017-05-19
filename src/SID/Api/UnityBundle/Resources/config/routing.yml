@@ -1,13 +1,4 @@
 unity_tipo:
     resource: "@UnityBundle/Resources/config/routing/tipo.yml"
     prefix:   /tipos
-unity_usuarios:
-    resource: "@UnityBundle/Resources/config/routing/usuariounidad.yml"
-    prefix:   /integrantes
-unity_unidades:
-    resource: "@UnityBundle/Resources/config/routing/unidadejecutora.yml"
-    prefix:   /
 
-unity_homepage:
-    path:     /
-    defaults: { _controller: UnityBundle:Default:index }

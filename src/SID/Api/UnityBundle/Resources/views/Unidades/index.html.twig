@@ -8,9 +8,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Cufe</th>
-                <th>Detalle</th>
                 <th>Nombre</th>
+                <th>Detalle</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -18,9 +17,8 @@
         {% for unidad in unidadEjecutoras %}
             <tr>
                 <td><a href="{{ path('unidades_show', { 'id': unidad.id }) }}">{{ unidad.id }}</a></td>
-                <td>{{ unidad.cufe }}</td>
-                <td>{{ unidad.detalle }}</td>
                 <td>{{ unidad.nombre }}</td>
+                <td>{{ unidad.detalle |slice(0, 40) ~ '...' }}</td>
                 <td>
                     <ul>
                         <li>

@@ -3,11 +3,6 @@ tipo_index:
     defaults: { _controller: "UnityBundle:Tipo:index" }
     methods:  GET
 
-tipo_show:
-    path:     /{id}
-    defaults: { _controller: "UnityBundle:Tipo:show" }
-    methods:  GET
-
 tipo_new:
     path:     /new
     defaults: { _controller: "UnityBundle:Tipo:new" }
@@ -18,7 +13,12 @@ tipo_edit:
     defaults: { _controller: "UnityBundle:Tipo:edit" }
     methods:  [GET, POST]
 
+tipo_show:
+    path:     /{id}
+    defaults: { _controller: "UnityBundle:Tipo:show" }
+    methods:  GET
+
 tipo_delete:
-    path:     /{id}/delete
+    path:     /{id}
     defaults: { _controller: "UnityBundle:Tipo:delete" }
     methods:  DELETE

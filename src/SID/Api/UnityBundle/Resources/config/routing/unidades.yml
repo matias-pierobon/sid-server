@@ -3,11 +3,6 @@ unidades_index:
     defaults: { _controller: "UnityBundle:UnidadEjecutora:index" }
     methods:  GET
 
-unidades_show:
-    path:     /{id}
-    defaults: { _controller: "UnityBundle:UnidadEjecutora:show" }
-    methods:  GET
-
 unidades_new:
     path:     /new
     defaults: { _controller: "UnityBundle:UnidadEjecutora:new" }
@@ -18,7 +13,12 @@ unidades_edit:
     defaults: { _controller: "UnityBundle:UnidadEjecutora:edit" }
     methods:  [GET, POST]
 
+unidades_show:
+    path:     /{id}
+    defaults: { _controller: "UnityBundle:UnidadEjecutora:show" }
+    methods:  GET
+
 unidades_delete:
-    path:     /{id}/delete
+    path:     /{id}
     defaults: { _controller: "UnityBundle:UnidadEjecutora:delete" }
     methods:  DELETE

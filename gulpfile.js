@@ -1,6 +1,7 @@
 const gulp = require('gulp')
 const sass = require('gulp-sass')
 const uglyfly = require('gulp-uglyfly')
+const  copy = require('gulp-copy')
 
 const webApp = "./client"
 const sassSrc = `${webApp}/sass/**/main.scss`
@@ -9,6 +10,7 @@ const buildSrc = `./web/dist`
 const nodeModules = `./node_modules/`
 const jsDirs = [
     './node_modules/jquery/dist/jquery.js',
+    './node_modules/tether/dist/js/tether.js',
     './node_modules/bootstrap/dist/js/bootstrap.js',
     jsSrc
 ]
@@ -26,7 +28,11 @@ gulp.task('js', () => gulp.src(jsDirs)
     .pipe(gulp.dest(`${buildSrc}/js`))
 )
 
-gulp.task('sass:watch', () => gulp.watch(sassSrc, ['sass']))
+gulp.task('fonts', () => gulp.src('./node_modules/**/fonts/**/*')
+    .pipe(copy(`${buildSrc}/fonts`, {prefix: 7}))
+)
+
+gulp.task('sass:watch', () => gulp.watch(`${webApp}/**/*.scss`, ['sass']))
 gulp.task('js:watch', () => gulp.watch(jsSrc, ['js']))
 
 gulp.task('watch', [ 'sass:watch', 'js:watch' ])

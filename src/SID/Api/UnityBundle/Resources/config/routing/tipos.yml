@@ -19,6 +19,6 @@ tipo_show:
     methods:  GET
 
 tipo_delete:
-    path:     /{id}
+    path:     /{id}/remove
     defaults: { _controller: "UnityBundle:Tipo:delete" }
-    methods:  DELETE
+    methods:  POST

@@ -2,24 +2,32 @@
 
 {% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
 
-{% set pageTitle = "Editar Tipo de Unidad" %}
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('unidades_index') }}">Unidades</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('tipo_index') }}">Tipos</a></li>
+        <li class="breadcrumb-item active">{{ tipo.nombre }}</li>
+    </ol>
+{% endblock %}
 
 {% block content %}
-    <h1>Tipo edit</h1>
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">Editar Tipo de Unidad</h4>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <a class="btn btn-secondary" href="{{ path('tipo_index') }}">Lista de Tipos</a>
+        <button class="btn btn-primary" type="submit">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Editar
+        </button>
+        <a class="btn btn-danger" href="{{ path('tipo_delete', { 'id': tipo.id }) }}">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            Eliminar</a>
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('tipo_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
+    </div>
+</div>
 {% endblock %}

@@ -1,37 +1,49 @@
 {% extends 'UnityBundle:Tipos:layout.html.twig' %}
 
-{% set pageTitle = "Tipos de Unidad" %}
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('unidades_index') }}">Unidades</a></li>
+        <li class="breadcrumb-item active">Tipos</li>
+    </ol>
+{% endblock %}
 
 {% block content %}
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">
+            Listado de Tipos
+            <div class="btn-group pull-right">
+                <a class="btn btn-primary" href="{{ path('tipo_new') }}">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Agregar
+                </a>
+            </div>
+        </h4>
+    </div>
+    <div class="card-block">
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Detalle</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tipo in tipos %}
-            <tr>
-                <td><a href="{{ path('tipo_show', { 'id': tipo.id }) }}">{{ tipo.id }}</a></td>
-                <td>{{ tipo.nombre }}</td>
-                <td>{{ tipo.detalle }}</td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="{{ path('tipo_edit', { 'id': tipo.id }) }}" class="btn btn-secondary">Editar</a>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('tipo_new') }}">Create a new tipo</a>
-        </li>
-    </ul>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Detalle</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for tipo in tipos %}
+                <tr>
+                    <td><a href="{{ path('tipo_show', { 'id': tipo.id }) }}">{{ tipo.nombre }}</a></td>
+                    <td>{{ tipo.detalle }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="{{ path('tipo_edit', { 'id': tipo.id }) }}" class="btn btn-outline-info"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
 {% endblock %}

@@ -8,12 +8,43 @@
   transition: all 0.2s ease-in-out;
   background: #303340;
 
-  li > a{
-    color: #fcfcfc;
-  }
+  nav {
+    display: flex;
+    flex-direction: row;
+    ul {
+      display: flex;
+      flex-direction: column;
+      flex: 1 0 auto;
+      padding-left: 0;
+      margin-bottom: 0;
+      list-style: none;
 
-  li > a.active {
-    background-color: #1b1d23;
-    color: #458ab6;
+      li {
+        color: #8d9ea7;
+        cursor: default;
+        font-size: 13px;
+        letter-spacing: 0.035em;
+        padding: 0;
+
+        & > a {
+          cursor: pointer;
+          padding: 15px 30px 15px 15px;
+          display: block;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 200;
+          color: #888ea6;
+
+          &:active {
+            background-color: #1b1d23;
+            color: #458ab6;
+          }
+        }
+
+        &:hover > a {
+          background: rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
   }
 }

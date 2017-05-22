@@ -2,7 +2,18 @@
 
 {% set pageTitle = "Tipo de Unidad" %}
 
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('unidades_index') }}">Unidades</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('tipo_index') }}">Tipos</a></li>
+        <li class="breadcrumb-item">{{ tipo.nombre }}</li>
+    </ol>
+{% endblock %}
+
 {% block content %}
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">Ver Tipo de Unidad</h4>
 
     <table class="table table-hover">
         <tbody>
@@ -20,13 +31,8 @@
             </tr>
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('tipo_index') }}">Lista de Tipos</a>
-        </li>
-        <li>
-            <a href="{{ path('tipo_edit', { 'id': tipo.id }) }}">Editar</a>
-        </li>
-    </ul>
+        <a class="btn btn-secondary" href="{{ path('tipo_index') }}">Lista de Tipos</a>
+        <a class="btn btn-info" href="{{ path('tipo_edit', { 'id': tipo.id }) }}">Editar</a>
+    </div>
+</div>
 {% endblock %}

@@ -1,13 +1,30 @@
 {% extends 'UnityBundle:Unidades:layout.html.twig' %}
 
-{% set pageTitle = "Unidades Ejecutora" %}
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Unidades</li>
+    </ol>
+{% endblock %}
 
 {% block content %}
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">
+            Listado de Unidades
+            <div class="btn-group pull-right">
+                <a class="btn btn-secondary" href="{{ path('tipo_index') }}">Tipos de Unidades</a>
+                <a class="btn btn-primary" href="{{ path('unidades_new') }}">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Agregar
+                </a>
+            </div>
+        </h4>
 
+    </div>
+    <div class="card-block">
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>Detalle</th>
                 <th>Acciones</th>
@@ -16,27 +33,23 @@
         <tbody>
         {% for unidad in unidadEjecutoras %}
             <tr>
-                <td><a href="{{ path('unidades_show', { 'id': unidad.id }) }}">{{ unidad.id }}</a></td>
-                <td>{{ unidad.nombre }}</td>
+                <td><a href="{{ path('unidades_show', { 'id': unidad.id }) }}">{{ unidad.nombre }}</a></td>
                 <td>{{ unidad.detalle |slice(0, 40) ~ '...' }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('unidades_show', { 'id': unidad.id }) }}">Ver</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('unidades_edit', { 'id': unidad.id }) }}">Editar</a>
-                        </li>
-                    </ul>
+                    <div class="btn-group">
+                        <a class="btn btn-outline-warning" data-toggle="tooltip" title="Ver" href="{{ path('unidades_show', { 'id': unidad.id }) }}">
+                            <i class="fa fa-info" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-outline-info" data-toggle="tooltip" title="Editar" href="{{ path('unidades_edit', { 'id': unidad.id }) }}">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('unidades_new') }}">Crear una Unidad ejecutora</a>
-        </li>
-    </ul>
+    </div>
+</div>
 {% endblock %}

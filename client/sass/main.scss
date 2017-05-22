@@ -1,4 +1,10 @@
+$brand-primary: #45b6ab;
+$brand-success: #99d683;
+$brand-info: #458ab6;
+$brand-warning: #f0ad4e;
+$brand-danger: #e76462;
 @import "bootstrap/scss/bootstrap";
+@import "font-awesome/scss/font-awesome";
 
 html, body{
   height: 100%;
@@ -14,6 +20,13 @@ body{
   background-color: #f1f2f7;
 }
 
-@import "./mainpage";
+h1, h2, h3, h4, h5, h6 {
+  color: #2b2b2b;
+  font-family: 'Montserrat', sans-serif;
+  margin: 10px 0;
+  font-weight: 300;
+}
 
+@import "./mainpage";
 @import "./titles";
+@import "./whitebox";

@@ -1,4 +1,4 @@
-{% extends 'UnityBundle:Tipos:layout.html.twig' %}
+{% extends 'UnityBundle:Tipos:base.html.twig' %}
 
 {% set pageTitle = "Tipo de Unidad" %}
 
@@ -11,28 +11,24 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-block">
-        <h4 class="card-title">Ver Tipo de Unidad</h4>
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Ver Tipo de Unidad</h4>
 
-    <table class="table table-hover">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ tipo.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ tipo.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Detalle</th>
-                <td>{{ tipo.detalle }}</td>
-            </tr>
-        </tbody>
-    </table>
-        <a class="btn btn-secondary" href="{{ path('tipo_index') }}">Lista de Tipos</a>
-        <a class="btn btn-info" href="{{ path('tipo_edit', { 'id': tipo.id }) }}">Editar</a>
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ tipo.nombre }}</td>
+                </tr>
+                <tr>
+                    <th>Detalle</th>
+                    <td>{{ tipo.detalle }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-secondary" href="{{ path('tipo_index') }}">Lista de Tipos</a>
+            <a class="btn btn-info" href="{{ path('tipo_edit', { 'id': tipo.id }) }}">Editar</a>
+        </div>
     </div>
-</div>
 {% endblock %}

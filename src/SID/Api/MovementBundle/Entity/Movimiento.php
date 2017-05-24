@@ -229,7 +229,7 @@ class Movimiento
     }
 
     /**
-     * Set motivo
+     * Set Motivo
      *
      * @param \SID\Api\MovementBundle\Entity\Motivo $motivo
      *
@@ -243,7 +243,7 @@ class Movimiento
     }
 
     /**
-     * Get motivo
+     * Get Motivo
      *
      * @return \SID\Api\MovementBundle\Entity\Motivo
      */

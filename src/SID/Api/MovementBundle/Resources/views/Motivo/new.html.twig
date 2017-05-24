@@ -1,0 +1,27 @@
+{% extends 'MovementBundle:Motivo:base.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Movimientos</li>
+        <li class="breadcrumb-item"><a href="{{ path('motivo_index') }}">Motivos</a></li>
+        <li class="breadcrumb-item active">Nuevo</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Nuevo Motivo</h4>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <a class="btn btn-secondary" href="{{ path('motivo_index') }}">Lista de Motivos</a>
+            <input class="btn btn-primary" type="submit" value="Crear"/>
+            {{ form_end(form) }}
+
+
+        </div>
+    </div>
+{% endblock %}

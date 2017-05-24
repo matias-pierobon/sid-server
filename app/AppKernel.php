@@ -21,7 +21,6 @@ class AppKernel extends Kernel
             new SID\Api\DrugBundle\DrugBundle(),
             new SID\Api\ProviderBundle\ProviderBundle(),
             new SID\Api\MovementBundle\MovementBundle(),
-            new SID\ClientBundle\ClientBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
         ];

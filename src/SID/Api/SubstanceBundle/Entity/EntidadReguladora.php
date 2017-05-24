@@ -36,6 +36,13 @@ class EntidadReguladora
     private $detalle;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaIngreso", type="datetime")
+     */
+    private $fechaIngreso;
+
+    /**
      * Many Classes have Many Incompatibilities.
      * @ORM\ManyToMany(targetEntity="Droga", mappedBy="entidades")
      */
@@ -47,6 +54,7 @@ class EntidadReguladora
      */
     public function __construct()
     {
+        $this->fechaIngreso = new \DateTime();
         $this->drogas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -106,6 +114,30 @@ class EntidadReguladora
     public function getDetalle()
     {
         return $this->detalle;
+    }
+
+    /**
+     * Set fechaIngreso
+     *
+     * @param \DateTime $fechaIngreso
+     *
+     * @return Droga
+     */
+    public function setFechaIngreso($fechaIngreso)
+    {
+        $this->fechaIngreso = $fechaIngreso;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaIngreso
+     *
+     * @return \DateTime
+     */
+    public function getFechaIngreso()
+    {
+        return $this->fechaIngreso;
     }
 
     /**

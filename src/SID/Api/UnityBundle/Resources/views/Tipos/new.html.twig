@@ -1,4 +1,4 @@
-{% extends 'UnityBundle:Tipos:layout.html.twig' %}
+{% extends 'UnityBundle:Tipos:base.html.twig' %}
 
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
@@ -11,16 +11,16 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-block">
-        <h4 class="card-title">Nuevo Tipo de Unidad</h4>
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Nuevo Tipo de Unidad</h4>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Crear" />
-    {{ form_end(form) }}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <a class="btn btn-secondary" href="{{ path('tipo_index') }}">Lista de Tipos</a>
+            <input  class="btn btn-primary" type="submit" value="Crear"/>
+            {{ form_end(form) }}
 
-        <a class="btn btn-secondary" href="{{ path('tipo_index') }}">Lista de Tipos</a>
+            </div>
     </div>
-</div>
 {% endblock %}

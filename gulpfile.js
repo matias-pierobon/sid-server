@@ -3,7 +3,7 @@ const sass = require('gulp-sass')
 const uglyfly = require('gulp-uglyfly')
 const  copy = require('gulp-copy')
 
-const webApp = "./client"
+const webApp = "./app/Resources/public"
 const sassSrc = `${webApp}/sass/**/main.scss`
 const jsSrc = `${webApp}/js/**/*.js`
 const buildSrc = `./web/dist`

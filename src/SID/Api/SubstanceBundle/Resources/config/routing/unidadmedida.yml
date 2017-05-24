@@ -1,0 +1,24 @@
+unidades_medidas_index:
+    path:     /
+    defaults: { _controller: "SubstanceBundle:UnidadMedida:index" }
+    methods:  GET
+
+unidades_medidas_new:
+    path:     /new
+    defaults: { _controller: "SubstanceBundle:UnidadMedida:new" }
+    methods:  [GET, POST]
+
+unidades_medidas_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "SubstanceBundle:UnidadMedida:edit" }
+    methods:  [GET, POST]
+
+unidades_medidas_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "SubstanceBundle:UnidadMedida:delete" }
+    methods:  GET
+
+unidades_medidas_show:
+    path:     /{id}
+    defaults: { _controller: "SubstanceBundle:UnidadMedida:show" }
+    methods:  GET

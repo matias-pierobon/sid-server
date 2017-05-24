@@ -3,15 +3,15 @@ api_login_check:
 
 movement:
     resource: "@MovementBundle/Resources/config/routing.yml"
-    prefix:   /api/movimientos
+    prefix:   /movimientos
 
 provider:
     resource: "@ProviderBundle/Resources/config/routing.yml"
-    prefix:   /api/proveedores
+    prefix:   /proveedores
 
 drug:
     resource: "@DrugBundle/Resources/config/routing.yml"
-    prefix:   /api/drogueros
+    prefix:   /drogueros
 
 unity:
     resource: "@UnityBundle/Resources/config/routing.yml"
@@ -19,12 +19,8 @@ unity:
 
 substance:
     resource: "@SubstanceBundle/Resources/config/routing.yml"
-    prefix:   /api/sustancias
+    prefix:   /sustancias
 
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /api/usuarios
-
-client:
-    resource: "@ClientBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /usuarios

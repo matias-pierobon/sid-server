@@ -1,0 +1,54 @@
+{% extends 'SubstanceBundle:Entidad:base.html.twig' %}
+
+{% form_theme delete_form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Sustancias</li>
+        <li class="breadcrumb-item"><a href="{{ path('entidades_index') }}">Entidades Reguladoras</a></li>
+        <li class="breadcrumb-item active">Entidades Reguladoras</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">Entidad Reguladora</h4>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entidad.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entidad.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Detalle</th>
+                <td>{{ entidad.detalle }}</td>
+            </tr>
+            <tr>
+                <th>Fechaingreso</th>
+                <td>{% if entidad.fechaIngreso %}{{ entidad.fechaIngreso|date('d/m/Y H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('entidades_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('entidades_edit', { 'id': entidad.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+    </div>
+</div>
+{% endblock %}

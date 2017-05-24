@@ -1,0 +1,34 @@
+{% extends 'MovementBundle:Motivo:base.html.twig' %}
+
+{% form_theme delete_form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Movimientos</li>
+        <li class="breadcrumb-item"><a href="{{ path('motivo_index') }}">Motivos</a></li>
+        <li class="breadcrumb-item active">{{ motivo.nombre }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Motivo de Movimiento</h4>
+
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ motivo.nombre }}</td>
+                </tr>
+                <tr>
+                    <th>Detalle</th>
+                    <td>{{ motivo.detalle }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-secondary" href="{{ path('motivo_index') }}">Lista de Motivos</a>
+            <a class="btn btn-info" href="{{ path('motivo_edit', { 'id': motivo.id }) }}">Editar</a>
+        </div>
+    </div>
+{% endblock %}

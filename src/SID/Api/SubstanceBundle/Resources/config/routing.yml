@@ -1,0 +1,7 @@
+substance_entidades:
+    resource: "@SubstanceBundle/Resources/config/routing/entidadreguladora.yml"
+    prefix:   /entidades
+
+substance_unidades:
+    resource: "@SubstanceBundle/Resources/config/routing/unidadmedida.yml"
+    prefix:   /unidades

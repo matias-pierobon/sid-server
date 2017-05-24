@@ -1,0 +1,36 @@
+{% extends 'SubstanceBundle:Unidad:base.html.twig' %}
+
+{% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% form_theme delete_form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Sustancias</li>
+        <li class="breadcrumb-item"><a href="{{ path('unidades_medidas_index') }}">Unidades de Medidas</a></li>
+        <li class="breadcrumb-item active">{{ unidad.sigla }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">Editar Unidad</h4>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Edit" />
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('unidades_medidas_index') }}">Back to the list</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+    </div>
+</div>
+{% endblock %}

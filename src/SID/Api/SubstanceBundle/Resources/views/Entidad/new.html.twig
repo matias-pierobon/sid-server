@@ -1,0 +1,30 @@
+{% extends 'SubstanceBundle:Entidad:base.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Sustancias</li>
+        <li class="breadcrumb-item"><a href="{{ path('entidades_index') }}">Entidades Reguladoras</a></li>
+        <li class="breadcrumb-item active">Entidades Reguladoras</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">Nueva Entidad</h4>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('entidades_index') }}">Back to the list</a>
+        </li>
+    </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+
+lugares_fisicos_index:
+    path:     /
+    defaults: { _controller: DrugBundle:Lugar:index }
+    methods:  GET
+
+lugares_fisicos_new:
+    path:     /new
+    defaults: { _controller: DrugBundle:Lugar:new }
+    methods:  GET
+
+lugares_fisicos_create:
+    path:     /new
+    defaults: { _controller: DrugBundle:Lugar:create }
+    methods:  POST
+
+lugares_fisicos_edit:
+    path:     /{id}/edit
+    defaults: { _controller: DrugBundle:Lugar:edit }
+    methods:  GET
+
+lugares_fisicos_update:
+    path:     /{id}/edit
+    defaults: { _controller: DrugBundle:Lugar:update }
+    methods:  POST
+
+lugares_fisicos_delete:
+    path:     /{id}/delete
+    defaults: { _controller: DrugBundle:Lugar:delete }
+    methods:  GET
+
+lugares_fisicos_image:
+    path:     /{id}/image
+    defaults: { _controller: DrugBundle:Lugar:image }
+    methods:  GET
+
+lugares_fisicos_show:
+    path:     /{id}
+    defaults: { _controller: DrugBundle:Lugar:show }
+    methods:  GET

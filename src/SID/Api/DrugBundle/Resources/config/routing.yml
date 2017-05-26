@@ -1,0 +1,3 @@
+drug_lugares:
+    resource: "@DrugBundle/Resources/config/routing/lugares.yml"
+    prefix:   /lugares

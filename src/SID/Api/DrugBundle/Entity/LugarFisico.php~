@@ -1,0 +1,100 @@
+<?php
+
+namespace SID\Api\DrugBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
+
+/**
+ * LugarFisico
+ *
+ * @ORM\Table(name="lugar_fisico")
+ * @ORM\Entity(repositoryClass="SID\Api\DrugBundle\Repository\LugarFisicoRepository")
+ */
+class LugarFisico
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="sysDate", type="datetimetz")
+     */
+    private $sysDate;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="latitud", type="float", nullable=true)
+     */
+    private $latitud;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitud", type="float", nullable=true)
+     */
+    private $longitud;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="detalle", type="text", nullable=true)
+     */
+    private $detalle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="blob", nullable=true)
+     */
+    private $image;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imageMime", type="string", length=64, nullable=true)
+     */
+    private $imageMime;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->prestamos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function setImageBlob(File $file)
+    {
+        if (!$file){
+            $this->setImage(null);
+            $this->setImageMime(null);
+            return $this;
+        }
+        if(!$file->isValid()){
+            throw new FileException("Invalid File");
+        }
+        $imageFile    = fopen($file->getRealPath(), 'r');
+        $imageContent = fread($imageFile, $file->getClientSize());
+        fclose($imageFile);
+        $this->setImage($imageContent);
+        $this->setImageType($file->getMimeType());
+        return $this;
+    }
+}
+

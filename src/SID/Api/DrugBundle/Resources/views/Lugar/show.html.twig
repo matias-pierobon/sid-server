@@ -1,0 +1,45 @@
+{% extends "DrugBundle:Lugar:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Drogueros</li>
+        <li class="breadcrumb-item"><a href="{{ path('lugares_fisicos_index') }}">Lugares Fisicos</a></li>
+        <li class="breadcrumb-item active">{{ lugar.nombre }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Editar Entidad</h4>
+
+            <div class="row">
+                <div class="col col-sm-4"><img src="{{ path('lugares_fisiocs_image', {'id': lugar.id }) }}" alt="" class="img-fluid img-thumbnail"></div>
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="col col-sm-4"></div>
+                        <div class="col-sm-8"></div>
+                        <div class="row">
+                        <div class="col col-sm-4"></div>
+                        <div class="col-sm-8"></div>
+                        </div>
+                        <div class="row">
+                        <div class="col col-sm-4"></div>
+                        <div class="col-sm-8"></div>
+                        </div>
+                        <div class="row">
+                        <div class="col col-sm-4"></div>
+                        <div class="col-sm-8"></div>
+                        </div>
+                        <div class="row">
+                        <div class="col col-sm-4"></div>
+                        <div class="col-sm-8"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

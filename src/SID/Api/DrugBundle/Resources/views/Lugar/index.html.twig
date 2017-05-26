@@ -1,0 +1,53 @@
+{% extends "DrugBundle:Lugar:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Drogueros</li>
+        <li class="breadcrumb-item active">Lugares Fisicos</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">
+                Listado de Lugares
+                <div class="btn-group pull-right">
+                    <a class="btn btn-primary" href="{{ path('lugares_fisicos_new') }}">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Agregar
+                    </a>
+                </div>
+            </h4>
+            <div class="card-block">
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Detalle</th>
+                        <th>(Lat - Long)</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for lugar in lugares %}
+                        <tr>
+                            <td><a href="{{ path('lugares_fisicos_show', { 'id': lugar.id }) }}">{{ lugar.nombre }}</a></td>
+                            <td>{{ lugar.detalle }}</td>
+                            <td>{% if lugar.latitud and lugar.longitude %}({{ tipo.latitud }}-{{ tipo.longitud }}){% else %} (...) {% endif %}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="{{ path('lugares_fisicos_show', { 'id': lugar.id }) }}" class="btn btn-outline-warning"><i class="fa fa-info" aria-hidden="true"></i></a>
+                                    <a href="{{ path('lugares_fisicos_edit', { 'id': lugar.id }) }}" class="btn btn-outline-info"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+{% endblock %}

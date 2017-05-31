@@ -10,15 +10,25 @@
 {% block content %}
 <div class="card">
     <div class="card-block">
-        <h4 class="card-title">Lista de Unidades</h4>
+        <h4 class="card-title">
+            Lista de Unidades
+            <div class="btn-group pull-right">
+                <a class="btn btn-primary" href="{{ path('unidades_medidas_new') }}">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Agregar
+                </a>
+            </div>
+        </h4>
+    </div>
+    <div class="card-block">
 
-    <table>
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Sigla</th>
                 <th>Detalle</th>
                 <th>Fecha de Ingreso</th>
-                <th>Actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -28,25 +38,15 @@
                 <td>{{ unidad.detalle }}</td>
                 <td>{{ unidad.fechaIngreso | date("d/m/Y") }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('unidades_medidas_show', { 'id': unidad.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('unidades_medidas_edit', { 'id': unidad.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="{{ path('unidades_medidas_edit', { 'id': unidad.id }) }}" class="btn btn-outline-info"><i
+                                    class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('unidades_new') }}">Create a new unidadMedida</a>
-        </li>
-    </ul>
     </div>
 </div>
 {% endblock %}

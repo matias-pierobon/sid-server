@@ -13,30 +13,32 @@
 {% block content %}
     <div class="card">
         <div class="card-block">
-            <h4 class="card-title">Editar Entidad</h4>
+            <h4 class="card-title">Ver Lugar</h4>
 
             <div class="row">
-                <div class="col col-sm-4"><img src="{{ path('lugares_fisiocs_image', {'id': lugar.id }) }}" alt="" class="img-fluid img-thumbnail"></div>
-                <div class="col-sm-8">
+                <div class="col col-md-4 text-center">
+                    <img src="{{ path('lugares_fisicos_image', {'id': lugar.id }) }}" alt="" class="img-fluid img-thumbnail" style="max-width: 400px; max-height: 500px;">
+                </div>
+                <div class="col col-md-8">
                     <div class="row">
-                        <div class="col col-sm-4"></div>
-                        <div class="col-sm-8"></div>
-                        <div class="row">
-                        <div class="col col-sm-4"></div>
-                        <div class="col-sm-8"></div>
+                        <div class="col col-sm-4">Nombre:</div>
+                        <div class="col col-sm-8">{{ lugar.nombre }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-sm-4">Fecha</div>
+                        <div class="col col-sm-8">{{ lugar.sysDate | date("d/m/Y") }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-sm-4">Georeferencia:</div>
+                        <div class="col col-sm-8">
+                            {% if lugar.latitud and lugar.longitud %}
+                                ({{ lugar.latitud }} - {{ lugar.longitud }})
+                            {% else %} - {% endif %}
                         </div>
-                        <div class="row">
-                        <div class="col col-sm-4"></div>
-                        <div class="col-sm-8"></div>
-                        </div>
-                        <div class="row">
-                        <div class="col col-sm-4"></div>
-                        <div class="col-sm-8"></div>
-                        </div>
-                        <div class="row">
-                        <div class="col col-sm-4"></div>
-                        <div class="col-sm-8"></div>
-                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-sm-4">Detalle:</div>
+                        <div class="col col-sm-8">{{ lugar.detalle }}</div>
                     </div>
                 </div>
             </div>

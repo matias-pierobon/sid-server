@@ -11,40 +11,28 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-block">
-        <h4 class="card-title">Unidad de Medida</h4>
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Unidad de Medida</h4>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Sigla</th>
-                <td>{{ unidad.sigla }}</td>
-            </tr>
-            <tr>
-                <th>Detalle</th>
-                <td>{{ unidad.detalle }}</td>
-            </tr>
-            <tr>
-                <th>Fechaingreso</th>
-                <td>{{ unidad.fechaIngreso |date('d/m/Y H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('unidades_medidas_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('unidades_medidas_edit', { 'id': unidad.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <th>Sigla</th>
+                    <td>{{ unidad.sigla }}</td>
+                </tr>
+                <tr>
+                    <th>Detalle</th>
+                    <td>{{ unidad.detalle }}</td>
+                </tr>
+                <tr>
+                    <th>Fechaingreso</th>
+                    <td>{{ unidad.fechaIngreso |date('d/m/Y H:i:s') }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-secondary" href="{{ path('unidades_medidas_index') }}">Lista de Unidades</a>
+            <a class="btn btn-info" href="{{ path('unidades_medidas_edit', { 'id': unidad.id }) }}">Editar</a>
+        </div>
     </div>
-</div>
 {% endblock %}

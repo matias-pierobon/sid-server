@@ -1,52 +1,53 @@
 {% extends 'SubstanceBundle:Entidad:base.html.twig' %}
 
 {% block breadcrumb %}
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">Sustancias</li>
-    <li class="breadcrumb-item active">Entidades Reguladoras</li>
-</ol>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Sustancias</li>
+        <li class="breadcrumb-item active">Entidades Reguladoras</li>
+    </ol>
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-block">
-        <h4 class="card-title">Lista de Entidades</h4>
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">
+                Lista de Entidades
+                <div class="btn-group pull-right">
+                    <a class="btn btn-primary" href="{{ path('entidades_new') }}">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Agregar
+                    </a>
+                </div>
+            </h4>
+        </div>
+        <div class="card-block">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Detalle</th>
-                <th>Fecha de Ingreso</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entidadReguladora in entidades %}
-            <tr>
-                <td>{{ entidadReguladora.nombre }}</td>
-                <td>{{ entidadReguladora.detalle }}</td>
-                <td>{% if entidadReguladora.fechaIngreso %}{{ entidadReguladora.fechaIngreso| date("d/m/Y") }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('entidades_show', { 'id': entidadReguladora.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('entidades_edit', { 'id': entidadReguladora.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('entidades_new') }}">Create a new entidadReguladora</a>
-        </li>
-    </ul>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Detalle</th>
+                    <th>Fecha de Ingreso</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entidadReguladora in entidades %}
+                    <tr>
+                        <td>{{ entidadReguladora.nombre }}</td>
+                        <td>{{ entidadReguladora.detalle }}</td>
+                        <td>{% if entidadReguladora.fechaIngreso %}{{ entidadReguladora.fechaIngreso| date("d/m/Y") }}{% endif %}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="{{ path('entidades_edit', { 'id': entidadReguladora.id }) }}"
+                                   class="btn btn-outline-info"><i
+                                            class="fa fa-pencil" aria-hidden="true"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 {% endblock %}

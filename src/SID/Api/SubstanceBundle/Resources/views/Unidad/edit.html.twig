@@ -12,25 +12,21 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-block">
-        <h4 class="card-title">Editar Unidad</h4>
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Editar Unidad</h4>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('unidades_medidas_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <a class="btn btn-secondary" href="{{ path('unidades_medidas_index') }}">Lista de Unidades</a>
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                Editar
+            </button>
+            <a class="btn btn-danger" href="{{ path('unidades_medidas_delete', { 'id': unidad.id }) }}">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Eliminar</a>
+            {{ form_end(edit_form) }}
+        </div>
     </div>
-</div>
 {% endblock %}

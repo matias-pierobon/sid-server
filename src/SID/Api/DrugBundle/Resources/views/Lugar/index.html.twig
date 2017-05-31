@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-block">
             <h4 class="card-title">
-                Listado de Lugares
+                Lista de Lugares
                 <div class="btn-group pull-right">
                     <a class="btn btn-primary" href="{{ path('lugares_fisicos_new') }}">
                         <i class="fa fa-plus" aria-hidden="true"></i>
@@ -37,7 +37,7 @@
                         <tr>
                             <td><a href="{{ path('lugares_fisicos_show', { 'id': lugar.id }) }}">{{ lugar.nombre }}</a></td>
                             <td>{{ lugar.detalle }}</td>
-                            <td>{% if lugar.latitud and lugar.longitude %}({{ tipo.latitud }}-{{ tipo.longitud }}){% else %} (...) {% endif %}</td>
+                            <td>{% if lugar.latitud and lugar.longitud %}({{ lugar.latitud }} - {{ lugar.longitud }}){% else %} (...) {% endif %}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ path('lugares_fisicos_show', { 'id': lugar.id }) }}" class="btn btn-outline-warning"><i class="fa fa-info" aria-hidden="true"></i></a>

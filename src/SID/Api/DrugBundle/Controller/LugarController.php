@@ -55,8 +55,27 @@ class LugarController extends Controller
         ));
     }
 
-    public function updateAction(LugarFisico $lugar) {
+    public function updateAction(LugarFisico $lugar, Request $request) {
+        $lat = $request->get('lat', $lugar->getLatitud());
+        $lat = trim($lat) == "" ? null : $lat;
 
+        $long = $request->get('long', $lugar->getLongitud());
+        $long = trim($long) == "" ? null : $long;
+
+        $lugar
+            ->setDetalle($request->get('detalle', $lugar->getDetalle()))
+            ->setLatitud($lat)
+            ->setLongitud($long)
+            ->setNombre($request->get('nombre', $lugar->getNombre()));
+
+        if($request->files->get('image', null)){
+            $lugar->setImageBlob($request->files->get('image'));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('lugares_fisicos_show', array('id' => $lugar->getId()));
     }
 
     public function deleteAction(LugarFisico $lugar) {

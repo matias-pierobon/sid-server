@@ -1,34 +1,33 @@
-{% extends "SubstanceBundle:Clase:base.html.twig" %}
+{% extends "SubstanceBundle:Droga:base.html.twig" %}
 
 {#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
 
 {% block breadcrumb %}
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">Sustancias</li>
-        <li class="breadcrumb-item"><a href="{{ path('clases_sustancias_index') }}">Clases de Sustancias</a></li>
-        <li class="breadcrumb-item active">Nuevo</li>
+        <li class="breadcrumb-item"><a href="{{ path('sustancias_index') }}">Sustancias</a></li>
+        <li class="breadcrumb-item active"><a href="{{ path('sustancias_show', { 'id': droga.id }) }}">{{ droga.nombre }}</a></li>
+        <li class="breadcrumb-item active">Editar</li>
     </ol>
 {% endblock %}
 
 {% block content %}
-
-    <form action="{{ path('clases_sustancias_create') }}" method="post">
+    <form action="{{ path('clases_sustancias_update', {'id': clase.id}) }}" method="post">
         <div class="row">
             <div class="col col-md-4">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">Ver Clase</h4>
+                        <h4 class="card-title">Editar Clase</h4>
 
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input name="nombre" type="text" class="form-control" id="nombre">
+                            <input name="nombre" type="text" class="form-control" id="nombre" value="{{ clase.nombre }}">
                         </div>
                         <div class="form-group">
                             <label for="detalle">Detalle</label>
-                            <textarea name="detalle" class="form-control" id="detalle" rows="3"></textarea>
+                            <textarea name="detalle" class="form-control" id="detalle" rows="3">{{ clase.detalle }}</textarea>
                         </div>
                         <a class="btn btn-secondary" href="{{ path('clases_sustancias_index') }}">Lista de Clases</a>
-                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <button type="submit" class="btn btn-primary">Editar</button>
                     </div>
                 </div>
 
@@ -48,21 +47,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for clase in clases %}
+                            {% for c in clases %}
+                                {% if not (c.id == clase.id) %}
                                 <tr>
                                     <td>
                                         <div class="form-check">
                                             <label class="form-check-label">
                                                 <input name="incompatibilidades[]" class="form-check-input"
-                                                       type="checkbox" value="{{ clase.id }}">
+                                                       type="checkbox"
+                                                       {% if clase.incompatibilidades.contains(c) %}checked{% endif %}
+                                                       value="{{ c.id }}"
+                                                />
                                             </label>
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{ path('clases_sustancias_show', { 'id': clase.id }) }}">{{ clase.nombre }}</a>
+                                        <a href="{{ path('clases_sustancias_show', { 'id': c.id }) }}">{{ c.nombre }}</a>
                                     </td>
-                                    <td>{{ clase.sysDate | date('d/m/Y') }}</td>
+                                    <td>{{ c.sysDate | date('d/m/Y') }}</td>
                                 </tr>
+                            {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>

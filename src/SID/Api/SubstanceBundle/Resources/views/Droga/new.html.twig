@@ -1,10 +1,10 @@
-{% extends "SubstanceBundle:Clase:base.html.twig" %}
+{% extends "SubstanceBundle:Droga:base.html.twig" %}
 
 {#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
 
 {% block breadcrumb %}
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">Sustancias</li>
+        <li class="breadcrumb-item"><a href="{{ path('sustancias_index') }}">Sustancias</a></li>
         <li class="breadcrumb-item"><a href="{{ path('clases_sustancias_index') }}">Clases de Sustancias</a></li>
         <li class="breadcrumb-item active">Nuevo</li>
     </ol>

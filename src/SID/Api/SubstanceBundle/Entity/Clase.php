@@ -79,6 +79,7 @@ class Clase
         $this->drogas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->incompatibleConmigo = new \Doctrine\Common\Collections\ArrayCollection();
         $this->incompatibleCon = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sysDate = new \DateTime();
     }
 
     /**
@@ -239,9 +240,11 @@ class Clase
      *
      * @return Clase
      */
-    public function addIncompatibleCon(\SID\Api\SubstanceBundle\Entity\Clase $incompatibleCon)
+    public function addIncompatibleCon(\SID\Api\SubstanceBundle\Entity\Clase $clase)
     {
-        $this->incompatibleCon[] = $incompatibleCon;
+        if(!$this->getIncompatibleCon()->contains($clase)){
+            $this->incompatibleCon->add($clase);
+        }
 
         return $this;
     }

@@ -1,0 +1,53 @@
+{% extends "SubstanceBundle:Droga:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('sustancias_index') }}">Sustancias</a></li>
+        <li class="breadcrumb-item active">Clases de Sustancias</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">
+                Lista de Clases de Sustancias
+                <div class="btn-group pull-right">
+                    <a class="btn btn-primary" href="{{ path('clases_sustancias_new') }}">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Agregar
+                    </a>
+                </div>
+            </h4>
+            <div class="card-block">
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Detalle</th>
+                        <th>Fecha de Ingreso</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for clase in clases %}
+                        <tr>
+                            <td><a href="{{ path('clases_sustancias_show', { 'id': clase.id }) }}">{{ clase.nombre }}</a></td>
+                            <td>{{ clase.detalle }}</td>
+                            <td>{{ clase.sysDate | date('d/m/Y') }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="{{ path('clases_sustancias_show', { 'id': clase.id }) }}" class="btn btn-outline-warning"><i class="fa fa-info" aria-hidden="true"></i></a>
+                                    <a href="{{ path('clases_sustancias_edit', { 'id': clase.id }) }}" class="btn btn-outline-info"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+{% endblock %}

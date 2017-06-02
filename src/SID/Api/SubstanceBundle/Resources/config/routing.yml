@@ -9,3 +9,7 @@ substance_unidades:
 substance_clases:
     resource: "@SubstanceBundle/Resources/config/routing/clases.yml"
     prefix:   /clases
+
+substance_ref:
+    resource: "@SubstanceBundle/Resources/config/routing/drogas.yml"
+    prefix:   /

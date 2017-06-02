@@ -1,0 +1,39 @@
+sustancias_index:
+    path:     /
+    defaults: { _controller: SubstanceBundle:Droga:index }
+    methods:  GET
+
+sustancias_new:
+    path:     /new
+    defaults: { _controller: SubstanceBundle:Droga:new }
+    methods:  GET
+
+sustancias_create:
+    path:     /new
+    defaults: { _controller: SubstanceBundle:Droga:create }
+    methods:  POST
+
+sustancias_edit:
+    path:     /{id}/edit
+    defaults: { _controller: SubstanceBundle:Droga:edit }
+    methods:  GET
+
+sustancias_update:
+    path:     /{id}/edit
+    defaults: { _controller: SubstanceBundle:Droga:update }
+    methods:  POST
+
+sustancias_delete:
+    path:     /{id}/delete
+    defaults: { _controller: SubstanceBundle:Droga:delete }
+    methods:  GET
+
+sustancias_image:
+    path:     /{id}/image
+    defaults: { _controller: SubstanceBundle:Droga:image }
+    methods:  GET
+
+sustancias_show:
+    path:     /{id}
+    defaults: { _controller: SubstanceBundle:Droga:show }
+    methods:  GET

@@ -5,7 +5,7 @@
 
 {% block breadcrumb %}
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">Sustancias</li>
+        <li class="breadcrumb-item"><a href="{{ path('sustancias_index') }}">Sustancias</a></li>
         <li class="breadcrumb-item"><a href="{{ path('entidades_index') }}">Entidades Reguladoras</a></li>
         <li class="breadcrumb-item active">{{ entidad.nombre }}</li>
     </ol>

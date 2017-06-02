@@ -5,3 +5,18 @@ substance_entidades:
 substance_unidades:
     resource: "@SubstanceBundle/Resources/config/routing/unidadmedida.yml"
     prefix:   /unidades
+index:
+    path:     /
+    defaults: { _controller: SubstanceBundle:Clase:index }
+
+show:
+    path:     /{id}
+    defaults: { _controller: SubstanceBundle:Clase:show }
+
+edit:
+    path:     /{id}/edit
+    defaults: { _controller: SubstanceBundle:Clase:edit }
+
+new:
+    path:     /new
+    defaults: { _controller: SubstanceBundle:Clase:new }

@@ -1,0 +1,7 @@
+{% macro item(route, title, icon, active) %}
+    <li class="{% if app.request.attributes.get('_route') starts with (active|default(route|split('_', -1)|join('_'))) %}active{% endif %}">
+        <a href="{{ path(route) }}">
+            <i class="fa fa-{{ icon }}" aria-hidden="true"></i> {{ title }}
+        </a>
+    </li>
+{% endmacro %}

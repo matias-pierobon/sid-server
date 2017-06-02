@@ -23,7 +23,6 @@
         color: #8d9ea7;
         cursor: default;
         font-size: 13px;
-        letter-spacing: 0.035em;
         padding: 0;
 
         & > a {
@@ -39,11 +38,11 @@
             width: 25px;
             text-align: center;
           }
+        }
 
-          &:active {
-            background-color: #1b1d23;
-            color: #458ab6;
-          }
+        &.active > a {
+          background-color: #1b1d23;
+          color: #458ab6;
         }
 
         &:hover > a {

@@ -14,7 +14,7 @@ class ClaseController extends Controller
         $clases = $this->getDoctrine()->getRepository('SubstanceBundle:Clase')->findAll();
         $clases = new ArrayCollection($clases);
         $criteria = Criteria::create()
-            ->orderBy('nombre', Criteria::ASC);
+            ->orderBy(array('nombre' => Criteria::ASC));
         return $this->render('SubstanceBundle:Clase:index.html.twig', array(
             'clases' => $clases->matching($criteria)
         ));
@@ -32,7 +32,7 @@ class ClaseController extends Controller
         $clases = $this->getDoctrine()->getRepository('SubstanceBundle:Clase')->findAll();
         $clases = new ArrayCollection($clases);
         $criteria = Criteria::create()
-            ->orderBy('nombre', Criteria::ASC);
+            ->orderBy(array('nombre' => Criteria::ASC));
 
         return $this->render('SubstanceBundle:Clase:edit.html.twig', array(
             'clase' => $clase,
@@ -45,7 +45,7 @@ class ClaseController extends Controller
         $clases = $this->getDoctrine()->getRepository('SubstanceBundle:Clase')->findAll();
         $clases = new ArrayCollection($clases);
         $criteria = Criteria::create()
-            ->orderBy('nombre', Criteria::ASC);
+            ->orderBy(array('nombre' => Criteria::ASC));
 
         return $this->render('SubstanceBundle:Clase:new.html.twig', array(
             'clases' => $clases->matching($criteria)

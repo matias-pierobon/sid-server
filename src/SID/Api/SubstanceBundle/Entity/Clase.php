@@ -22,6 +22,13 @@ class Clase
     private $id;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="sysDate", type="datetimetz")
+     */
+    private $sysDate;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
@@ -58,10 +65,10 @@ class Clase
     private $incompatibleCon;
 
 
-    public function incompatibilidades(){
-        return;
+    public function incompatibilidades()
+    {
+        return $this->getIncompatibleCon();
     }
-
 
 
     /**
@@ -73,6 +80,31 @@ class Clase
         $this->incompatibleConmigo = new \Doctrine\Common\Collections\ArrayCollection();
         $this->incompatibleCon = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    /**
+     * Set sysDate
+     *
+     * @param \DateTime $sysDate
+     *
+     * @return LugarFisico
+     */
+    public function setSysDate($sysDate)
+    {
+        $this->sysDate = $sysDate;
+
+        return $this;
+    }
+
+    /**
+     * Get sysDate
+     *
+     * @return \DateTime
+     */
+    public function getSysDate()
+    {
+        return $this->sysDate;
+    }
+
 
     /**
      * Get id

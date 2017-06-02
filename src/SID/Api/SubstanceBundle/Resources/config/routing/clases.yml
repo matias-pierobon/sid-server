@@ -1,0 +1,40 @@
+
+clases_sustancias_index:
+    path:     /
+    defaults: { _controller: SubstanceBundle:Clase:index }
+    methods:  GET
+
+clases_sustancias_new:
+    path:     /new
+    defaults: { _controller: SubstanceBundle:Clase:new }
+    methods:  GET
+
+clases_sustancias_create:
+    path:     /new
+    defaults: { _controller: SubstanceBundle:Clase:create }
+    methods:  POST
+
+clases_sustancias_edit:
+    path:     /{id}/edit
+    defaults: { _controller: SubstanceBundle:Clase:edit }
+    methods:  GET
+
+clases_sustancias_update:
+    path:     /{id}/edit
+    defaults: { _controller: SubstanceBundle:Clase:update }
+    methods:  POST
+
+clases_sustancias_delete:
+    path:     /{id}/delete
+    defaults: { _controller: SubstanceBundle:Clase:delete }
+    methods:  GET
+
+clases_sustancias_image:
+    path:     /{id}/image
+    defaults: { _controller: SubstanceBundle:Clase:image }
+    methods:  GET
+
+clases_sustancias_show:
+    path:     /{id}
+    defaults: { _controller: SubstanceBundle:Clase:show }
+    methods:  GET

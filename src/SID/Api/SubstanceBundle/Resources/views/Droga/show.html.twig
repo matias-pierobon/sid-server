@@ -5,64 +5,105 @@
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('sustancias_index') }}">Sustancias</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('clases_sustancias_index') }}">Clases de Sustancias</a></li>
-        <li class="breadcrumb-item active">{{ clase.nombre }}</li>
+        <li class="breadcrumb-item active">{{ droga.nombre }}</li>
     </ol>
 {% endblock %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="col col-md-4">
-            <div class="card">
-                <div class="card-block">
-                    <h4 class="card-title">Ver Clase</h4>
+    <div class="card">
+        <div class="card-block row-details">
+            <h4 class="card-title">Ver Droga</h4>
 
-                    <div class="row">
-                        <div class="col col-sm-4">Nombre:</div>
-                        <div class="col col-sm-8">{{ clase.nombre }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-sm-4">Fecha de Ingreso</div>
-                        <div class="col col-sm-8">{{ clase.sysDate | date("d/m/Y") }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-sm-4">Detalle:</div>
-                        <div class="col col-sm-8">{{ clase.detalle }}</div>
-                    </div>
-
-                    <a class="btn btn-secondary" href="{{ path('clases_sustancias_index') }}">Lista de Clases</a>
-                    <a class="btn btn-info" href="{{ path('clases_sustancias_edit', { 'id': clase.id }) }}">Editar</a>
+            <div class="row">
+                <div class="col col-sm-4">Nombre:</div>
+                <div class="col col-sm-8">{{ droga.nombre }}</div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">Fórmula molecular:</div>
+                <div class="col col-sm-8">{{ droga.formulaMolecular }}</div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">Número CAS:</div>
+                <div class="col col-sm-8">{{ droga.cas }}</div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">Sinónimos:</div>
+                <div class="col col-sm-8">
+                    <ul class="chip-list">
+                    {% for sinonimo in droga.sinonimos %}
+                        <li class="alert-info">{{ sinonimo.nombre }}</li>
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            <strong>Info!</strong> No hay sinónimos registrados para esta sustancia.
+                        </div>
+                    {% endfor %}
+                    </ul>
                 </div>
             </div>
-
-        </div>
-        <div class="col col-md-8">
-            <div class="card">
-                <div class="card-block">
-                    <h4 class="card-title">Incompatibilidades</h4>
-                </div>
-                <div class="card-block">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Fecha de Ingreso</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for c in clase.incompatibilidades %}
-                            <tr>
-                                <td>
-                                    <a href="{{ path('clases_sustancias_show', { 'id': c.id }) }}">{{ c.nombre }}</a>
-                                </td>
-                                <td>{{ c.sysDate | date('d/m/Y') }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+            <div class="row">
+                <div class="col col-sm-4">Densidad:</div>
+                <div class="col col-sm-8">{{ droga.densidad }}</div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">Clases:</div>
+                <div class="col col-sm-8">
+                    <ul class="chip-list">
+                    {% for clase in droga.clases %}
+                        <li class="alert-info">{{ clase.nombre }}</li>
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            <strong>Info!</strong> No hay clases registradas para esta sustancia.
+                        </div>
+                    {% endfor %}
+                    </ul>
                 </div>
             </div>
+            <div class="row">
+                <div class="col col-sm-4">Entidades reguladoras:</div>
+                <div class="col col-sm-8">
+                    <ul class="chip-list">
+                    {% for entidad in droga.entidades %}
+                        <li class="alert-info">{{ entidad.nombre }}</li>
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            <strong>Info!</strong> No hay entidades reguladoras que requiera esta sustancia.
+                        </div>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">Imágenes GHS:</div>
+                <div class="col col-sm-8">
+                    {% for ghs in droga.ghs %}
+                        <img src="" alt=""/>
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            <strong>Info!</strong> No hay imagenes GHS registradas para esta sustancia.
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">Recomendaciones de almacenamiento:</div>
+                <div class="col col-sm-8">{{ droga.recAlm }}</div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">Desechos:</div>
+                <div class="col col-sm-8">{{ droga.desechos }}</div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">Fecha de Ingreso</div>
+                <div class="col col-sm-8">{{ droga.fechaIngreso | date("d/m/Y") }}</div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">Acciones de emergencia:</div>
+                <div class="col col-sm-8">{{ droga.accionesEmergencia }}</div>
+            </div>
+
+            <a class="btn btn-secondary" href="{{ path('sustancias_index') }}">Lista de Sustancias</a>
+            <a class="btn btn-info" href="{{ path('sustancias_edit', { 'id': droga.id }) }}">Editar</a>
         </div>
     </div>
 {% endblock %}

@@ -102,7 +102,7 @@ class Droga
     /**
      * @var bool
      *
-     * @ORM\Column(name="rec_alm", type="boolean", nullable=true)
+     * @ORM\Column(name="rec_alm", type="text", nullable=true)
      */
     private $recAlm;
 

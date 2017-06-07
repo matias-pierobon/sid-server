@@ -1,0 +1,25 @@
+ul.chip-list{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  float: left;
+  clear: both;
+  li {
+    float: left;
+    align-items: center;
+    border: 1px solid;
+    border-radius: 16px;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    height: 32px;
+    padding-left: 12px;
+    padding-right: 12px;
+    position: relative;
+    transition-duration: .15s;
+    transition-property: box-shadow,background;
+    vertical-align: top;
+    white-space: nowrap;
+    margin: 0 10px;
+    font-weight: 200;
+  }
+}

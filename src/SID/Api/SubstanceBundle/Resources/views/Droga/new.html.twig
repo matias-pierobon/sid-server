@@ -5,38 +5,56 @@
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('sustancias_index') }}">Sustancias</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('clases_sustancias_index') }}">Clases de Sustancias</a></li>
         <li class="breadcrumb-item active">Nuevo</li>
     </ol>
 {% endblock %}
 
 {% block content %}
 
-    <form action="{{ path('clases_sustancias_create') }}" method="post">
+    <form action="{{ path('sustancias_create') }}" method="post">
         <div class="row">
-            <div class="col col-md-4">
+            <div class="col col-md-6">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">Ver Clase</h4>
-
+                        <h4 class="card-title">Editar Clase</h4>
+                        <div class="row">
+                            <div class="form-group col col-md-6">
+                                <label for="nombre">Nombre</label>
+                                <input name="nombre" type="text" class="form-control" id="nombre">
+                            </div>
+                            <div class="form-group col col-md-6">
+                                <label for="formula">Fórmula Molecular</label>
+                                <input name="formula" type="text" class="form-control" id="formula">
+                            </div></div>
+                        <div class="row">
+                            <div class="form-group col col-md-6">
+                                <label for="cas">Número Cas</label>
+                                <input name="cas" type="text" class="form-control" id="cas">
+                            </div>
+                            <div class="form-group col col-md-6">
+                                <label for="densidad">Densidad</label>
+                                <input name="densidad" type="text" class="form-control" id="densidad">
+                            </div></div>
                         <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input name="nombre" type="text" class="form-control" id="nombre">
+                            <label for="recAlm">Recomendaciones de almacenamiento</label>
+                            <textarea name="recAlm" class="form-control" id="recAlm" rows="3"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="detalle">Detalle</label>
-                            <textarea name="detalle" class="form-control" id="detalle" rows="3"></textarea>
+                            <label for="desechos">Desechos</label>
+                            <input name="desechos" type="text" class="form-control" id="desechos">
                         </div>
-                        <a class="btn btn-secondary" href="{{ path('clases_sustancias_index') }}">Lista de Clases</a>
+                        <div class="form-group">
+                            <label for="emergencias">Acciones de emergencia</label>
+                            <textarea name="emergencias" class="form-control" id="emergencias" rows="3"></textarea>
+                        </div>
+                        <a class="btn btn-secondary" href="{{ path('sustancias_index') }}">Lista de Clases</a>
                         <button type="submit" class="btn btn-primary">Crear</button>
                     </div>
                 </div>
 
-            </div>
-            <div class="col col-md-8">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">Incompatibilidades</h4>
+                        <h4 class="card-title">Clases</h4>
                     </div>
                     <div class="card-block">
                         <table class="table table-hover">
@@ -53,15 +71,156 @@
                                     <td>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input name="incompatibilidades[]" class="form-check-input"
-                                                       type="checkbox" value="{{ clase.id }}">
+                                                <input name="clases[]" class="form-check-input"
+                                                       type="checkbox"
+                                                       value="{{ clase.id }}"
+                                                />
                                             </label>
                                         </div>
                                     </td>
-                                    <td>
-                                        <a href="{{ path('clases_sustancias_show', { 'id': clase.id }) }}">{{ clase.nombre }}</a>
-                                    </td>
+                                    <td>{{ clase.nombre }}</td>
                                     <td>{{ clase.sysDate | date('d/m/Y') }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="alert alert-info" role="alert">
+                                            <strong>Info!</strong> No hay Clases registradas.
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md-6">
+
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Requiere</h4>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Entidad</th>
+                                <th>Detalle</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for entidad in entidades %}
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input name="entidades[]" class="form-check-input"
+                                                       type="checkbox"
+                                                       value="{{ entidad.id }}"
+                                                />
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>{{ entidad.nombre }}</td>
+                                    <td>{{ entidad.detalle }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="alert alert-info" role="alert">
+                                            <strong>Info!</strong> No hay entidades reguladoras registradas.
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Imagenes GHS</h4>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Nombre</th>
+                                <th>Fecha de Ingreso</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for image in ghs %}
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input name="ghs[]" class="form-check-input"
+                                                       type="checkbox"
+                                                       value="{{ image.id }}"
+                                                />
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td><img src="https://unsplash.it/64/64" alt=""/></td>
+                                    <td>{{ image.nombre }}</td>
+                                    <td>{{ c.sysDate | date('d/m/Y') }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="alert alert-info" role="alert">
+                                            <strong>Info!</strong> No hay imagenes GHS registradas.
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Sinónimos</h4>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Nombre</th>
+                                <th>Fecha de Ingreso</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for sinonimo in sinonimos %}
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input name="sinonimos[]" class="form-check-input"
+                                                       type="checkbox"
+                                                       value="{{ sinonimo.id }}"
+                                                />
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>{{ sinonimo.nombre }}</td>
+                                    <td>{{ c.sysDate | date('d/m/Y') }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="alert alert-info" role="alert">
+                                            <strong>Info!</strong> No hay sinónimos registrados.
+                                        </div>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>

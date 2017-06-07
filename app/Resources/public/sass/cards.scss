@@ -1,0 +1,30 @@
+.card{
+  margin-bottom: 15px;
+
+  .card-block{
+    &.row-details{
+      .row{
+        border-top: 1px solid #eceeef;
+        margin-left:0;
+        margin-right: 0;
+
+        &:hover{
+          background-color: rgba(0,0,0,0.075);
+        }
+
+        & > .col {
+          padding: .75rem;
+          vertical-align: top;
+
+          .alert{
+            margin: 0;
+          }
+
+          &:nth-child(1){
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}

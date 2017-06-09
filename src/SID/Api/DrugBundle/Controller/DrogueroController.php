@@ -76,7 +76,7 @@ class DrogueroController extends Controller
 
         $lugar = $em
             ->getRepository('DrugBundle:LugarFisico')
-            ->find($request->get('lugar', $droguero->getLugar()->getId()));
+            ->find($request->get('lugar'));
 
         $droguero
             ->setLatitud($lat)
@@ -92,7 +92,7 @@ class DrogueroController extends Controller
 
         $em->flush();
 
-        return $this->redirectToRoute('drug_drogueros_show', array('id' => $droguero->getId()));
+        return $this->redirectToRoute('drug_drogueros_index');
     }
 
     public function newAction()

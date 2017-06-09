@@ -21,8 +21,7 @@ class AppKernel extends Kernel
             new SID\Api\DrugBundle\DrugBundle(),
             new SID\Api\ProviderBundle\ProviderBundle(),
             new SID\Api\MovementBundle\MovementBundle(),
-            new Nelmio\CorsBundle\NelmioCorsBundle(),
-            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
+            new SID\Api\SecurityBundle\SidSecurityBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

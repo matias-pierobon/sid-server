@@ -1,0 +1,4 @@
+services:
+#    sid_security.example:
+#        class: SID\Api\SecurityBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

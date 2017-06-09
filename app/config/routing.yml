@@ -1,5 +1,6 @@
-api_login_check:
-    path: /api/login_check
+sid_security:
+    resource: "@SidSecurityBundle/Resources/config/routing.yml"
+    prefix:   /
 
 movement:
     resource: "@MovementBundle/Resources/config/routing.yml"

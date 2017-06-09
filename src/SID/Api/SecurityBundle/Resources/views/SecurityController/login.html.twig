@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}SidSecurityBundle:SecurityController:login{% endblock %}
+
+{% block body %}
+
+    <div class="card" style="margin: 70px auto; max-width: 400px;">
+        <div class="card-block">
+            {% if error is defined and error %}
+                <div class="alert alert-danger text-center" role="alert">
+                    El email y/o la contraseña son incorrectos.
+                </div>
+            {% endif %}
+
+            <form id="signInForm" action="{{ path('login') }}" method="post">
+                <div class="form-group"><input type="text" id="_username" name="_username" class="form-control"
+                                               placeholder="Nombre de Usuario" required></div>
+                <div class="form-group"><input type="password" id="_password" name="_password" class="form-control"
+                                               placeholder="Contraseña" required></div>
+                <button class="form-group btn btn-lg btn-primary btn-block" type="submit">Acceder</button>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

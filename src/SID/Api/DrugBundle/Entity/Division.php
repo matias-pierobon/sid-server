@@ -4,6 +4,7 @@ namespace SID\Api\DrugBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * Division
@@ -69,6 +70,24 @@ abstract class Division
     public abstract function getDroguero();
 
     public abstract function getPath() : ArrayCollection;
+
+    public function setImageBlob($file)
+    {
+        if (!$file){
+            $this->setImage(null);
+            $this->setImageMime(null);
+            return $this;
+        }
+        if(!$file->isValid()){
+            throw new FileException("Invalid File");
+        }
+        $imageFile    = fopen($file->getRealPath(), 'r');
+        $imageContent = fread($imageFile, $file->getClientSize());
+        fclose($imageFile);
+        $this->setImage($imageContent);
+        $this->setImageMime($file->getMimeType());
+        return $this;
+    }
 
 
     /**

@@ -1,0 +1,4 @@
+user_rest_filter:
+    path:     /
+    defaults: { _controller: UserBundle:Rest:filter }
+    methods:  GET

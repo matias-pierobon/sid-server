@@ -1,0 +1,59 @@
+{% extends "DrugBundle:Droguero:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_index') }}">Drogueros</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_show', {'id': droguero.id }) }}">{{ droguero.nombre }}</a></li>
+        <li class="breadcrumb-item active">Acceso</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <form action="{{ path('drug_drogueros_grant_access', {'id': droguero.id }) }}" method="post">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Lista de Usuarios con acceso</h4>
+            </div>
+            <div class="card-block">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Fecha de Ingreso</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        {% if not (user.id == droguero.responsable.user.id or user.isAdmin) %}
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input name="usuarios[]" class="form-check-input"
+                                                   type="checkbox"
+                                                   {% if droguero.hasAccess(user) %}checked{% endif %}
+                                                   value="{{ user.id }}"
+                                            />
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>{{ user.lastname }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.sysDate | date('d/m/Y') }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-block">
+                <a href="{{ path('drug_drogueros_index') }}" class="card-link">Mis Drogueros</a>
+                <button type="submit" class="card-link btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

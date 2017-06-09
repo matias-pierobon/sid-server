@@ -25,3 +25,8 @@ substance:
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /usuarios
+
+drug_drogueros_homepage:
+    path:     /
+    defaults: { _controller: DrugBundle:Droguero:index }
+    methods:  GET

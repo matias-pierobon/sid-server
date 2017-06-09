@@ -1,0 +1,3 @@
+user_rest:
+    resource: "@UserBundle/Resources/config/routing/rest.yml"
+    prefix:   /rest

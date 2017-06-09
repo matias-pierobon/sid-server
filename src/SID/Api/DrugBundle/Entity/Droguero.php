@@ -15,6 +15,14 @@ use SID\Api\UserBundle\Entity\User;
  */
 class Droguero extends Division
 {
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero_interno", type="string", length=255)
+     */
+    protected $numero;
+
     /**
      * @var \DateTime
      *
@@ -54,6 +62,13 @@ class Droguero extends Division
      */
     private $accesos;
 
+    /**
+     * Many Features have One Product.
+     * @ORM\ManyToOne(targetEntity="LugarFisico", inversedBy="drogueros")
+     * @ORM\JoinColumn(name="lugar_id", referencedColumnName="id")
+     */
+    private $lugar;
+
 
     public function getDroguero(){
         return $this;
@@ -79,12 +94,18 @@ class Droguero extends Division
     }
 
     public function isResponsable(User $user){
-        return $this->getResponsable()->getId() == $user->getId();
+        return $this->getResponsable()->getUser()->getId() == $user->getId();
     }
 
     public function hasAccess(User $user){
         return $this->accesos->exists(function ($key, $acceso) use ($user){
             return ($acceso->getUser()->getId() == $user->getId() and $acceso->getHasta() == null);
+        });
+    }
+
+    public function hasUnidad(UnidadEjecutora $unida){
+        return $this->unidades->exists(function ($key, DrogueroUnidad $drogueroUnidad) use ($unida){
+            return ($drogueroUnidad->getUnidad()->getId() == $unida->getId() and $drogueroUnidad->getHasta() == null);
         });
     }
 
@@ -105,6 +126,30 @@ class Droguero extends Division
         $this->accesos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->subdiviciones = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set numero
+     *
+     * @param string $numero
+     *
+     * @return Droguero
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numero
+     *
+     * @return string
+     */
+    public function getNumero()
+    {
+        return $this->numero;
     }
 
     /**
@@ -281,5 +326,29 @@ class Droguero extends Division
     public function getAccesos()
     {
         return $this->accesos;
+    }
+
+    /**
+     * Set lugar
+     *
+     * @param \SID\Api\DrugBundle\Entity\LugarFisico $lugar
+     *
+     * @return Droguero
+     */
+    public function setLugar(\SID\Api\DrugBundle\Entity\LugarFisico $lugar = null)
+    {
+        $this->lugar = $lugar;
+
+        return $this;
+    }
+
+    /**
+     * Get lugar
+     *
+     * @return \SID\Api\DrugBundle\Entity\LugarFisico
+     */
+    public function getLugar()
+    {
+        return $this->lugar;
     }
 }

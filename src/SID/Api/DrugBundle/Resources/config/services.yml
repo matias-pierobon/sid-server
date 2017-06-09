@@ -2,3 +2,8 @@ services:
 #    drug.example:
 #        class: SID\Api\DrugBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    security.access.post_voter:
+        class:  SID\Api\DrugBundle\Security\DrogueroVoter
+        public: false
+        tags:
+            - { name: security.voter }

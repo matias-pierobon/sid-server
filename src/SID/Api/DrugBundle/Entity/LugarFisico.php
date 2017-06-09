@@ -2,6 +2,7 @@
 
 namespace SID\Api\DrugBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
@@ -72,10 +73,17 @@ class LugarFisico
      */
     private $imageMime;
 
+    /**
+     * One Product has Many Features.
+     * @ORM\OneToMany(targetEntity="Droguero", mappedBy="lugar", cascade={"persist"})
+     */
+    private $drogueros;
+
 
     public function __construct()
     {
         $this->sysDate = new \DateTime();
+        $this->drogueros = new ArrayCollection();
     }
 
     public function setImageBlob($file)
@@ -272,5 +280,39 @@ class LugarFisico
     public function getImageMime()
     {
         return $this->imageMime;
+    }
+
+    /**
+     * Add droguero
+     *
+     * @param \SID\Api\DrugBundle\Entity\Droguero $droguero
+     *
+     * @return LugarFisico
+     */
+    public function addDroguero(Droguero $droguero)
+    {
+        $this->drogueros->add($droguero);
+
+        return $this;
+    }
+
+    /**
+     * Remove droguero
+     *
+     * @param \SID\Api\DrugBundle\Entity\Droguero $droguero
+     */
+    public function removeDroguero(Droguero $droguero)
+    {
+        $this->drogueros->removeElement($droguero);
+    }
+
+    /**
+     * Get drogueros
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDrogueros()
+    {
+        return $this->drogueros;
     }
 }

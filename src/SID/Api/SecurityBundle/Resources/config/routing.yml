@@ -1,3 +1,5 @@
 login:
     path:     /login
     defaults: { _controller: SidSecurityBundle:SecurityController:login }
+logout:
+    path: /logout

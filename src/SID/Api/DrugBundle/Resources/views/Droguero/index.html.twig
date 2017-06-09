@@ -1,0 +1,44 @@
+{% extends "DrugBundle:Droguero:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Drogueros</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <a class="btn btn-primary" href="{{ path('drug_drogueros_new') }}">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Agregar
+    </a>
+    <p></p>
+
+    <div class="row">
+        {% for droguero in drogueros %}
+            <div class="col col-sm-6 col-md-4">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">{{ droguero.nombre }}</h4>
+                        <p class="card-text">{{ droguero.detalle }}</p>
+                        <p class="card-text">Responsable: {{ droguero.responsable.user.username }}</p>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        {% if is_granted('entry', droguero) %}
+                            <a href="{{ path('drug_drogueros_show', {'id': droguero.id}) }}" class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i>
+                                Ingresar</a>
+                        {% endif %}
+                        {% if is_granted('access', droguero) %}
+                            <a href="{{ path('drug_drogueros_access', {'id': droguero.id }) }}" class="btn btn-info"><i class="fa fa-users" aria-hidden="true"></i> Acceso</a>
+                        {% endif %}
+                        {% if is_granted('edit', droguero) %}
+                            <a href="{{ path('drug_drogueros_edit', {'id': droguero.id}) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>
+                                Editar</a>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

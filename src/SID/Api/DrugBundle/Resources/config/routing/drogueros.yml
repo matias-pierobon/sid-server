@@ -1,0 +1,50 @@
+
+drug_drogueros_index:
+    path:     /
+    defaults: { _controller: DrugBundle:Droguero:index }
+    methods:  GET
+
+drug_drogueros_new:
+    path:     /new
+    defaults: { _controller: DrugBundle:Droguero:new }
+    methods:  GET
+
+drug_drogueros_create:
+    path:     /new
+    defaults: { _controller: DrugBundle:Droguero:create }
+    methods:  POST
+
+drug_drogueros_edit:
+    path:     /{id}/edit
+    defaults: { _controller: DrugBundle:Droguero:edit }
+    methods:  GET
+
+drug_drogueros_update:
+    path:     /{id}/edit
+    defaults: { _controller: DrugBundle:Droguero:update }
+    methods:  POST
+
+drug_drogueros_access:
+    path:     /{id}/access
+    defaults: { _controller: DrugBundle:Droguero:access }
+    methods:  GET
+
+drug_drogueros_grant_access:
+    path:     /{id}/access
+    defaults: { _controller: DrugBundle:Droguero:grantAccess }
+    methods:  POST
+
+drug_drogueros_delete:
+    path:     /{id}/delete
+    defaults: { _controller: DrugBundle:Droguero:delete }
+    methods:  GET
+
+drug_drogueros_image:
+    path:     /{id}/image
+    defaults: { _controller: DrugBundle:Droguero:image }
+    methods:  GET
+
+drug_drogueros_show:
+    path:     /{id}
+    defaults: { _controller: DrugBundle:Droguero:show }
+    methods:  GET

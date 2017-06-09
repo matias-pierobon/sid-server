@@ -1,0 +1,108 @@
+{% extends "DrugBundle:Droguero:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_index') }}">Drogueros</a></li>
+        <li class="breadcrumb-item">{{ droguero.nombre }}</a></li>
+        <li class="breadcrumb-item active">Editar</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <form action="{{ path('drug_drogueros_update', {'id': droguero.id}) }}" method="post" enctype="multipart/form-data">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Editar Droguero</h4>
+
+                <div class="row">
+                    <div class="form-group col col-md-6">
+                        <label for="nombre">Nombre</label>
+                        <input name="nombre" type="text" class="form-control" id="nombre" value="{{ droguero.nombre }}">
+                    </div>
+                    <div class="form-group col col-md-6">
+                        <label for="numero">Número Interno</label>
+                        <input name="numero" type="text" class="form-control" id="numero" value="{{ droguero.numero }}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col col-sm-6">
+                        <label for="lat">Latitud</label>
+                        <input name="lat" type="text" class="form-control" id="lat" value="{{ droguero.latitud }}">
+                    </div>
+                    <div class="form-group col col-sm-6">
+                        <label for="long">Longitud</label>
+                        <input name="long" type="text" class="form-control" id="long" value="{{ droguero.longitud }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lugar">Lugar Físico</label>
+                    <select class="form-control" id="lugar" name="lugar">
+                        {% for lugar in lugares %}
+                            <option value="{{ lugar.id }}"
+                                    {% if droguero.lugar and droguero.lugar.id == lugar.id %}selected{% endif %} >{{ lugar.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="form-group col col-md-6">
+                        <label for="unidades">Unidades</label>
+                        <select multiple class="form-control" id="unidades" name="unidades[]">
+                            {% for unidad in unidades %}
+                                <option value="{{ unidad.id }}"
+                                        {% if droguero.hasUnidad(unidad) %}selected{% endif %} >{{ unidad.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col col-md-6">
+                        <label for="responsable">Responsable</label>
+                        <select class="form-control" id="responsable" name="responsable">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="image">Imagen</label>
+                    <input name="image" type="file" class="form-control-file" id="image" aria-describedby="fileHelp">
+                    <small id="fileHelp" class="form-text text-muted">Imagen del lugar</small>
+                </div>
+                <div class="form-group">
+                    <label for="detalle">Detalle</label>
+                    <textarea name="detalle" class="form-control" id="detalle" rows="3"></textarea>
+                </div>
+
+                <a class="btn btn-secondary" href="{{ path('clases_sustancias_index') }}">Lista de Clases</a>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const unidades = jQuery('#unidades')
+        const responsable = jQuery('#responsable')
+
+        const values = () => unidades.val()
+        const createOption = user => jQuery(
+            user.id == {{ droguero.responsable.id }}
+                ? `<option value="${user.id}" selected>${user.apellido}, ${user.nombre}</option>`
+                :`<option value="${user.id}">${user.apellido}, ${user.nombre}</option>`
+        )
+
+        const fetch = () => (
+            jQuery.getJSON(
+                "{{ path('user_rest_filter') }}",
+                {unidades: values()},
+                response => {
+                    responsable.html("")
+                    response.data.forEach(user => responsable.append(createOption(user)))
+                }
+            )
+        )
+
+        unidades.on('change', e => fetch())
+
+        fetch()
+    </script>
+{% endblock %}

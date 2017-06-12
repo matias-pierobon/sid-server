@@ -44,7 +44,6 @@ drug_drogueros_image:
     defaults: { _controller: DrugBundle:Droguero:image }
     methods:  GET
 
-drug_drogueros_show:
-    path:     /{id}
-    defaults: { _controller: DrugBundle:Droguero:show }
-    methods:  GET
+drug_drogueros_divisiones:
+    resource: "@DrugBundle/Resources/config/routing/divisiones.yml"
+    prefix:   /{droguero}

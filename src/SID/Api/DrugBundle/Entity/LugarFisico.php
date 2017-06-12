@@ -5,7 +5,7 @@ namespace SID\Api\DrugBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * LugarFisico
@@ -48,7 +48,7 @@ class LugarFisico
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="nombre", type="string", length=255, unique=true)
      */
     private $nombre;
 
@@ -86,6 +86,10 @@ class LugarFisico
         $this->drogueros = new ArrayCollection();
     }
 
+    /**
+     * @param UploadedFile $file
+     * @return $this
+     */
     public function setImageBlob($file)
     {
         if (!$file){

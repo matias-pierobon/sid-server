@@ -1,0 +1,30 @@
+
+drug_drogueros_show:
+    path:     /
+    defaults: { _controller: DrugBundle:Division:show }
+    methods:  GET
+
+drug_drogueros_division_show:
+    path:     /{division}
+    defaults: { _controller: DrugBundle:Division:show }
+    methods:  GET
+
+drug_drogueros_division_new:
+    path:     /{division}/new
+    defaults: { _controller: DrugBundle:Division:new }
+    methods:  GET
+
+drug_drogueros_division_create:
+    path:     /{division}/new
+    defaults: { _controller: DrugBundle:Division:create }
+    methods:  POST
+
+drug_drogueros_division_edit:
+    path:     /{division}/edit
+    defaults: { _controller: DrugBundle:Division:edit }
+    methods:  GET
+
+drug_drogueros_division_update:
+    path:     /{division}/edit
+    defaults: { _controller: DrugBundle:Division:update }
+    methods:  POST

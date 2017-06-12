@@ -5,7 +5,7 @@
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_index') }}">Drogueros</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_show', {'id': droguero.id }) }}">{{ droguero.nombre }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_show', {'droguero': droguero.id }) }}">{{ droguero.nombre }}</a></li>
         <li class="breadcrumb-item active">Acceso</li>
     </ol>
 {% endblock %}
@@ -23,7 +23,8 @@
                         <th></th>
                         <th>Apellido</th>
                         <th>Nombre</th>
-                        <th>Fecha de Ingreso</th>
+                        <th>Email</th>
+                        <th>Nombre de Usuario</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,7 +44,8 @@
                                 </td>
                                 <td>{{ user.lastname }}</td>
                                 <td>{{ user.name }}</td>
-                                <td>{{ user.sysDate | date('d/m/Y') }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.username }}</td>
                             </tr>
                         {% endif %}
                     {% endfor %}

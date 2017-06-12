@@ -28,7 +28,7 @@ class Subdivision extends Division
     private $parent;
 
 
-    public function getDroguero(){
+    public function getDroguero() : Droguero{
         return $this->parent->getDroguero();
     }
 
@@ -37,6 +37,11 @@ class Subdivision extends Division
         $path = $this->parent->getPath();
         $path->add($this);
         return $path;
+    }
+
+    public function __toString()
+    {
+        return $this->getAlias();
     }
 
 

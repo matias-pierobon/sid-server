@@ -24,7 +24,7 @@ class Tipo
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="nombre", type="string", length=255, unique=true)
      */
     private $nombre;
 

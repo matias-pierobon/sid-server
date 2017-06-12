@@ -29,6 +29,9 @@ class DrogueroVoter extends Voter
             },
             "access" => function(Droguero $droguero, User $user){
                 return $droguero->isResponsable($user);
+            },
+            "config" => function(Droguero $droguero, User $user){
+                return $droguero->isResponsable($user);
             }
         ));
     }

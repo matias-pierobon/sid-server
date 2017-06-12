@@ -90,6 +90,31 @@ class DrogueroController extends Controller
             $droguero->setImageBlob($request->files->get('image'));
         }
 
+        $unityRepository = $em->getRepository('UnityBundle:UnidadEjecutora');
+        $unidades =  new ArrayCollection($request->get('unidades', array()));
+
+        /* @var DrogueroUnidad $unidad */
+        foreach ($droguero->getUnidades() as $unidad) {
+            if(!$unidades->contains($unidad->getUnidad()->getId()))
+                $unidad->setHasta(new \DateTime());
+        }
+        foreach ( $unidades as $id) {
+            $droguero->addUnidad($unityRepository->find($id));
+        }
+
+        $user = $em->getRepository('UserBundle:User')->find($request->get('responsable'));
+        if(!$droguero->isResponsable($user)){
+            $responsable = $droguero->getResponsable();
+            if($responsable)
+                $responsable->setHasta(new \DateTime());
+
+            $responsable = new Responsable();
+            $responsable
+                ->setDroguero($droguero)
+                ->setUser($user);
+            $em->persist($responsable);
+        }
+
         $em->flush();
 
         return $this->redirectToRoute('drug_drogueros_index');
@@ -202,7 +227,7 @@ class DrogueroController extends Controller
 
         /* @var Acceso $acceso */
         foreach ($droguero->getAccesos() as $acceso){
-            if(!$users->exists(function (User $user) use ($acceso){
+            if(!$users->exists(function ($index, User $user) use ($acceso){
                 return $user->getId() == $acceso->getUser()->getId() && $acceso->getHasta() != null;
             })){
                 $acceso->setHasta(new \DateTime());

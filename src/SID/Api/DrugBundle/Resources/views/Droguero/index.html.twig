@@ -9,11 +9,13 @@
 {% endblock %}
 
 {% block content %}
-    <a class="btn btn-primary" href="{{ path('drug_drogueros_new') }}">
-        <i class="fa fa-plus" aria-hidden="true"></i>
-        Agregar
-    </a>
-    <p></p>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-primary" href="{{ path('drug_drogueros_new') }}">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Agregar
+        </a>
+        <p></p>
+    {% endif %}
 
     <div class="row">
         {% for droguero in drogueros %}
@@ -24,21 +26,31 @@
                         <p class="card-text">{{ droguero.detalle }}</p>
                         <p class="card-text">Responsable: {{ droguero.responsable.user.username }}</p>
                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                        {% if is_granted('entry', droguero) %}
-                            <a href="{{ path('drug_drogueros_show', {'id': droguero.id}) }}" class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i>
-                                Ingresar</a>
-                        {% endif %}
-                        {% if is_granted('access', droguero) %}
-                            <a href="{{ path('drug_drogueros_access', {'id': droguero.id }) }}" class="btn btn-info"><i class="fa fa-users" aria-hidden="true"></i> Acceso</a>
-                        {% endif %}
-                        {% if is_granted('edit', droguero) %}
-                            <a href="{{ path('drug_drogueros_edit', {'id': droguero.id}) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>
-                                Editar</a>
-                        {% endif %}
+                            {% if is_granted('entry', droguero) %}
+                                <a href="{{ path('drug_drogueros_show', {'droguero': droguero.id}) }}"
+                                   class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i>
+                                    Ingresar</a>
+                            {% endif %}
+                            {% if is_granted('access', droguero) %}
+                                <a href="{{ path('drug_drogueros_access', {'id': droguero.id }) }}"
+                                   class="btn btn-info"><i class="fa fa-users" aria-hidden="true"></i> Acceso</a>
+                            {% endif %}
+                            {% if is_granted('edit', droguero) %}
+                                <a href="{{ path('drug_drogueros_edit', {'id': droguero.id}) }}"
+                                   class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>
+                                    Editar</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
+        {% else %}
+            <div class="col col-sm-12">
+                <div class="alert alert-info" role="alert">
+                    <strong>Info!</strong> No hay drogueros.
+                </div>
+            </div>
+
         {% endfor %}
     </div>
 {% endblock %}

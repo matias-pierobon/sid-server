@@ -62,12 +62,12 @@ abstract class Division
 
     /**
      * One Category has Many Categories.
-     * @ORM\OneToMany(targetEntity="Subdivision", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Subdivision", mappedBy="parent", cascade={"persist"})
      */
     protected $subdivisiones;
 
 
-    public abstract function getDroguero();
+    public abstract function getDroguero() : Droguero;
 
     public abstract function getPath() : ArrayCollection;
 

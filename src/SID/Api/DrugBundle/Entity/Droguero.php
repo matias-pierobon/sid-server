@@ -70,20 +70,33 @@ class Droguero extends Division
     private $lugar;
 
 
-    public function getDroguero(){
+    /**
+     * @return Droguero
+     */
+    public function getDroguero() : Droguero{
         return $this;
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getPath(): ArrayCollection
     {
         return new ArrayCollection(array($this));
     }
 
+    /**
+     * @return array
+     */
     public function getDrogas()
     {
         return $this->stocks->toArray();
     }
 
+
+    /**
+     * @return Responsable|null
+     */
     public function getResponsable(){
         foreach ($this->getResponsables() as $responsable) {
             if($responsable->getHasta() == null){
@@ -93,25 +106,49 @@ class Droguero extends Division
         return null;
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function isResponsable(User $user){
         return $this->getResponsable()->getUser()->getId() == $user->getId();
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function hasAccess(User $user){
         return $this->accesos->exists(function ($key, $acceso) use ($user){
             return ($acceso->getUser()->getId() == $user->getId() and $acceso->getHasta() == null);
         });
     }
 
+    /**
+     * @param UnidadEjecutora $unida
+     * @return bool
+     */
     public function hasUnidad(UnidadEjecutora $unida){
         return $this->unidades->exists(function ($key, DrogueroUnidad $drogueroUnidad) use ($unida){
             return ($drogueroUnidad->getUnidad()->getId() == $unida->getId() and $drogueroUnidad->getHasta() == null);
         });
     }
 
+    /**
+     * @param $user
+     * @return bool
+     */
     public function hasInclusiveAccess($user)
     {
         return $this->hasAccess($user) || $this->isResponsable($user);
+    }
+
+    /**
+     * @return string
+     */
+    function __toString()
+    {
+        return $this->getNombre();
     }
 
 
@@ -233,7 +270,10 @@ class Droguero extends Division
      */
     public function addUnidad(UnidadEjecutora $unidad)
     {
-        $this->unidades->add(new DrogueroUnidad($this, $unidad));
+        if(! $this->getUnidades()->exists(function ($index, DrogueroUnidad $drogUnidad) use ($unidad){
+            return $unidad->getId() == $drogUnidad->getUnidad()->getId() && $drogUnidad->getHasta() == null;
+        }))
+            $this->unidades->add(new DrogueroUnidad($this, $unidad));
 
         return $this;
     }

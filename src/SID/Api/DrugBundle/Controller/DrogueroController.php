@@ -12,6 +12,7 @@ use SID\Api\UnityBundle\Entity\UsuarioUnidad;
 use SID\Api\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class DrogueroController extends Controller
@@ -249,6 +250,14 @@ class DrogueroController extends Controller
     public function deleteAction(Droguero $droguero)
     {
         throw new UnauthorizedHttpException("barear");
+    }
+
+    public function imageAction(Droguero $droguero) {
+        return new Response(
+            stream_get_contents($droguero->getImage()),
+            200,
+            array('Content-Type' => $droguero->getImageMime())
+        );
     }
 
 }

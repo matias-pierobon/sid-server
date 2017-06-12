@@ -21,7 +21,7 @@
         <div class="card-block">
             <h4 class="card-title">Nueva Subdivisión</h4>
 
-            <form action="{{ path('drug_drogueros_division_create', {'droguero': division.droguero.id, 'division': division.id}) }}"
+            <form id="form" action="{{ path('drug_drogueros_division_create', {'droguero': division.droguero.id, 'division': division.id}) }}"
                   method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="form-group col col-md-6">
@@ -46,4 +46,57 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
+    <script>
+        $.validator.addMethod("nonNumeric", function (value, element) {
+            return this.optional(element) || isNaN(Number(value));
+        });
+
+        $('#form').validate({
+            rules: {
+                nombre: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                alias: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                detalle: {
+                    nonNumeric: true,
+                },
+            },
+            messages: {
+                nombre: {
+                    required: "Ingrese un nombre",
+                    nonNumeric: "El nombre debe ser texto",
+                },
+                alias: {
+                    required: "Ingrese un alias",
+                    nonNumeric: "El alias debe ser texto",
+                },
+                detalle: {
+                    required: "Ingrese un detalle",
+                    nonNumeric: "El detalle debe ser texto",
+                },
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-warning');
+                $(element).addClass('form-control-warning');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-warning');
+                $(element).removeClass('form-control-warning');
+                $(element).closest('.form-group').addClass('has-success');
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler: function (form) {
+                form.submit();
+            }
+        })
+    </script>
 {% endblock %}

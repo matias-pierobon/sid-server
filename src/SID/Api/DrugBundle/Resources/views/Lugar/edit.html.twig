@@ -15,7 +15,7 @@
         <div class="card-block">
             <h4 class="card-title">Editar Lugar</h4>
 
-            <form action="{{ path('lugares_fisicos_update', {'id': lugar.id}) }}" method="post" enctype="multipart/form-data">
+            <form id="form" action="{{ path('lugares_fisicos_update', {'id': lugar.id}) }}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input name="nombre" type="text" class="form-control" id="nombre" value="{{ lugar.nombre }}">
@@ -44,4 +44,48 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
+    <script>
+        $.validator.addMethod("nonNumeric", function (value, element) {
+            return this.optional(element) || isNaN(Number(value));
+        });
+
+        $('#form').validate({
+            rules: {
+                nombre: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                detalle: {
+                    nonNumeric: true,
+                },
+            },
+            messages: {
+                nombre: {
+                    required: "Ingrese un nombre",
+                    nonNumeric: "El nombre debe ser texto",
+                },
+                detalle: {
+                    nonNumeric: "El detalle debe ser texto",
+                },
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-warning');
+                $(element).addClass('form-control-warning');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-warning');
+                $(element).removeClass('form-control-warning');
+                $(element).closest('.form-group').addClass('has-success');
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler: function (form) {
+                form.submit();
+            }
+        })
+    </script>
 {% endblock %}

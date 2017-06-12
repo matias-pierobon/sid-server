@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{{ path('sustancias_update', {'id': droga.id}) }}" method="post">
+    <form id="form" action="{{ path('sustancias_update', {'id': droga.id}) }}" method="post">
         <div class="row">
             <div class="col col-md-6">
                 <div class="card">
@@ -47,7 +47,7 @@
                             <label for="emergencias">Acciones de emergencia</label>
                             <textarea name="emergencias" class="form-control" id="emergencias" rows="3">{{ droga.accionesEmergencia }}</textarea>
                         </div>
-                        <a class="btn btn-secondary" href="{{ path('sustancias_index') }}">Lista de Clases</a>
+                        <a class="btn card-link" href="{{ path('sustancias_index') }}">Lista de Clases</a>
                         <button type="submit" class="btn btn-primary">Editar</button>
                     </div>
                 </div>
@@ -229,3 +229,66 @@
         </div>
     </form>
 {% endblock %}
+
+
+
+{% block javascripts %}
+    <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
+    <script>
+        $.validator.addMethod("nonNumeric", function (value, element) {
+            return this.optional(element) || isNaN(Number(value));
+        });
+
+        $('#form').validate({
+            rules: {
+                nombre: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                formula: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                cas: {
+                    required: true,
+                },
+                densidad: {
+                },
+                recAlm: {
+                },
+                desechos: {
+                },
+                emergencias: {
+                },
+            },
+            messages: {
+                nombre: {
+                    required: "Ingrese un nombre",
+                    nonNumeric: "El nombre debe ser texto",
+                },
+                formula: {
+                    required: "Ingrese una fórmula",
+                    nonNumeric: "La fórmula es inválida",
+                },
+                cas: {
+                    required: "Ingrese un número CAS",
+                },
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-warning');
+                $(element).addClass('form-control-warning');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-warning');
+                $(element).removeClass('form-control-warning');
+                $(element).closest('.form-group').addClass('has-success');
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler: function (form) {
+                form.submit();
+            }
+        })
+    </script>
+{% endblock %}
+

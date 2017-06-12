@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{{ path('drug_drogueros_update', {'id': droguero.id}) }}" method="post" enctype="multipart/form-data">
+    <form id="form" action="{{ path('drug_drogueros_update', {'id': droguero.id}) }}" method="post" enctype="multipart/form-data">
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">Editar Droguero</h4>
@@ -71,7 +71,7 @@
                     <textarea name="detalle" class="form-control" id="detalle" rows="3"></textarea>
                 </div>
 
-                <a class="btn card-link" href="{{ path('clases_sustancias_index') }}">Lista de Clases</a>
+                <a class="btn card-link" href="{{ path('drug_drogueros_index') }}">Mis Drogueros</a>
                 <button type="submit" class="btn btn-primary">Crear</button>
             </div>
         </div>
@@ -79,7 +79,56 @@
 {% endblock %}
 
 {% block javascripts %}
+
+    <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
     <script>
+
+        $.validator.addMethod("nonNumeric", function (value, element) {
+            return this.optional(element) || isNaN(Number(value));
+        });
+
+        $('#form').validate({
+            rules: {
+                nombre: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                numero: {
+                    required: true,
+                },
+                detalle: {
+                    nonNumeric: true,
+                },
+            },
+            messages: {
+                nombre: {
+                    required: "Ingrese un nombre",
+                    nonNumeric: "El nombre debe ser texto",
+                },
+                numero: {
+                    required: "Ingrese un número interno"
+                },
+                detalle: {
+                    required: "Ingrese un detalle",
+                    nonNumeric: "El detalle debe ser texto",
+                },
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-warning');
+                $(element).addClass('form-control-warning');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-warning');
+                $(element).removeClass('form-control-warning');
+                $(element).closest('.form-group').addClass('has-success');
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler: function (form) {
+                form.submit();
+            }
+        })
+
         const unidades = jQuery('#unidades')
         const responsable = jQuery('#responsable')
 
@@ -87,7 +136,7 @@
         const createOption = user => jQuery(
             user.id == {{ droguero.responsable.user.id }}
                 ? `<option value="${user.id}" selected>${user.apellido}, ${user.nombre}</option>`
-                :`<option value="${user.id}">${user.apellido}, ${user.nombre}</option>`
+                : `<option value="${user.id}">${user.apellido}, ${user.nombre}</option>`
         )
 
         const fetch = () => (
@@ -96,7 +145,7 @@
                 {unidades: values()},
                 response => {
                     responsable.html("")
-                    _.each(response.data, user => responsable.append( createOption(user) ))
+                    _.each(response.data, user => responsable.append(createOption(user)))
                 }
             )
         )
@@ -104,5 +153,6 @@
         unidades.on('change', e => fetch())
 
         fetch()
+
     </script>
 {% endblock %}

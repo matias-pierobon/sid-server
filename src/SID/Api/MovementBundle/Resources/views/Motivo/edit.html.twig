@@ -30,3 +30,47 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
+    <script>
+        $.validator.addMethod("nonNumeric", function (value, element) {
+            return this.optional(element) || isNaN(Number(value));
+        });
+
+        $('#sid_api_movementbundle_motivo').validate({
+            rules: {
+                sid_api_movementbundle_motivo_nombre: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                sid_api_movementbundle_motivo_detalle: {
+                    nonNumeric: true,
+                },
+            },
+            messages: {
+                sid_api_movementbundle_motivo_nombre: {
+                    required: "Ingrese un nombre",
+                    nonNumeric: "El nombre debe ser texto",
+                },
+                sid_api_movementbundle_motivo_detalle: {
+                    nonNumeric: "El detalle debe ser texto",
+                },
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-warning');
+                $(element).addClass('form-control-warning');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-warning');
+                $(element).removeClass('form-control-warning');
+                $(element).closest('.form-group').addClass('has-success');
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler: function (form) {
+                form.submit();
+            }
+        })
+    </script>
+{% endblock %}

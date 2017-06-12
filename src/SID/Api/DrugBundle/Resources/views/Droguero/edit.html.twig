@@ -96,7 +96,7 @@
                 {unidades: values()},
                 response => {
                     responsable.html("")
-                    response.data.forEach(user => responsable.append(createOption(user)))
+                    _.each(response.data, user => responsable.append( createOption(user) ))
                 }
             )
         )

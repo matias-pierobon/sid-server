@@ -10,6 +10,7 @@ const buildSrc = `./web/dist`
 const nodeModules = `./node_modules/`
 const jsDirs = [
     './node_modules/jquery/dist/jquery.js',
+    './node_modules/lodash/lodash.js',
     './node_modules/tether/dist/js/tether.js',
     './node_modules/select2/dist/js/select2.full.js',
     './node_modules/bootstrap/dist/js/bootstrap.js',

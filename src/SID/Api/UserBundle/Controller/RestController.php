@@ -3,6 +3,7 @@
 namespace SID\Api\UserBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use SID\Api\UnityBundle\Entity\UnidadEjecutora;
 use SID\Api\UnityBundle\Entity\UsuarioUnidad;
 use SID\Api\UserBundle\Entity\User;
@@ -31,8 +32,11 @@ class RestController extends Controller
             }
         }
 
+        $criteria = Criteria::create()
+            ->orderBy(array('lastname' => Criteria::ASC, 'name' => Criteria::ASC));
+
         return new JsonResponse(array(
-            'data' => $this->serializeUsers($users)
+            'data' => $this->serializeUsers($users->matching($criteria))
         ));
     }
 

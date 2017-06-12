@@ -40,7 +40,7 @@ class ListUserCommand extends ContainerAwareCommand
                     $user->getName(),
                     $user->getLastname(),
                     $user->isAdmin() ? 'Admin' : 'User',
-                    $user->getSysDate()->format("d/m/Y")
+                    $user->getSysDate()->format("d/m/Y H:m:s")
                 );
             })->toArray()
         );

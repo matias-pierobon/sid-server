@@ -15,10 +15,15 @@
         <div class="card-block">
             <h4 class="card-title">Editar Unidad</h4>
             {{ form_start(edit_form) }}
-                {{ form_widget(edit_form) }}
-                <input type="submit" value="Editar" />
+                {{ form_widget(edit_form) }}<a class="card-link btn" href="{{ path('unidades_index') }}">Lista de Unidades</a>
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                Editar
+            </button>
+            <a class="btn btn-danger" href="{{ path('unidades_delete', { 'id': unidadEjecutora.id }) }}">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Eliminar</a>
             {{ form_end(edit_form) }}
-            <a href="{{ path('unidades_index') }}">Lista de Unidades</a>
         </div>
     </div>
 {% endblock %}

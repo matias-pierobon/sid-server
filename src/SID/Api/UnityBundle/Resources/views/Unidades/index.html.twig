@@ -12,7 +12,6 @@
         <h4 class="card-title">
             Listado de Unidades
             <div class="btn-group pull-right">
-                <a class="btn btn-secondary" href="{{ path('tipo_index') }}">Tipos de Unidades</a>
                 <a class="btn btn-primary" href="{{ path('unidades_new') }}">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     Agregar
@@ -37,10 +36,10 @@
                 <td>{{ unidad.detalle |slice(0, 40) ~ '...' }}</td>
                 <td>
                     <div class="btn-group">
-                        <a class="btn btn-outline-warning" data-toggle="tooltip" title="Ver" href="{{ path('unidades_show', { 'id': unidad.id }) }}">
+                        <a class="btn btn-warning" data-toggle="tooltip" title="Ver" href="{{ path('unidades_show', { 'id': unidad.id }) }}">
                             <i class="fa fa-info" aria-hidden="true"></i>
                         </a>
-                        <a class="btn btn-outline-info" data-toggle="tooltip" title="Editar" href="{{ path('unidades_edit', { 'id': unidad.id }) }}">
+                        <a class="btn btn-info" data-toggle="tooltip" title="Editar" href="{{ path('unidades_edit', { 'id': unidad.id }) }}">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
                     </div>

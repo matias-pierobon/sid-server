@@ -16,10 +16,9 @@
 
         {{ form_start(form) }}
             {{ form_widget(form) }}
-            <input type="submit" value="Agregar" />
+        <a class="card-link btn" href="{{ path('unidades_index') }}">Lista de Unidades</a>
+        <input  class="btn btn-primary" type="submit" value="Crear"/>
         {{ form_end(form) }}
-
-        <a href="{{ path('unidades_index') }}">Lista de Unidades</a>
     </div>
 </div>
 {% endblock %}

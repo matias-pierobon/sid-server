@@ -40,8 +40,8 @@
                             <td>{% if lugar.latitud and lugar.longitud %}({{ lugar.latitud }} - {{ lugar.longitud }}){% else %} (...) {% endif %}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="{{ path('lugares_fisicos_show', { 'id': lugar.id }) }}" class="btn btn-outline-warning"><i class="fa fa-info" aria-hidden="true"></i></a>
-                                    <a href="{{ path('lugares_fisicos_edit', { 'id': lugar.id }) }}" class="btn btn-outline-info"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <a href="{{ path('lugares_fisicos_show', { 'id': lugar.id }) }}" class="btn btn-warning"><i class="fa fa-info" aria-hidden="true"></i></a>
+                                    <a href="{{ path('lugares_fisicos_edit', { 'id': lugar.id }) }}" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 </div>
                             </td>
                         </tr>

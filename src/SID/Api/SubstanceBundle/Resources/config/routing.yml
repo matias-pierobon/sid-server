@@ -10,6 +10,10 @@ substance_clases:
     resource: "@SubstanceBundle/Resources/config/routing/clases.yml"
     prefix:   /clases
 
+substance_sinonimo:
+    resource: "@SubstanceBundle/Resources/config/routing/sinonimo.yml"
+    prefix:   /sinonimos
+
 substance_ref:
     resource: "@SubstanceBundle/Resources/config/routing/drogas.yml"
     prefix:   /

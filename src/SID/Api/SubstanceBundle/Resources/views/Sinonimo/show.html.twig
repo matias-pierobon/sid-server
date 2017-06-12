@@ -1,0 +1,32 @@
+{% extends 'SubstanceBundle:Sinonimo:base.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('sustancias_index') }}">Sustancias</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('sinonimo_index') }}">Sinónimos</a></li>
+        <li class="breadcrumb-item active">{{ sinonimo.nombre }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Sinónimo</h4>
+
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ sinonimo.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ sinonimo.nombre }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <a class="card-link btn" href="{{ path('sinonimo_index') }}">Lista de Sinónimos</a>
+            <a class="card-link btn btn-info" href="{{ path('sinonimo_edit', { 'id': sinonimo.id }) }}">Editar</a>
+        </div>
+    </div>
+{% endblock %}

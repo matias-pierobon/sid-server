@@ -2,6 +2,10 @@ drug_lugares:
     resource: "@DrugBundle/Resources/config/routing/lugares.yml"
     prefix:   /lugares
 
+drug_calidades:
+    resource: "@DrugBundle/Resources/config/routing/calidades.yml"
+    prefix:   /calidades
+
 drug_drogueros:
     resource: "@DrugBundle/Resources/config/routing/drogueros.yml"
     prefix:   /

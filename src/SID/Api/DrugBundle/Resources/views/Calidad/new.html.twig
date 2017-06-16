@@ -1,0 +1,25 @@
+{% extends "DrugBundle:Calidad:base.html.twig" %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_index') }}">Drogueros</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('calidades_index') }}">Calidades</a></li>
+        <li class="breadcrumb-item active">Nueva</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Nueva Calidad</h4>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <a class="btn card-link" href="{{ path('calidades_index') }}">Lista de Calidades</a>
+            <button type="submit" class="btn btn-primary">Crear</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

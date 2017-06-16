@@ -1,0 +1,50 @@
+{% extends 'DrugBundle:Calidad:base.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_index') }}">Drogueros</a></li>
+        <li class="breadcrumb-item active">Calidades de Sustancias</a></li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">
+                Listado de Calidades
+                <div class="btn-group pull-right">
+                    <a class="btn btn-primary" href="{{ path('calidades_new') }}">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Agregar
+                    </a>
+                </div>
+            </h4>
+        </div>
+        <div class="card-block">
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Detalle</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for calidad in calidads %}
+                    <tr>
+                        <td>{{ calidad.nombre }}</td>
+                        <td>{{ calidad.detalle }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="{{ path('calidades_edit', { 'id': calidad.id }) }}" class="btn btn-info"><i
+                                            class="fa fa-pencil" aria-hidden="true"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

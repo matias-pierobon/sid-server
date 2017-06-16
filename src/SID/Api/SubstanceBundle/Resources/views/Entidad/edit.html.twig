@@ -20,8 +20,7 @@
             {{ form_widget(edit_form) }}
             <a class="btn btn-secondary" href="{{ path('entidades_index') }}">Lista de Entidades</a>
             <button class="btn btn-primary" type="submit">
-                <i class="fa fa-pencil" aria-hidden="true"></i>
-                Editar
+                <i class="fa fa-save"></i> Guardar
             </button>
             <a class="btn btn-danger" href="{{ path('entidades_delete', { 'id': entidad.id }) }}">
                 <i class="fa fa-trash" aria-hidden="true"></i>

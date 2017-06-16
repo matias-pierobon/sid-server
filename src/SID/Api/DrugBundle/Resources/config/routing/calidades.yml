@@ -1,0 +1,24 @@
+calidades_index:
+    path:     /
+    defaults: { _controller: "DrugBundle:Calidad:index" }
+    methods:  GET
+calidades_new:
+    path:     /new
+    defaults: { _controller: "DrugBundle:Calidad:new" }
+    methods:  [GET, POST]
+
+calidades_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DrugBundle:Calidad:edit" }
+    methods:  [GET, POST]
+
+calidades_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DrugBundle:Calidad:delete" }
+    methods:  GET
+
+calidades_show:
+    path:     /{id}
+    defaults: { _controller: "DrugBundle:Calidad:show" }
+    methods:  GET
+

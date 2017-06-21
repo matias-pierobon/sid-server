@@ -77,10 +77,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for stock in division.allStocks %}
+                {% for stock in division.allStocks | sort %}
                     <tr>
                         <td>
-                            <a href="{{ path('sustancias_show', { 'id': stock.droga.id }) }}">{{ stock.droga.nombre }}</a>
+                            <a href="{{ path('drug_drogueros_stock_show', {'stock': stock.id}) }}">{{ stock.droga.nombre }}</a>
                         </td>
                         <td>{{ stock.droga.formulaMolecular }}</td>
                         <td>{{ stock.cantidad }} {{ stock.unidadMedida.sigla }}</td>
@@ -98,7 +98,7 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="{{ path('sustancias_show', { 'id': stock.droga.id }) }}"
+                                <a href="{{ path('drug_drogueros_stock_show', {'stock': stock.id}) }}"
                                    class="btn btn-warning"><i class="fa fa-info" aria-hidden="true"></i></a>
                                 {% if is_granted('movement', division.droguero) %}
                                     <a href="{{ path('drug_drogueros_stock_movement', { 'stock': stock.id }) }}"

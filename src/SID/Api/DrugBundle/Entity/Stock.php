@@ -36,7 +36,7 @@ class Stock
     /**
      * @var int
      *
-     * @ORM\Column(name="numeroEvnase", type="integer", nullable=true)
+     * @ORM\Column(name="numeroEvnase",  type="string", length=255, nullable=true)
      */
     private $numeroEvnase;
 
@@ -85,9 +85,16 @@ class Stock
     /**
      * @var string
      *
-     * @ORM\Column(name="numeroProducto", type="string", length=255)
+     * @ORM\Column(name="numeroProducto", type="string", length=255, nullable=true)
      */
     private $numeroProducto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numeroInterno", type="string", length=255, nullable=true)
+     */
+    private $numeroInterno;
 
     /**
      * @var int
@@ -155,6 +162,11 @@ class Stock
         $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    function __toString()
+    {
+        return $this->getDroga()->__toString();
+    }
+
 
     /**
      * @param UploadedFile $file
@@ -215,7 +227,7 @@ class Stock
     /**
      * Set numeroEvnase
      *
-     * @param integer $numeroEvnase
+     * @param string $numeroEvnase
      *
      * @return Stock
      */
@@ -229,11 +241,35 @@ class Stock
     /**
      * Get numeroEvnase
      *
-     * @return integer
+     * @return string
      */
     public function getNumeroEvnase()
     {
         return $this->numeroEvnase;
+    }
+
+    /**
+     * Set numeroInterno
+     *
+     * @param string $numero
+     *
+     * @return Stock
+     */
+    public function setNumeroInterno($numero)
+    {
+        $this->numeroInterno = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroInterno
+     *
+     * @return string
+     */
+    public function getNumeroInterno()
+    {
+        return $this->numeroInterno;
     }
 
     /**

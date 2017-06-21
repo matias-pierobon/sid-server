@@ -108,9 +108,9 @@ abstract class Division
         }
 
         $criteria = Criteria::create()
-            ->orderBy(array('nombre' => Criteria::ASC));
+            ->orderBy(array('' => Criteria::ASC));
 
-        return $stocks->matching($criteria);
+        return $stocks;
     }
 
 

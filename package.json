@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
+    "bourbon": "^4.3.4",
     "font-awesome": "^4.7.0",
     "jquery-validation": "^1.16.0",
     "lodash": "^4.17.4",

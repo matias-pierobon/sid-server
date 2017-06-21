@@ -4,6 +4,7 @@ namespace SID\Api\DrugBundle\Controller;
 
 use SID\Api\DrugBundle\Entity\LugarFisico;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -83,6 +84,14 @@ class LugarController extends Controller
     }
 
     public function imageAction(LugarFisico $lugar) {
+        if (!$lugar->getImage()) {
+            $file = new File(__DIR__ . '/../Resources/public/image/blank.png');
+            $imageFile = fopen($file->getRealPath(), 'r');
+            $imageContent = fread($imageFile, $file->getSize());
+            fclose($imageFile);
+            return new Response($imageContent, 200, array('Content-Type' => $file->getMimeType()));
+        }
+
         return new Response(
             stream_get_contents($lugar->getImage()),
             200,

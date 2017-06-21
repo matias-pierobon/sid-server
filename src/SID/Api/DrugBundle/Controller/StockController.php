@@ -8,7 +8,9 @@ use SID\Api\DrugBundle\Entity\Droguero;
 use SID\Api\DrugBundle\Entity\Stock;
 use SID\Api\MovementBundle\Entity\Movimiento;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class StockController extends Controller
 {
@@ -28,9 +30,10 @@ class StockController extends Controller
         ));
     }
 
-    protected function findAll($bundle, $entity){
+    protected function findAll($bundle, $entity)
+    {
         $doctrine = $this->getDoctrine();
-        $repo = $doctrine->getRepository($bundle . 'Bundle:' . $entity );
+        $repo = $doctrine->getRepository($bundle . 'Bundle:' . $entity);
         return new ArrayCollection($repo->findAll());
     }
 
@@ -61,6 +64,7 @@ class StockController extends Controller
             ->setMarca($request->get('marca'))
             ->setNumeroEvnase($request->get('envase'))
             ->setNumeroProducto($request->get('producto'))
+            ->setImageBlob($request->files->get('image'))
             ->setPesoBruto($peso)
             ->setPesoBrutoActual($peso)
             ->setStockActual($cantidad);
@@ -120,6 +124,29 @@ class StockController extends Controller
             'droguero' => $stock->getDivision()->getDroguero()->getId(),
             'division' => $stock->getDivision()->getId()
         ));
+    }
+
+    public function showAction(Stock $stock)
+    {
+        return $this->render('DrugBundle:Stock:show.html.twig', array(
+            'stock' => $stock
+        ));
+    }
+
+    public function imageAction(Stock $stock)
+    {
+        if (!$stock->getImagen()) {
+            $file = new File(__DIR__ . '/../Resources/public/image/blank.png');
+            $imageFile = fopen($file->getRealPath(), 'r');
+            $imageContent = fread($imageFile, $file->getSize());
+            fclose($imageFile);
+            return new Response($imageContent, 200, array('Content-Type' => $file->getMimeType()));
+        }
+        return new Response(
+            stream_get_contents($stock->getImagen()),
+            200,
+            array('Content-Type' => $stock->getImageMime())
+        );
 
     }
 

@@ -11,6 +11,7 @@ use SID\Api\DrugBundle\Entity\Responsable;
 use SID\Api\UnityBundle\Entity\UsuarioUnidad;
 use SID\Api\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -252,12 +253,23 @@ class DrogueroController extends Controller
         throw new UnauthorizedHttpException("barear");
     }
 
-    public function imageAction(Droguero $droguero) {
+
+
+    public function imageAction(Droguero $droguero)
+    {
+        if (!$droguero->getImage()) {
+            $file = new File(__DIR__ . '/../Resources/public/image/blank.png');
+            $imageFile = fopen($file->getRealPath(), 'r');
+            $imageContent = fread($imageFile, $file->getSize());
+            fclose($imageFile);
+            return new Response($imageContent, 200, array('Content-Type' => $file->getMimeType()));
+        }
         return new Response(
             stream_get_contents($droguero->getImage()),
             200,
             array('Content-Type' => $droguero->getImageMime())
         );
+
     }
 
 }

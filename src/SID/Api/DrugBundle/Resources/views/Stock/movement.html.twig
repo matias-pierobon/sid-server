@@ -12,7 +12,7 @@
                 </a>
             </li>
         {% endfor %}
-        <li class="breadcrumb-item"><a href="#">{{ stock.droga.nombre }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_stock_show', {'stock': stock.id}) }}">{{ stock.droga.nombre }}</a></li>
         <li class="breadcrumb-item active">Movimiento</li>
     </ol>
 {% endblock %}

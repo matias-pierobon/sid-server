@@ -99,6 +99,11 @@
                         <input name="vencimiento" type="date" class="form-control" id="vencimiento">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="image">Imagen</label>
+                    <input name="image" type="file" class="form-control-file" id="image" aria-describedby="fileHelp">
+                    <small id="fileHelp" class="form-text text-muted">Imagen del lugar</small>
+                </div>
                 <a class="card-link btn"
                    href="{{ path('drug_drogueros_division_show', {'droguero': division.droguero.id, 'division': division.id}) }}"
                 >

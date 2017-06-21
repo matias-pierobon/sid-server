@@ -1,0 +1,102 @@
+{% extends "DrugBundle:Droguero:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_index') }}">Drogueros</a></li>
+        {% for place in division.path %}
+            <li class="breadcrumb-item">
+                <a href="{{ path('drug_drogueros_division_show', {'droguero': place.droguero.id, 'division': place.id}) }}">
+                    {{ place }}
+                </a>
+            </li>
+        {% endfor %}
+        <li class="breadcrumb-item active">Nuevo</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Nueva Subdivisión</h4>
+
+            <form id="form" action="{{ path('drug_drogueros_division_create', {'droguero': division.droguero.id, 'division': division.id}) }}"
+                  method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="form-group col col-md-6">
+                        <label for="nombre">Nombre</label>
+                        <input name="nombre" type="text" class="form-control" id="nombre">
+                    </div>
+                    <div class="form-group col col-md-6">
+                        <label for="alias">Alias</label>
+                        <input name="alias" type="text" class="form-control" id="alias">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="detalle">Detalle</label>
+                    <textarea name="detalle" class="form-control" id="detalle" rows="3"></textarea>
+                </div>
+                <a class="card-link btn"
+                   href="{{ path('drug_drogueros_division_show', {'droguero': division.droguero.id, 'division': division.id}) }}"
+                >
+                    Volver a {{ division }}
+                </a>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
+    <script>
+        $.validator.addMethod("nonNumeric", function (value, element) {
+            return this.optional(element) || isNaN(Number(value));
+        });
+
+        $('#form').validate({
+            rules: {
+                nombre: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                alias: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                detalle: {
+                    nonNumeric: true,
+                },
+            },
+            messages: {
+                nombre: {
+                    required: "Ingrese un nombre",
+                    nonNumeric: "El nombre debe ser texto",
+                },
+                alias: {
+                    required: "Ingrese un alias",
+                    nonNumeric: "El alias debe ser texto",
+                },
+                detalle: {
+                    required: "Ingrese un detalle",
+                    nonNumeric: "El detalle debe ser texto",
+                },
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-warning');
+                $(element).addClass('form-control-warning');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-warning');
+                $(element).removeClass('form-control-warning');
+                $(element).closest('.form-group').addClass('has-success');
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler: function (form) {
+                form.submit();
+            }
+        })
+    </script>
+{% endblock %}

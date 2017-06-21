@@ -5,6 +5,9 @@ namespace SID\Api\DrugBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use SID\Api\MovementBundle\Entity\Movimiento;
 use SID\Api\SubstanceBundle\Entity\Droga;
+use SID\Api\SubstanceBundle\Entity\UnidadMedida;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Stock
@@ -89,7 +92,7 @@ class Stock
     /**
      * @var int
      *
-     * @ORM\Column(name="cantidad", type="integer")
+     * @ORM\Column(name="cantidad", type="float")
      */
     private $cantidad;
 
@@ -127,6 +130,20 @@ class Stock
      */
     private $droga;
 
+    /**
+     * Many Stocks have One Calidad.
+     * @ORM\ManyToOne(targetEntity="Calidad", inversedBy="stocks")
+     * @ORM\JoinColumn(name="calidad_id", referencedColumnName="id")
+     */
+    private $calidad;
+
+    /**
+     * Many Stocks have One UnidadMedida.
+     * @ORM\ManyToOne(targetEntity="SID\Api\SubstanceBundle\Entity\UnidadMedida", inversedBy="stocks")
+     * @ORM\JoinColumn(name="medida_id", referencedColumnName="id")
+     */
+    private $unidadMedida;
+
 
 
     /**
@@ -134,7 +151,31 @@ class Stock
      */
     public function __construct()
     {
+        $this->fechaIngreso = new \DateTime();
         $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    /**
+     * @param UploadedFile $file
+     * @return $this
+     */
+    public function setImageBlob($file)
+    {
+        if (!$file){
+            $this->setImagen(null);
+            $this->setImageMime(null);
+            return $this;
+        }
+        if(!$file->isValid()){
+            throw new FileException("Invalid File");
+        }
+        $imageFile    = fopen($file->getRealPath(), 'r');
+        $imageContent = fread($imageFile, $file->getClientSize());
+        fclose($imageFile);
+        $this->setImagen($imageContent);
+        $this->setImageMime($file->getMimeType());
+        return $this;
     }
 
     /**
@@ -442,7 +483,7 @@ class Stock
      *
      * @return Stock
      */
-    public function setDivision(\SID\Api\DrugBundle\Entity\Division $division = null)
+    public function setDivision(Division $division = null)
     {
         $this->division = $division;
 
@@ -457,6 +498,54 @@ class Stock
     public function getDivision()
     {
         return $this->division;
+    }
+
+    /**
+     * Set calidad
+     *
+     * @param \SID\Api\DrugBundle\Entity\Calidad $calidad
+     *
+     * @return Stock
+     */
+    public function setCalidad(Calidad $calidad = null)
+    {
+        $this->calidad = $calidad;
+
+        return $this;
+    }
+
+    /**
+     * Get calidad
+     *
+     * @return \SID\Api\DrugBundle\Entity\Calidad
+     */
+    public function getCalidad()
+    {
+        return $this->calidad;
+    }
+
+    /**
+     * Set unidadMedida
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\UnidadMedida $unidad
+     *
+     * @return Stock
+     */
+    public function setUnidadMedida(UnidadMedida $unidad = null)
+    {
+        $this->unidadMedida = $unidad;
+
+        return $this;
+    }
+
+    /**
+     * Get unidadMedida
+     *
+     * @return \SID\Api\SubstanceBundle\Entity\UnidadMedida
+     */
+    public function getUnidadMedida()
+    {
+        return $this->unidadMedida;
     }
 
     /**

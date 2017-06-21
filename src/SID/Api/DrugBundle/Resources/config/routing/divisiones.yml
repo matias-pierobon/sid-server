@@ -28,3 +28,13 @@ drug_drogueros_division_update:
     path:     /{division}/edit
     defaults: { _controller: DrugBundle:Division:update }
     methods:  POST
+
+drug_drogueros_stock_add:
+    path:     /{division}/add
+    defaults: { _controller: DrugBundle:Stock:add }
+    methods:  GET
+
+drug_drogueros_stock_load:
+    path:     /{division}/add
+    defaults: { _controller: DrugBundle:Stock:load }
+    methods:  POST

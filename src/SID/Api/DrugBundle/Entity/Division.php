@@ -3,7 +3,9 @@
 namespace SID\Api\DrugBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\SubstanceBundle\Entity\Droga;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
@@ -87,6 +89,28 @@ abstract class Division
         $this->setImage($imageContent);
         $this->setImageMime($file->getMimeType());
         return $this;
+    }
+
+    public function getAllStocks(){
+        $stocks = new ArrayCollection();
+
+        /* @var Subdivision $subdivision */
+        foreach ($this->getSubdivisiones() as $subdivision) {
+            /* @var Stock $stock */
+            foreach ($subdivision->getAllStocks() as $stock) {
+                $stocks->add($stock);
+            }
+        }
+
+        /* @var Stock $stock */
+        foreach ($this->getStocks() as $stock) {
+            $stocks->add($stock);
+        }
+
+        $criteria = Criteria::create()
+            ->orderBy(array('nombre' => Criteria::ASC));
+
+        return $stocks->matching($criteria);
     }
 
 

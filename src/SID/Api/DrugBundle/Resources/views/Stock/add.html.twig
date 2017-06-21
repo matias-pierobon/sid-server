@@ -1,0 +1,164 @@
+{% extends "DrugBundle:Droguero:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('drug_drogueros_index') }}">Drogueros</a></li>
+        {% for place in division.path %}
+            <li class="breadcrumb-item">
+                <a href="{{ path('drug_drogueros_division_show', {'droguero': place.droguero.id, 'division': place.id}) }}">
+                    {{ place }}
+                </a>
+            </li>
+        {% endfor %}
+        <li class="breadcrumb-item active">Agregar Stock</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Agregar Stock</h4>
+
+            <form id="form" action="{{ path('drug_drogueros_stock_load', {'droguero': division.droguero.id, 'division': division.id}) }}"
+                  method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="form-group col col-md-6">
+                        <label for="sustancia">Sustancia</label>
+                        <select class="form-control" id="sustancia" name="sustancia">
+                            {% for sutancia in sustancias %}
+                                <option value="{{ sutancia.id }}">{{ sutancia.nombre }} ({{ sutancia.formulaMolecular }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col col-md-6">
+                        <label for="motivo">Motivo</label>
+                        <select class="form-control" id="motivo" name="motivo">
+                            {% for motivo in motivos %}
+                                <option value="{{ motivo.id }}">{{ motivo.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col col-md-4">
+                        <label for="envase">Numero de Envase</label>
+                        <input name="envase" type="text" class="form-control" id="envase">
+                    </div>
+                    <div class="form-group col col-md-4">
+                        <label for="producto">Numero de Producto</label>
+                        <input name="producto" type="text" class="form-control" id="producto">
+                    </div>
+                    <div class="form-group col col-md-4">
+                        <label for="interno">Numero Interno</label>
+                        <input name="interno" type="text" class="form-control" id="interno">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col col-md-6">
+                        <label for="cantidad">Cantidad</label>
+                        <input name="cantidad" type="number" min="0" class="form-control" id="cantidad">
+                    </div>
+                    <div class="form-group col col-md-6">
+                        <label for="medida">Unidad de Medida</label>
+                        <select class="form-control" id="medida" name="medida">
+                            {% for unidad in unidadesMedida %}
+                                <option value="{{ unidad.id }}">{{ unidad.detalle }} ({{ unidad.sigla }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="calidad">Calidad</label>
+                        <select class="form-control" id="calidad" name="calidad">
+                            {% for calidad in calidades %}
+                                <option value="{{ calidad.id }}">{{ calidad.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col col-md-6">
+                        <label for="peso">Peso</label>
+                        <input name="peso" type="number" min="0" class="form-control" id="peso">
+                    </div>
+                    <div class="form-group col col-md-6">
+                        <label for="marca">Marca</label>
+                        <input name="marca" type="text" class="form-control" id="marca">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col col-md-6">
+                        <label for="lote">Lote</label>
+                        <input name="lote" type="text" class="form-control" id="lote">
+                    </div>
+                    <div class="form-group col col-md-6">
+                        <label for="vencimiento">Vencimiento</label>
+                        <input name="vencimiento" type="date" class="form-control" id="vencimiento">
+                    </div>
+                </div>
+                <a class="card-link btn"
+                   href="{{ path('drug_drogueros_division_show', {'droguero': division.droguero.id, 'division': division.id}) }}"
+                >
+                    Volver a {{ division }}
+                </a>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
+    <script>
+        $.validator.addMethod("nonNumeric", function (value, element) {
+            return this.optional(element) || isNaN(Number(value));
+        });
+
+        $('#form').validate({
+            rules: {
+                nombre: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                alias: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                detalle: {
+                    nonNumeric: true,
+                },
+            },
+            messages: {
+                nombre: {
+                    required: "Ingrese un nombre",
+                    nonNumeric: "El nombre debe ser texto",
+                },
+                alias: {
+                    required: "Ingrese un alias",
+                    nonNumeric: "El alias debe ser texto",
+                },
+                detalle: {
+                    required: "Ingrese un detalle",
+                    nonNumeric: "El detalle debe ser texto",
+                },
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-warning');
+                $(element).addClass('form-control-warning');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-warning');
+                $(element).removeClass('form-control-warning');
+                $(element).closest('.form-group').addClass('has-success');
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler: function (form) {
+                form.submit();
+            }
+        })
+    </script>
+{% endblock %}

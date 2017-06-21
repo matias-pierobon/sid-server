@@ -6,6 +6,10 @@ drug_calidades:
     resource: "@DrugBundle/Resources/config/routing/calidades.yml"
     prefix:   /calidades
 
+drug_stocks:
+    resource: "@DrugBundle/Resources/config/routing/stocks.yml"
+    prefix:   /stocks
+
 drug_drogueros:
     resource: "@DrugBundle/Resources/config/routing/drogueros.yml"
     prefix:   /

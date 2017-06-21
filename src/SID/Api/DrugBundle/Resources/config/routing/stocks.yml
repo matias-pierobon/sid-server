@@ -1,0 +1,9 @@
+drug_drogueros_stock_movement:
+    path:     /{stock}
+    defaults: { _controller: DrugBundle:Stock:movement }
+    methods:  GET
+
+drug_drogueros_stock_doMovement:
+    path:     /{stock}
+    defaults: { _controller: DrugBundle:Stock:doMovement }
+    methods:  POST

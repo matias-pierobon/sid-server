@@ -33,7 +33,7 @@ class Movimiento
     /**
      * @var string
      *
-     * @ORM\Column(name="cantidad", type="string", length=255, nullable=true)
+     * @ORM\Column(name="cantidad", type="float", nullable=true)
      */
     private $cantidad;
 

@@ -2,6 +2,7 @@
 
 namespace SID\Api\SubstanceBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +43,12 @@ class UnidadMedida
      */
     private $detalle;
 
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Stock", mappedBy="unidadMedida")
+     */
+    protected $stocks;
+
 
     /**
      * Constructor
@@ -49,6 +56,7 @@ class UnidadMedida
     public function __construct()
     {
         $this->fechaIngreso = new \DateTime();
+        $this->stocks = new ArrayCollection();
     }
 
     /**
@@ -131,6 +139,40 @@ class UnidadMedida
     public function getDetalle()
     {
         return $this->detalle;
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \SID\Api\DrugBundle\Entity\Stock $stock
+     *
+     * @return Calidad
+     */
+    public function addStock(\SID\Api\DrugBundle\Entity\Stock $stock)
+    {
+        $this->stocks[] = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \SID\Api\DrugBundle\Entity\Stock $stock
+     */
+    public function removeStock(\SID\Api\DrugBundle\Entity\Stock $stock)
+    {
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }
 

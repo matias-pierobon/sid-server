@@ -35,6 +35,16 @@ class Calidad
      */
     private $detalle;
 
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="calidad")
+     */
+    protected $stocks;
+
+
+    public function __construct(){
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -92,6 +102,40 @@ class Calidad
     public function getDetalle()
     {
         return $this->detalle;
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \SID\Api\DrugBundle\Entity\Stock $stock
+     *
+     * @return Calidad
+     */
+    public function addStock(\SID\Api\DrugBundle\Entity\Stock $stock)
+    {
+        $this->stocks[] = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \SID\Api\DrugBundle\Entity\Stock $stock
+     */
+    public function removeStock(\SID\Api\DrugBundle\Entity\Stock $stock)
+    {
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }
 

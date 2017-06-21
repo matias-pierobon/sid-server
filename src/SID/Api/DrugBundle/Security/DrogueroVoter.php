@@ -3,6 +3,7 @@ namespace SID\Api\DrugBundle\Security;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use SID\Api\DrugBundle\Entity\Droguero;
+use SID\Api\SubstanceBundle\Entity\Droga;
 use SID\Api\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -32,6 +33,9 @@ class DrogueroVoter extends Voter
             },
             "config" => function(Droguero $droguero, User $user){
                 return $droguero->isResponsable($user);
+            },
+            "movement" => function(Droguero $droguero, User $user){
+                return $droguero->hasAccess($user);
             }
         ));
     }

@@ -46,14 +46,17 @@
 
                         <div class="btn-group" role="group" aria-label="Subdivisión">
                             <a href="{{ path('drug_drogueros_division_show', {'droguero': division.droguero.id, 'division': subdivision.id}) }}"
-                               class="btn btn-primary"><i
+                               class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Ingresar"><i
                                         class="fa fa-sign-in" aria-hidden="true"></i>
                             </a>
-                            {% if is_granted('config', division.droguero) %}<a class="btn btn-warning"
-                                                                               href="{{ path('drug_drogueros_division_edit', {'droguero': subdivision.droguero.id, 'division': subdivision.id}) }}"
-                            >
-                                <i class="fa fa-pencil" aria-hidden="true"></i>{% endif %}
-                            </a>
+                            {% if is_granted('config', division.droguero) %}
+                                <a class="btn btn-warning" data-toggle="tooltip"
+                                   title="Editar" data-placement="top"
+                                   href="{{ path('drug_drogueros_division_edit', {'droguero': subdivision.droguero.id, 'division': subdivision.id}) }}"
+                                >
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -99,11 +102,33 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ path('drug_drogueros_stock_show', {'stock': stock.id}) }}"
-                                   class="btn btn-warning"><i class="fa fa-info" aria-hidden="true"></i></a>
+                                   class="btn btn-warning" data-toggle="tooltip" data-placement="top"
+                                   title="Información"><i class="fa fa-info" aria-hidden="true"></i></a>
                                 {% if is_granted('movement', division.droguero) %}
-                                    <a href="{{ path('drug_drogueros_stock_movement', { 'stock': stock.id }) }}"
-                                       class="btn btn-danger"><i class="fa fa-sign-out" aria-hidden="true"></i>
-                                    </a>
+                                    {% if stock.isActive %}
+                                        <a href="{{ path('drug_drogueros_stock_movement', { 'stock': stock.id }) }}"
+                                           class="btn btn-primary" data-toggle="tooltip" data-placement="top"
+                                           title="Mover">
+                                            <i class="fa fa-exchange" aria-hidden="true"></i>
+                                        </a>
+                                        <a href="{{ path('drug_drogueros_stock_extract', { 'stock': stock.id }) }}"
+                                           class="btn btn-danger" data-toggle="tooltip" data-placement="top"
+                                           title="Extraer">
+                                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                        </a>
+                                    {% elseif stock.extraccionActiva.usuario.id == app.user.id %}
+                                        <a href="{{ path('drug_drogueros_stock_movement', { 'stock': stock.id }) }}"
+                                           class="btn btn-success" data-toggle="tooltip" data-placement="top"
+                                           title="Devolver">
+                                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                        </a>
+                                    {% else %}
+                                        <a href="#" class="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                           title="Stock en posesión de {{ stock.extraccionActiva.usuario }}">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                        </a>
+                                    {% endif %}
+
                                 {% endif %}
                             </div>
                         </td>

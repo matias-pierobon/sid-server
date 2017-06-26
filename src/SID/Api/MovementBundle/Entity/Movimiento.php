@@ -61,7 +61,7 @@ class Movimiento
     /**
      * Many Features have One Product.
      * @ORM\ManyToOne(targetEntity="SID\Api\DrugBundle\Entity\Stock", inversedBy="movimientos")
-     * @ORM\JoinColumn(name="movimiento_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="stock_id", referencedColumnName="id")
      */
     private $stock;
 
@@ -72,6 +72,14 @@ class Movimiento
      */
     private $motivo;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->desde = new \DateTime();
+    }
 
 
     /**

@@ -8,6 +8,11 @@ drug_drogueros_stock_doMovement:
     defaults: { _controller: DrugBundle:Stock:doMovement }
     methods:  POST
 
+drug_drogueros_stock_extract:
+    path:     /{stock}/extract
+    defaults: { _controller: DrugBundle:Stock:extract }
+    methods:  GET
+
 drug_drogueros_stock_show:
     path:     /{stock}
     defaults: { _controller: DrugBundle:Stock:show }

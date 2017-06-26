@@ -37,8 +37,14 @@
                 <div class="row">
                     <div class="form-group col">
                         <label for="cantidad">Cantidad ({{ stock.unidadMedida.sigla }})</label>
-                        <input name="cantidad" type="number" min="-{{ stock.cantidad }}" class="form-control" id="cantidad">
+                        <input name="cantidad" type="number" min="0" class="form-control" id="cantidad" required>
                     </div>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input name="sum" class="form-check-input" type="checkbox">
+                        Sumar cantidad al Stock
+                    </label>
                 </div>
                 <div class="form-group">
                     <label for="comentario">Comentario</label>

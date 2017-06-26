@@ -2,8 +2,10 @@
 
 namespace SID\Api\DrugBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use SID\Api\MovementBundle\Entity\Movimiento;
+use SID\Api\MovementBundle\Entity\MovimientoFisico;
 use SID\Api\SubstanceBundle\Entity\Droga;
 use SID\Api\SubstanceBundle\Entity\UnidadMedida;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -131,6 +133,12 @@ class Stock
     private $movimientos;
 
     /**
+     * One Movement has Many Users.
+     * @ORM\OneToMany(targetEntity="SID\Api\MovementBundle\Entity\MovimientoFisico", mappedBy="stock")
+     */
+    private $extracciones;
+
+    /**
      * Many Stocks have One Divition.
      * @ORM\ManyToOne(targetEntity="SID\Api\SubstanceBundle\Entity\Droga", inversedBy="stocks")
      * @ORM\JoinColumn(name="droga_id", referencedColumnName="id")
@@ -152,16 +160,39 @@ class Stock
     private $unidadMedida;
 
 
-
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->fechaIngreso = new \DateTime();
-        $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->movimientos = new ArrayCollection();
+        $this->extracciones = new ArrayCollection();
     }
 
+    /**
+     * @return MovimientoFisico
+     */
+    public function getExtraccionActiva(){
+
+        /* @var MovimientoFisico $extraccion */
+        foreach ($this->extracciones as $extraccion) {
+            if($extraccion->getHashta() == null)
+                return $extraccion;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->getExtraccionActiva() == null;
+    }
+
+    /**
+     * @return string
+     */
     function __toString()
     {
         return $this->getDroga()->__toString();
@@ -640,5 +671,39 @@ class Stock
     public function getDroga()
     {
         return $this->droga;
+    }
+
+    /**
+     * Add extraccion
+     *
+     * @param \SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion
+     *
+     * @return Stock
+     */
+    public function addExtraccion(\SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion)
+    {
+        $this->extracciones[] = $extraccion;
+
+        return $this;
+    }
+
+    /**
+     * Remove extraccion
+     *
+     * @param \SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion
+     */
+    public function removeExtraccione(\SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion)
+    {
+        $this->extracciones->removeElement($extraccion);
+    }
+
+    /**
+     * Get extracciones
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExtracciones()
+    {
+        return $this->extracciones;
     }
 }

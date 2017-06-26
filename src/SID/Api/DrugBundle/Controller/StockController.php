@@ -7,10 +7,12 @@ use SID\Api\DrugBundle\Entity\Division;
 use SID\Api\DrugBundle\Entity\Droguero;
 use SID\Api\DrugBundle\Entity\Stock;
 use SID\Api\MovementBundle\Entity\Movimiento;
+use SID\Api\MovementBundle\Entity\MovimientoFisico;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class StockController extends Controller
 {
@@ -100,10 +102,22 @@ class StockController extends Controller
 
     public function doMovementAction(Stock $stock, Request $request)
     {
+        if(!$stock->isActive()){
+            $extraction = $stock->getExtraccionActiva();
+            if($extraction->getUsuario()->getId() != $this->getUser()->getId())
+                throw new UnauthorizedHttpException('Movment', 'El Stock esta en uso');
+
+            $extraction->setHashta(new \DateTime());
+        }
+
         $em = $this->getDoctrine()->getManager();
         $motivo = $em->getRepository('MovementBundle:Motivo')->find($request->get('motivo'));
 
         $cantidad = floatval($request->get('cantidad'));
+
+
+        if ($request->get('sum', 'off') != 'on')
+            $cantidad = $cantidad * (-1);
 
         $stock->setCantidad($stock->getCantidad() + $cantidad);
 
@@ -148,6 +162,23 @@ class StockController extends Controller
             array('Content-Type' => $stock->getImageMime())
         );
 
+    }
+
+    public function extractAction(Stock $stock)
+    {
+        $extraction = new MovimientoFisico();
+        $extraction
+            ->setUsuario($this->getUser())
+            ->setStock($stock);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($extraction);
+        $em->flush();
+
+        return $this->redirectToRoute('drug_drogueros_show', array(
+            'droguero' => $stock->getDivision()->getDroguero()->getId()
+        ));
     }
 
 

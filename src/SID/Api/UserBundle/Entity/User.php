@@ -140,6 +140,12 @@ class User implements UserInterface{
 
     /**
      * One Movement has Many Users.
+     * @ORM\OneToMany(targetEntity="SID\Api\MovementBundle\Entity\MovimientoFisico", mappedBy="usuario")
+     */
+    private $extracciones;
+
+    /**
+     * One Movement has Many Users.
      * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Responsable", mappedBy="usuario")
      */
     private $droguerosResponsables;
@@ -245,7 +251,12 @@ class User implements UserInterface{
     {
         return $this->username;
     }
-    
+
+    public function __toString()
+    {
+        return $this->getLastname() . ', ' . $this->getName();
+    }
+
     /**
      * Constructor
      */
@@ -257,6 +268,7 @@ class User implements UserInterface{
         $this->movimientos = new ArrayCollection();
         $this->droguerosResponsables = new ArrayCollection();
         $this->unidades = new ArrayCollection();
+        $this->extracciones = new ArrayCollection();
     }
 
     /**
@@ -707,5 +719,63 @@ class User implements UserInterface{
     public function getUnidades()
     {
         return $this->unidades;
+    }
+
+    /**
+     * Add extraccione
+     *
+     * @param \SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion
+     *
+     * @return User
+     */
+    public function addExtraccion(\SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion)
+    {
+        $this->extracciones[] = $extraccion;
+
+        return $this;
+    }
+
+    /**
+     * Remove extraccione
+     *
+     * @param \SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion
+     */
+    public function removeExtraccione(\SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion)
+    {
+        $this->extracciones->removeElement($extraccion);
+    }
+
+    /**
+     * Get extracciones
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExtracciones()
+    {
+        return $this->extracciones;
+    }
+
+    /**
+     * Add misDroguero
+     *
+     * @param \SID\Api\DrugBundle\Entity\Acceso $misDroguero
+     *
+     * @return User
+     */
+    public function addMisDroguero(\SID\Api\DrugBundle\Entity\Acceso $misDroguero)
+    {
+        $this->misDrogueros[] = $misDroguero;
+
+        return $this;
+    }
+
+    /**
+     * Remove misDroguero
+     *
+     * @param \SID\Api\DrugBundle\Entity\Acceso $misDroguero
+     */
+    public function removeMisDroguero(\SID\Api\DrugBundle\Entity\Acceso $misDroguero)
+    {
+        $this->misDrogueros->removeElement($misDroguero);
     }
 }

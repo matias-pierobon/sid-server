@@ -73,6 +73,8 @@ abstract class Division
 
     public abstract function getPath() : ArrayCollection;
 
+    public abstract function isDroguero():bool;
+
     public function setImageBlob($file)
     {
         if (!$file){

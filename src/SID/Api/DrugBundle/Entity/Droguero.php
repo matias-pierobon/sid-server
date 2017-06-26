@@ -77,6 +77,11 @@ class Droguero extends Division
         return $this;
     }
 
+
+    public function isDroguero():bool{
+        return true;
+    }
+
     /**
      * @return ArrayCollection
      */

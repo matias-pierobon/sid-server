@@ -32,6 +32,10 @@ class Subdivision extends Division
         return $this->parent->getDroguero();
     }
 
+    public function isDroguero():bool{
+        return false;
+    }
+
     public function getPath(): ArrayCollection
     {
         $path = $this->parent->getPath();

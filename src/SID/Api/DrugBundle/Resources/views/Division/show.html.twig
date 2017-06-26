@@ -21,17 +21,33 @@
 
 {% block content %}
 
+    <div class="div-info">
+        {% if division.isDroguero %}
+            <div class="display-4">{{ division.nombre }}</div><br/>
+        {% else %}
+            <div class="display-4">{{ division.nombre }} ({{ division.alias }})</div>
+            <p>{{ division.detalle }}</p>
+        {% endif %}
+    </div>
+
     {% if is_granted('config', division.droguero) %}
         <div class="card">
             <div class="card-block">
                 <div class="card-title">Panel de Control</div>
                 <a class="card-link btn btn-primary"
-                   href="{{ path('drug_drogueros_division_new', {'droguero': division.droguero.id, 'division': division.id}) }}">Agregar
-                    Subdivisión</a>
+                   href="{{ path('drug_drogueros_division_new', {'droguero': division.droguero.id, 'division': division.id}) }}">
+                    <i class="fa fa-puzzle-piece"></i> Agregar Subdivisión
+                </a>
+
+                <a class="card-link btn btn-success"
+                   href="{{ path('drug_drogueros_stock_add', {'droguero': division.droguero.id, 'division': division.id}) }}">
+                    <i class="fa fa-sign-in"></i> Ingresar Stock
+                </a>
 
                 <a class="card-link btn btn-info"
-                   href="{{ path('drug_drogueros_stock_add', {'droguero': division.droguero.id, 'division': division.id}) }}">
-                    Ingresar Stock</a>
+                   href="{{ path('drug_drogueros_access', {'id': division.droguero.id}) }}">
+                    <i class="fa fa-users"></i> Ver Usuarios
+                </a>
 
             </div>
         </div>

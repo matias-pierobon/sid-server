@@ -47,6 +47,12 @@
                         <div class="col col-sm-4">Marca:</div>
                         <div class="col col-sm-8">{{ stock.marca }}</div>
                     </div>
+                    {% if stock.fechaVencimiento %}
+                        <div class="row">
+                            <div class="col col-sm-4">Marca:</div>
+                            <div class="col col-sm-8">{{ stock.fechaVencimiento | date("d/m/Y") }}</div>
+                        </div>
+                    {% endif %}
                     <div class="row">
                         <div class="col col-sm-4">Lote:</div>
                         <div class="col col-sm-8">{{ stock.lote }}</div>

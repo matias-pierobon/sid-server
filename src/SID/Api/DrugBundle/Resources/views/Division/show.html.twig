@@ -89,21 +89,25 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Formula</th>
-                    <th>Cantidad</th>
-                    <th>Fecha de Ingreso</th>
-                    <th>Camino</th>
+                    <th>Cantidad Actual</th>
+                    <th>#Interno</th>
+                    <th>#Producto</th>
+                    <th>#Envase</th>
+                    <th>Ubicación</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for stock in division.allStocks | sort %}
+                {% for stock in division.allStocks %}
                     <tr>
                         <td>
                             <a href="{{ path('drug_drogueros_stock_show', {'stock': stock.id}) }}">{{ stock.droga.nombre }}</a>
                         </td>
                         <td>{{ stock.droga.formulaMolecular }}</td>
                         <td>{{ stock.cantidad }} {{ stock.unidadMedida.sigla }}</td>
-                        <td>{{ stock.fechaIngreso | date('d/m/Y') }}</td>
+                        <td>{{ stock.numeroInterno }}</td>
+                        <td>{{ stock.numeroProducto }}</td>
+                        <td>{{ stock.numeroEvnase }}</td>
                         <td>
                             <ol class="breadcrumb">
                                 {% for place in stock.division.path %}
@@ -151,7 +155,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="6">
+                        <td colspan="8">
                             <div class="alert alert-info" role="alert">
                                 <strong>Info!</strong> No hay stocks cargados.
                             </div>

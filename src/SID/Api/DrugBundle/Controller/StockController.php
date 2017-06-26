@@ -61,15 +61,19 @@ class StockController extends Controller
             ->setDroga($droga)
             ->setCalidad($calidad)
             ->setUnidadMedida($medida)
-            ->setFechaVencimiento(new \DateTime($request->get('vencimiento')))
             ->setLote($request->get('lote'))
             ->setMarca($request->get('marca'))
+            ->setNumeroInterno($request->get('interno'))
             ->setNumeroEvnase($request->get('envase'))
             ->setNumeroProducto($request->get('producto'))
             ->setImageBlob($request->files->get('image'))
             ->setPesoBruto($peso)
             ->setPesoBrutoActual($peso)
             ->setStockActual($cantidad);
+
+
+        if ($request->get('vencimiento') != "")
+            $stock->setFechaVencimiento(new \DateTime($request->get('vencimiento')));
 
         $em->persist($stock);
 

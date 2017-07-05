@@ -147,6 +147,13 @@ class Droga
     private $sinonimos;
 
     /**
+     * Many Stocks have One UnidadMedida.
+     * @ORM\ManyToOne(targetEntity="UnidadMedida", inversedBy="sustancias")
+     * @ORM\JoinColumn(name="medida_id", referencedColumnName="id")
+     */
+    private $unidadMedida;
+
+    /**
      * One Movement has Many Users.
      * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Stock", mappedBy="droga")
      */
@@ -179,6 +186,30 @@ class Droga
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set unidadMedida
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\UnidadMedida $unidad
+     *
+     * @return $this
+     */
+    public function setUnidadMedida(UnidadMedida $unidad = null)
+    {
+        $this->unidadMedida = $unidad;
+
+        return $this;
+    }
+
+    /**
+     * Get unidadMedida
+     *
+     * @return \SID\Api\SubstanceBundle\Entity\UnidadMedida
+     */
+    public function getUnidadMedida()
+    {
+        return $this->unidadMedida;
     }
 
     /**

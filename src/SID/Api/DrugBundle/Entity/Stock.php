@@ -152,13 +152,6 @@ class Stock
      */
     private $calidad;
 
-    /**
-     * Many Stocks have One UnidadMedida.
-     * @ORM\ManyToOne(targetEntity="SID\Api\SubstanceBundle\Entity\UnidadMedida", inversedBy="stocks")
-     * @ORM\JoinColumn(name="medida_id", referencedColumnName="id")
-     */
-    private $unidadMedida;
-
 
     /**
      * Constructor
@@ -592,27 +585,13 @@ class Stock
     }
 
     /**
-     * Set unidadMedida
-     *
-     * @param \SID\Api\SubstanceBundle\Entity\UnidadMedida $unidad
-     *
-     * @return Stock
-     */
-    public function setUnidadMedida(UnidadMedida $unidad = null)
-    {
-        $this->unidadMedida = $unidad;
-
-        return $this;
-    }
-
-    /**
      * Get unidadMedida
      *
      * @return \SID\Api\SubstanceBundle\Entity\UnidadMedida
      */
     public function getUnidadMedida()
     {
-        return $this->unidadMedida;
+        return $this->getDroga()->getUnidadMedida();
     }
 
     /**

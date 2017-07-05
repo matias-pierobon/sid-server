@@ -164,8 +164,8 @@
                                             </label>
                                         </div>
                                     </td>
-                                    <td><img src="https://unsplash.it/64/64" alt=""/></td>
-                                    <td>{{ image.nombre }}</td>
+                                    <td><img src="{{ path('ghs_sustancias_image', {'id': image.id}) }}" width="64px" alt=""/></td>
+                                    <td>{{ image.detalle }}</td>
                                 </tr>
                             {% else %}
                                 <tr>

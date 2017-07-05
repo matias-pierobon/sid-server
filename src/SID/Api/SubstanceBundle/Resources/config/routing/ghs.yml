@@ -1,0 +1,4 @@
+ghs_sustancias_image:
+    path:     /{id}/image
+    defaults: { _controller: SubstanceBundle:GHS:image }
+    methods:  GET

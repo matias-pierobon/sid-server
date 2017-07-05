@@ -3,6 +3,8 @@
 namespace SID\Api\SubstanceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * GHS
@@ -55,6 +57,25 @@ class GHS
     public function __construct()
     {
         $this->drogas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @param SplFileInfo $file
+     * @return $this
+     */
+    public function setImageBlob($file)
+    {
+        if (!$file){
+            $this->setImage(null);
+            $this->setImageMime(null);
+            return $this;
+        }
+        $imageFile    = fopen($file->getRealPath(), 'r');
+        $imageContent = fread($imageFile, $file->getSize());
+        fclose($imageFile);
+        $this->setImage($imageContent);
+        $this->setImageMime('image/png');
+        return $this;
     }
 
     /**

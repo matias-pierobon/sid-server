@@ -1,15 +1,18 @@
+{% autoescape %}
 <!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('dist/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/main.css') }}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.png') }}"/>
+    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}"/>
     {% block stylesheets %}{% endblock %}
 
-    <title>SID</title>
+    <title>Abipon</title>
 </head>
 <body>
     <section id="main-page">
@@ -33,3 +36,4 @@
 
 </body>
 </html>
+{% endautoescape %}

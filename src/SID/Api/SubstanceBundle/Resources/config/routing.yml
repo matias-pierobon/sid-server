@@ -14,7 +14,7 @@ substance_sinonimo:
     resource: "@SubstanceBundle/Resources/config/routing/sinonimo.yml"
     prefix:   /sinonimos
 
-substance_sinonimo:
+substance_ghs:
     resource: "@SubstanceBundle/Resources/config/routing/ghs.yml"
     prefix:   /ghs
 

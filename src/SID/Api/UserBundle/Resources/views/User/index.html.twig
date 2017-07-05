@@ -1,0 +1,54 @@
+{% extends "UserBundle:User:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Usuarios</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">
+            Lista de Usuarios
+            <div class="btn-group pull-right">
+                <a class="btn btn-primary" href="{{ path('users_new') }}">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Agregar
+                </a>
+            </div>
+        </h4>
+        <div class="card-block">
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Fecha de Ingreso</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td><a href="{{ path('users_show', { 'id': user.id }) }}">{{ user.username }}</a></td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.sysDate | date('d/m/Y') }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="{{ path('users_show', { 'id': user.id }) }}" class="btn btn-warning"><i class="fa fa-info" aria-hidden="true"></i></a>
+                                <a href="{{ path('users_edit', { 'id': user.id }) }}" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

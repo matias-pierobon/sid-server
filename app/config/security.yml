@@ -30,4 +30,9 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/usuarios, roles: ROLE_ADMIN }
+        - { path: ^/sustancias, roles: ROLE_ADMIN }
+        - { path: ^/movimientos, roles: ROLE_ADMIN }
+        - { path: ^/unidades, roles: ROLE_ADMIN }
+        - { path: ^/drogueros/lugares, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

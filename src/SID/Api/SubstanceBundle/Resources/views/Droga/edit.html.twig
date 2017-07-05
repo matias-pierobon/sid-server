@@ -35,6 +35,15 @@
                             <label for="densidad">Densidad</label>
                             <input name="densidad" type="text" class="form-control" id="densidad" value="{{ droga.densidad }}">
                         </div></div>
+                        <div class="form-group col">
+                            <label for="medida">Unidad de Medida</label>
+                            <select class="form-control" id="medida" name="medida">
+                                {% for unidad in unidadesMedida %}
+                                    <option {% if unidad.id == droga.unidadMedida.id %} selected {% endif %}
+                                            value="{{ unidad.id }}">{{ unidad.detalle }} ({{ unidad.sigla }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="recAlm">Recomendaciones de almacenamiento</label>
                             <textarea name="recAlm" class="form-control" id="recAlm" rows="3">{{ droga.recAlm }}</textarea>

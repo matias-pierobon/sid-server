@@ -28,7 +28,7 @@
                         <label for="sustancia">Sustancia</label>
                         <select class="form-control" id="sustancia" name="sustancia">
                             {% for sutancia in sustancias %}
-                                <option value="{{ sutancia.id }}">{{ sutancia.nombre }} ({{ sutancia.formulaMolecular }})</option>
+                                <option value="{{ sutancia.id }}">{{ sutancia.nombre }} ({{ sutancia.formulaMolecular }}) [{{ sutancia.unidadMedida.sigla }}]</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -43,30 +43,22 @@
                 </div>
                 <div class="row">
                     <div class="form-group col col-md-4">
-                        <label for="envase">Numero de Envase</label>
+                        <label for="envase">Número de Envase</label>
                         <input name="envase" type="text" class="form-control" id="envase">
                     </div>
                     <div class="form-group col col-md-4">
-                        <label for="producto">Numero de Producto</label>
+                        <label for="producto">Número de Producto</label>
                         <input name="producto" type="text" class="form-control" id="producto">
                     </div>
                     <div class="form-group col col-md-4">
-                        <label for="interno">Numero Interno</label>
+                        <label for="interno">Número Interno</label>
                         <input name="interno" type="text" class="form-control" id="interno">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col col-md-6">
+                    <div class="form-group col">
                         <label for="cantidad">Cantidad</label>
                         <input name="cantidad" type="number" min="0" class="form-control" id="cantidad">
-                    </div>
-                    <div class="form-group col col-md-6">
-                        <label for="medida">Unidad de Medida</label>
-                        <select class="form-control" id="medida" name="medida">
-                            {% for unidad in unidadesMedida %}
-                                <option value="{{ unidad.id }}">{{ unidad.detalle }} ({{ unidad.sigla }})</option>
-                            {% endfor %}
-                        </select>
                     </div>
                 </div>
                 <div class="row">

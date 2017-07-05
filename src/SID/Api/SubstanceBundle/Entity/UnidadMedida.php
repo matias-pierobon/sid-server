@@ -45,9 +45,9 @@ class UnidadMedida
 
     /**
      * One Calidad has Many Stocks.
-     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Stock", mappedBy="unidadMedida")
+     * @ORM\OneToMany(targetEntity="Droga", mappedBy="unidadMedida")
      */
-    protected $stocks;
+    protected $drogas;
 
 
     /**

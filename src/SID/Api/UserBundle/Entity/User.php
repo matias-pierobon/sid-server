@@ -158,7 +158,7 @@ class User implements UserInterface{
 
     /**
      * One Product has Many Features.
-     * @ORM\OneToMany(targetEntity="SID\Api\UnityBundle\Entity\UsuarioUnidad", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="SID\Api\UnityBundle\Entity\UsuarioUnidad", mappedBy="usuario", cascade={"persist"})
      */
     private $unidades;
 
@@ -169,6 +169,34 @@ class User implements UserInterface{
         $this->roles = array();
         $this->sysDate = new \DateTime();
     }*/
+
+    /**
+     * @param UnidadEjecutora $unidad
+     * @return bool
+     */
+    public function hasUnidad(UnidadEjecutora $unidad){
+        return $this->unidades->exists(function ($key, UsuarioUnidad $usuarioUnidad) use ($unidad){
+            return ($usuarioUnidad->getUnidad()->getId() == $unidad->getId() and $usuarioUnidad->getHasta() == null);
+        });
+    }
+
+    public function setImageBlob($file)
+    {
+        if (!$file){
+            $this->setImage(null);
+            $this->setImageMime(null);
+            return $this;
+        }
+        if(!$file->isValid()){
+            throw new FileException("Invalid File");
+        }
+        $imageFile    = fopen($file->getRealPath(), 'r');
+        $imageContent = fread($imageFile, $file->getClientSize());
+        fclose($imageFile);
+        $this->setImage($imageContent);
+        $this->setImageMime($file->getMimeType());
+        return $this;
+    }
 
     public function getActiveUnities(){
         $unidades = new ArrayCollection();
@@ -688,25 +716,28 @@ class User implements UserInterface{
     }
 
     /**
-     * Add unidade
+     * Add unidad
      *
-     * @param \SID\Api\UnityBundle\Entity\UsuarioUnidad $unidade
+     * @param \SID\Api\UnityBundle\Entity\UnidadEjecutora $unidad
      *
      * @return User
      */
-    public function addUnidade(UsuarioUnidad $unidad)
+    public function addUnidad(UnidadEjecutora $unidad)
     {
-        $this->unidades[] = $unidad;
+        if(! $this->getUnidades()->exists(function ($index, UsuarioUnidad $userUnidad) use ($unidad){
+            return $unidad->getId() == $userUnidad->getUnidad()->getId() && $userUnidad->getHasta() == null;
+        }))
+            $this->unidades->add(new UsuarioUnidad($this, $unidad));
 
         return $this;
     }
 
     /**
-     * Remove unidade
+     * Remove unidad
      *
      * @param \SID\Api\UnityBundle\Entity\UsuarioUnidad $unidade
      */
-    public function removeUnidade(UsuarioUnidad $unidad)
+    public function removeUnidad(UsuarioUnidad $unidad)
     {
         $this->unidades->removeElement($unidad);
     }

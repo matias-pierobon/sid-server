@@ -27,21 +27,34 @@ class DrogaController extends Controller
             'droga' => $droga
         ));
     }
+    protected function findAll($bundle, $entity)
+    {
+        $doctrine = $this->getDoctrine();
+        $repo = $doctrine->getRepository($bundle . 'Bundle:' . $entity);
+        return new ArrayCollection($repo->findAll());
+    }
 
     public function editAction(Droga $droga)
     {
-        $em = $this->getDoctrine()->getManager();
-        $clases = $em->getRepository('SubstanceBundle:Clase')->findAll();
-        $entidades = $em->getRepository('SubstanceBundle:EntidadReguladora')->findAll();
-        $sinonimos = $em->getRepository('SubstanceBundle:Sinonimo')->findAll();
-        $ghs = $em->getRepository('SubstanceBundle:GHS')->findAll();
+
+        $criteria = Criteria::create()
+            ->orderBy(array('nombre' => Criteria::ASC));
+        $criteria2 = Criteria::create()
+            ->orderBy(array('detalle' => Criteria::ASC));
+
+        $unidadesMedida = $this->findAll('Substance', 'UnidadMedida')->matching($criteria2);
+        $clases = $this->findAll('Substance','Clase')->matching($criteria);
+        $entidades = $this->findAll('Substance','EntidadReguladora')->matching($criteria);
+        $sinonimos = $this->findAll('Substance','Sinonimo')->matching($criteria);
+        $ghs = $this->findAll('Substance','GHS')->matching($criteria2);
 
         return $this->render('SubstanceBundle:Droga:edit.html.twig', array(
             'droga' => $droga,
             'entidades' => $entidades,
             'clases' => $clases,
             'sinonimos' => $sinonimos,
-            'ghs' => $ghs
+            'ghs' => $ghs,
+            'unidadesMedida' => $unidadesMedida
         ));
     }
 
@@ -57,6 +70,9 @@ class DrogaController extends Controller
             ->setAccionesEmergencia($request->get('emergencias', $droga->getAccionesEmergencia()));
 
         $em = $this->getDoctrine()->getManager();
+
+        $unidadRepository = $em->getRepository('SubstanceBundle:UnidadMedida');
+        $droga->setUnidadMedida($unidadRepository->find($request->get('medida')));
 
         $clases = new ArrayCollection($request->get('clases', array()));
         foreach ($droga->getClases() as $clase) {
@@ -111,16 +127,23 @@ class DrogaController extends Controller
 
     public function newAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $clases = $em->getRepository('SubstanceBundle:Clase')->findAll();
-        $entidades = $em->getRepository('SubstanceBundle:EntidadReguladora')->findAll();
-        $sinonimos = $em->getRepository('SubstanceBundle:Sinonimo')->findAll();
-        $ghs = $em->getRepository('SubstanceBundle:GHS')->findAll();
+        $criteria = Criteria::create()
+            ->orderBy(array('nombre' => Criteria::ASC));
+        $criteria2 = Criteria::create()
+            ->orderBy(array('detalle' => Criteria::ASC));
+
+        $unidadesMedida = $this->findAll('Substance', 'UnidadMedida')->matching($criteria2);
+        $clases = $this->findAll('Substance','Clase')->matching($criteria);
+        $entidades = $this->findAll('Substance','EntidadReguladora')->matching($criteria);
+        $sinonimos = $this->findAll('Substance','Sinonimo')->matching($criteria);
+        $ghs = $this->findAll('Substance','GHS')->matching($criteria2);
+
         return $this->render('SubstanceBundle:Droga:new.html.twig', array(
             'entidades' => $entidades,
             'clases' => $clases,
             'sinonimos' => $sinonimos,
-            'ghs' => $ghs
+            'ghs' => $ghs,
+            'unidadesMedida' => $unidadesMedida
         ));
     }
 
@@ -138,6 +161,9 @@ class DrogaController extends Controller
             ->setAccionesEmergencia($request->get('emergencias'));
 
         $em = $this->getDoctrine()->getManager();
+
+        $unidadRepository = $em->getRepository('SubstanceBundle:UnidadMedida');
+        $droga->setUnidadMedida($unidadRepository->find($request->get('medida')));
 
         $claseRepository = $em->getRepository('SubstanceBundle:Clase');
         foreach ($request->get('clases', array()) as $clase) {

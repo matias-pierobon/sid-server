@@ -1,0 +1,60 @@
+{% extends "UserBundle:User:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('users_index') }}">Usuarios</a></li>
+        <li class="breadcrumb-item active">{{ user.username }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-block row-details">
+            <h4 class="card-title">Ver Usuario</h4>
+
+            <div class="row">
+                <div class="col col-md-4 text-center">
+                    <img src="{{ path('users_image', {'id': user.id }) }}" alt="" class="img-fluid img-thumbnail" style="width: 100%; max-width: 400px; max-height: 500px;">
+                </div>
+                <div class="col col-md-8">
+                    <div class="row">
+                        <div class="col col-sm-4">Nombre:</div>
+                        <div class="col col-sm-8">{{ user.name }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-sm-4">Apellido:</div>
+                        <div class="col col-sm-8">{{ user.lastname }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-sm-4">Email:</div>
+                        <div class="col col-sm-8">{{ user.email }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-sm-4">Usuario:</div>
+                        <div class="col col-sm-8">{{ user.username }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-sm-4">Fecha</div>
+                        <div class="col col-sm-8">{{ user.sysDate | date("d/m/Y") }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-sm-4">Unidades:</div>
+                        <div class="col col-sm-8">
+                            <ul class="chip-list">
+                            {% for trabajo in user.activeUnities  %}
+                                <li class="alert-info">{{ trabajo.unidad.nombre }}</li>
+                            {% else %}
+                                <div class="alert alert-info" role="alert">
+                                    <strong>Info!</strong> No hay Unidades registradas para este Usuario.
+                                </div>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

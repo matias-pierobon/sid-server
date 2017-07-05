@@ -13,7 +13,7 @@ class UnidadEjecutoraType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('cufe')->add('detalle')->add('nombre')->add('tipo');
+        $builder->add('nombre')->add('detalle')->add('cufe')->add('tipo');
     }
     
     /**

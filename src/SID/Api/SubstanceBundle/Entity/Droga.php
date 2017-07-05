@@ -148,7 +148,7 @@ class Droga
 
     /**
      * Many Stocks have One UnidadMedida.
-     * @ORM\ManyToOne(targetEntity="UnidadMedida", inversedBy="sustancias")
+     * @ORM\ManyToOne(targetEntity="UnidadMedida", inversedBy="drogas")
      * @ORM\JoinColumn(name="medida_id", referencedColumnName="id")
      */
     private $unidadMedida;

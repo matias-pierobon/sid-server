@@ -1,0 +1,123 @@
+{% extends "UserBundle:User:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('users_index') }}">Usuarios</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('users_show', {'id': user.id}) }}">{{ user.username }}</a></li>
+        <li class="breadcrumb-item active">Editar</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <form id="form" action="{{ path('users_update', {'id': user.id}) }}" method="post" enctype="multipart/form-data">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Nuevo Usuario</h4>
+
+                <div class="row">
+                    <div class="form-group col col-md-6">
+                        <label for="name">Nombre</label>
+                        <input name="name" type="text" class="form-control" id="name" value="{{ user.name }}">
+                    </div>
+                    <div class="form-group col col-md-6">
+                        <label for="lastname">Apellido</label>
+                        <input name="lastname" type="text" class="form-control" id="lastname" value="{{ user.lastname }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="mail">E-Mail</label>
+                        <input name="mail" type="text" class="form-control" id="mail" value="{{ user.email }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col col-sm-6">
+                        {{ user.username }}
+                    </div>
+                    <div class="form-group col col-sm-6">
+                        <label for="password">Contraseña</label>
+                        <input name="password" type="password" class="form-control" id="password">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="unidades">Unidades</label>
+                        <select multiple class="form-control" id="unidades" name="unidades[]">
+                            {% for unidad in unidades %}
+                                <option value="{{ unidad.id }}"
+                                        {% if user.hasUnidad(unidad) %}selected{% endif %} >{{ unidad.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                {#<div class="form-group">
+                    <label for="image">Imagen</label>
+                    <input name="image" type="file" class="form-control-file" id="image" aria-describedby="fileHelp">
+                    <small id="fileHelp" class="form-text text-muted">Imagen del lugar</small>
+                </div>#}
+
+                <a class="btn card-link" href="{{ path('users_index') }}">Mis Drogueros</a>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
+    <script>
+
+        $.validator.addMethod("nonNumeric", function (value, element) {
+            return this.optional(element) || isNaN(Number(value));
+        });
+
+        $('#form').validate({
+            rules: {
+                name: {
+                    required: true,
+                    nonNumeric: true,
+                },
+                lastname: {
+                    required: true,
+                },
+                mail: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Ingrese un nombre",
+                    nonNumeric: "El nombre debe ser texto",
+                },
+                lastname: {
+                    required: "Ingrese un apellido"
+                },
+                mail: {
+                    required: "Ingrese un mail",
+                    email: "El mail es inválido",
+                },
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-warning');
+                $(element).addClass('form-control-warning');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-warning');
+                $(element).removeClass('form-control-warning');
+                $(element).closest('.form-group').addClass('has-success');
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler: function (form) {
+                form.submit();
+            }
+        })
+
+    </script>
+{% endblock %}

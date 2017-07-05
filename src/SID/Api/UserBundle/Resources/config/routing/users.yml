@@ -1,0 +1,39 @@
+users_index:
+    path:     /
+    defaults: { _controller: UserBundle:User:index }
+    methods:  GET
+
+users_new:
+    path:     /new
+    defaults: { _controller: UserBundle:User:new }
+    methods:  GET
+
+users_create:
+    path:     /new
+    defaults: { _controller: UserBundle:User:create }
+    methods:  POST
+
+users_edit:
+    path:     /{id}/edit
+    defaults: { _controller: UserBundle:User:edit }
+    methods:  GET
+
+users_update:
+    path:     /{id}/edit
+    defaults: { _controller: UserBundle:User:update }
+    methods:  POST
+
+users_delete:
+    path:     /{id}/delete
+    defaults: { _controller: UserBundle:User:delete }
+    methods:  GET
+
+users_image:
+    path:     /{id}/image
+    defaults: { _controller: UserBundle:User:image }
+    methods:  GET
+
+users_show:
+    path:     /{id}
+    defaults: { _controller: UserBundle:User:show }
+    methods:  GET

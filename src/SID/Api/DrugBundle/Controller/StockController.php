@@ -18,14 +18,12 @@ class StockController extends Controller
 {
     public function addAction(Droguero $droguero, Division $division)
     {
-        $unidadesMedida = $this->findAll('Substance', 'UnidadMedida');
         $calidades = $this->findAll('Drug', 'Calidad');
         $sustancias = $this->findAll('Substance', 'Droga');
         $motivos = $this->findAll('Movement', 'Motivo');
         return $this->render('DrugBundle:Stock:add.html.twig', array(
             'droguero' => $droguero,
             'division' => $division,
-            'unidadesMedida' => $unidadesMedida,
             'sustancias' => $sustancias,
             'calidades' => $calidades,
             'motivos' => $motivos
@@ -49,7 +47,6 @@ class StockController extends Controller
         $droga = $em->getRepository('SubstanceBundle:Droga')->find($request->get('sustancia'));
         $motivo = $em->getRepository('MovementBundle:Motivo')->find($request->get('motivo'));
         $calidad = $em->getRepository('DrugBundle:Calidad')->find($request->get('calidad'));
-        $medida = $em->getRepository('SubstanceBundle:UnidadMedida')->find($request->get('medida'));
 
         $cantidad = $request->get('cantidad');
         $peso = $request->get('peso');
@@ -60,7 +57,6 @@ class StockController extends Controller
             ->setDivision($division)
             ->setDroga($droga)
             ->setCalidad($calidad)
-            ->setUnidadMedida($medida)
             ->setLote($request->get('lote'))
             ->setMarca($request->get('marca'))
             ->setNumeroInterno($request->get('interno'))

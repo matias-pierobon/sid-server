@@ -27,6 +27,8 @@ class RestController extends Controller
 
             /* @var UsuarioUnidad $integrante */
             foreach ($unidad->getIntegrantes() as $integrante) {
+                if($integrante->getHasta())
+                    continue;
                 if (!($users->contains($integrante->getUsuario()) || $integrante->getUsuario()->isAdmin()))
                     $users->add($integrante->getUsuario());
             }

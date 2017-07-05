@@ -1,4 +1,4 @@
 movement_motivo:
-    resource: "@MovementBundle/Resources/config/routing/Motivo.yml"
+    resource: "@MovementBundle/Resources/config/routing/motivo.yml"
     prefix:   /motivos
 

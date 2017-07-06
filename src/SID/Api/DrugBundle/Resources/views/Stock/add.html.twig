@@ -44,15 +44,15 @@
                 <div class="row">
                     <div class="form-group col col-md-4">
                         <label for="envase">Número de Envase</label>
-                        <input name="envase" type="text" class="form-control" id="envase">
+                        <input name="envase" type="text" class="form-control number-group" id="envase">
                     </div>
                     <div class="form-group col col-md-4">
                         <label for="producto">Número de Producto</label>
-                        <input name="producto" type="text" class="form-control" id="producto">
+                        <input name="producto" type="text" class="form-control number-group" id="producto">
                     </div>
                     <div class="form-group col col-md-4">
                         <label for="interno">Número Interno</label>
-                        <input name="interno" type="text" class="form-control" id="interno">
+                        <input name="interno" type="text" class="form-control number-group" id="interno">
                     </div>
                 </div>
                 <div class="row">
@@ -109,6 +109,7 @@
 
 {% block javascripts %}
     <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
+    <script src="{{ asset('dist/js/additional-methods.js') }}"></script>
     <script>
         $.validator.addMethod("nonNumeric", function (value, element) {
             return this.optional(element) || isNaN(Number(value));
@@ -125,8 +126,17 @@
                     nonNumeric: true,
                 },
                 detalle: {
-                    nonNumeric: true,
+                    nonNumeric: true
                 },
+                interno: {
+                    require_from_group: [1, ".number-group"]
+                },
+                producto: {
+                    require_from_group: [1, ".number-group"]
+                },
+                envase: {
+                    require_from_group: [1, ".number-group"]
+                }
             },
             messages: {
                 nombre: {
@@ -141,6 +151,15 @@
                     required: "Ingrese un detalle",
                     nonNumeric: "El detalle debe ser texto",
                 },
+                interno: {
+                    require_from_group: "Ingrese al menos un número"
+                },
+                producto: {
+                    require_from_group: "Ingrese al menos un número"
+                },
+                envase: {
+                    require_from_group: "Ingrese al menos un número"
+                }
             },
             highlight: function (element) {
                 $(element).closest('.form-group').addClass('has-warning');

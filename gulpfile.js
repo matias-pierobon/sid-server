@@ -14,6 +14,7 @@ const jsDirs = [
     './node_modules/tether/dist/js/tether.js',
     './node_modules/select2/dist/js/select2.full.js',
     './node_modules/bootstrap/dist/js/bootstrap.js',
+    "./node_modules/jquery-validation/dist/additional-methods.js",
     "./node_modules/jquery-validation/dist/jquery.validate.js",
     jsSrc
 ]

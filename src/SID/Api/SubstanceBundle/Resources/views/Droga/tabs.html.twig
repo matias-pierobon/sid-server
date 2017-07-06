@@ -1,0 +1,200 @@
+{% macro general(unidadesMedida, droga) %}
+    <div class="row">
+        <div class="form-group col col-md-6">
+            <label for="nombre">Nombre</label>
+            <input name="nombre" type="text" class="form-control" id="nombre" {% if droga %}value="{{ droga.nombre }}"{% endif %}>
+        </div>
+        <div class="form-group col col-md-6">
+            <label for="formula">Fórmula Molecular</label>
+            <input name="formula" type="text" class="form-control" id="formula" {% if droga %} value="{{ droga.formulaMolecular }}"{% endif %}>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col col-md-6">
+            <label for="cas">Número Cas</label>
+            <input name="cas" type="text" class="form-control" id="cas" {% if droga %} value="{{ droga.cas }}"{% endif %}>
+        </div>
+        <div class="form-group col col-md-6">
+            <label for="densidad">Densidad</label>
+            <input name="densidad" type="text" class="form-control" id="densidad" {% if droga %} value="{{ droga.densidad }}"{% endif %}>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="medida">Unidad de Medida</label>
+        <select class="form-control" id="medida" name="medida">
+            {% for unidad in unidadesMedida %}
+                <option {% if droga and unidad.id == droga.unidadMedida.id %} selected {% endif %}
+                        value="{{ unidad.id }}">{{ unidad.detalle }} ({{ unidad.sigla }})
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="recAlm">Recomendaciones de almacenamiento</label>
+        <textarea name="recAlm" class="form-control" id="recAlm" rows="3">{% if droga %}{{ droga.recAlm }}{% endif %}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="desechos">Desechos</label>
+        <textarea name="desechos" class="form-control" id="desechos"
+                  rows="3">{% if droga %}{{ droga.desechos }}{% endif %}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="emergencias">Acciones de emergencia</label>
+        <textarea name="emergencias" class="form-control" id="emergencias"
+                  rows="3">{% if droga %}{{ droga.accionesEmergencia }}{% endif %}</textarea>
+    </div>
+{% endmacro %}
+
+{% macro clases(clases, droga) %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Seleccionada</th>
+            <th>Nombre</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for clase in clases %}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input name="clases[]" class="form-check-input"
+                                   type="checkbox"
+                                   {% if droga and droga.clases.contains(clase) %}checked{% endif %}
+                                   value="{{ clase.id }}"
+                            />
+                        </label>
+                    </div>
+                </td>
+                <td>{{ clase.nombre }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Info!</strong> No hay Clases registradas.
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endmacro %}
+
+{% macro entidades(entidades, droga) %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Selecionada</th>
+            <th>Entidad</th>
+            <th>Detalle</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entidad in entidades %}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input name="entidades[]" class="form-check-input"
+                                   type="checkbox"
+                                   {% if droga and droga.entidades.contains(entidad) %}checked{% endif %}
+                                   value="{{ entidad.id }}"
+                            />
+                        </label>
+                    </div>
+                </td>
+                <td>{{ entidad.nombre }}</td>
+                <td>{{ entidad.detalle }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Info!</strong> No hay entidades reguladoras registradas.
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% macro ghs(ghs, droga) %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Seleccionada</th>
+            <th>Imágen</th>
+            <th>Nombre</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for image in ghs %}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input name="ghs[]" class="form-check-input"
+                                   type="checkbox"
+                                   {% if droga and droga.ghs.contains(image) %}checked{% endif %}
+                                   value="{{ image.id }}"
+                            />
+                        </label>
+                    </div>
+                </td>
+                <td><img class="img-thumbnail rounded" src="{{ path('ghs_sustancias_image', {'id': image.id}) }}" width="64px" alt=""/></td>
+                <td>{{ image.detalle }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Info!</strong> No hay imagenes GHS registradas.
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endmacro %}
+
+{% macro sinonimos(sinonimos, droga) %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Seleccionado</th>
+            <th>Nombre</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sinonimo in sinonimos %}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input name="sinonimos[]" class="form-check-input"
+                                   type="checkbox"
+                                   {% if droga and droga.sinonimos.contains(sinonimo) %}checked{% endif %}
+                                   value="{{ sinonimo.id }}"
+                            />
+                        </label>
+                    </div>
+                </td>
+                <td>{{ sinonimo.nombre }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Info!</strong> No hay sinónimos registrados.
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

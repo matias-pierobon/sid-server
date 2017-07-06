@@ -1,242 +1,69 @@
 {% extends "SubstanceBundle:Droga:base.html.twig" %}
+{% import "SubstanceBundle:Droga:tabs.html.twig" as tabs %}
 
 {#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
 
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('sustancias_index') }}">Sustancias</a></li>
-        <li class="breadcrumb-item active"><a href="{{ path('sustancias_show', { 'id': droga.id }) }}">{{ droga.nombre }}</a></li>
+        <li class="breadcrumb-item active"><a
+                    href="{{ path('sustancias_show', { 'id': droga.id }) }}">{{ droga.nombre }}</a></li>
         <li class="breadcrumb-item active">Editar</li>
     </ol>
 {% endblock %}
 
 {% block content %}
-    <form id="form" action="{{ path('sustancias_update', {'id': droga.id}) }}" method="post">
-        <div class="row">
-            <div class="col col-md-6">
-                <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">Editar Clase</h4>
-                        <div class="row">
-                        <div class="form-group col col-md-6">
-                            <label for="nombre">Nombre</label>
-                            <input name="nombre" type="text" class="form-control" id="nombre" value="{{ droga.nombre }}">
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Editar Sustancia</h3>
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#general" role="tab">General</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#clases" role="tab">Clases</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#entidades" role="tab">Entidades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#sinonimos" role="tab">Sinónimos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#ghs" role="tab">GHS</a>
+                        </li>
+                    </ul>
+                </div>
+                <form id="form" action="{{ path('sustancias_update', {'id': droga.id}) }}" method="post">
+                    <div class="card-block tab-content">
+                        <div class="tab-pane active" id="general" role="tabpanel">
+                            {{ tabs.general(unidadesMedida, droga) }}
                         </div>
-                        <div class="form-group col col-md-6">
-                            <label for="formula">Fórmula Molecular</label>
-                            <input name="formula" type="text" class="form-control" id="formula" value="{{ droga.formulaMolecular }}">
-                        </div></div>
-                        <div class="row">
-                        <div class="form-group col col-md-6">
-                            <label for="cas">Número Cas</label>
-                            <input name="cas" type="text" class="form-control" id="cas" value="{{ droga.cas }}">
+                        <div class="tab-pane" id="clases" role="tabpanel">
+                            {{ tabs.clases(clases, droga) }}
                         </div>
-                        <div class="form-group col col-md-6">
-                            <label for="densidad">Densidad</label>
-                            <input name="densidad" type="text" class="form-control" id="densidad" value="{{ droga.densidad }}">
-                        </div></div>
-                        <div class="form-group col">
-                            <label for="medida">Unidad de Medida</label>
-                            <select class="form-control" id="medida" name="medida">
-                                {% for unidad in unidadesMedida %}
-                                    <option {% if unidad.id == droga.unidadMedida.id %} selected {% endif %}
-                                            value="{{ unidad.id }}">{{ unidad.detalle }} ({{ unidad.sigla }})</option>
-                                {% endfor %}
-                            </select>
+                        <div class="tab-pane" id="entidades" role="tabpanel">
+                            {{ tabs.entidades(entidades, droga) }}
                         </div>
-                        <div class="form-group">
-                            <label for="recAlm">Recomendaciones de almacenamiento</label>
-                            <textarea name="recAlm" class="form-control" id="recAlm" rows="3">{{ droga.recAlm }}</textarea>
+                        <div class="tab-pane" id="sinonimos" role="tabpanel">
+                            {{ tabs.sinonimos(sinonimos, droga) }}
                         </div>
-                        <div class="form-group">
-                            <label for="desechos">Desechos</label>
-                            <input name="desechos" type="text" class="form-control" id="desechos" value="{{ droga.desechos }}">
+                        <div class="tab-pane" id="ghs" role="tabpanel">
+                            {{ tabs.ghs(ghs, droga) }}
                         </div>
-                        <div class="form-group">
-                            <label for="emergencias">Acciones de emergencia</label>
-                            <textarea name="emergencias" class="form-control" id="emergencias" rows="3">{{ droga.accionesEmergencia }}</textarea>
-                        </div>
+                    </div>
+
+                    <div class="card-block text-right">
                         <a class="btn card-link" href="{{ path('sustancias_index') }}">Lista de Clases</a>
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">Clases</h4>
-                    </div>
-                    <div class="card-block">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Seleccionada</th>
-                                <th>Nombre</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for clase in clases %}
-                                <tr>
-                                    <td>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input name="clases[]" class="form-check-input"
-                                                       type="checkbox"
-                                                       {% if droga.clases.contains(clase) %}checked{% endif %}
-                                                       value="{{ clase.id }}"
-                                                />
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>{{ clase.nombre }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="3">
-                                        <div class="alert alert-info" role="alert">
-                                            <strong>Info!</strong> No hay Clases registradas.
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-6">
-
-                <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">Requiere</h4>
-                    </div>
-                    <div class="card-block">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Selecionada</th>
-                                <th>Entidad</th>
-                                <th>Detalle</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for entidad in entidades %}
-                                <tr>
-                                    <td>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input name="entidades[]" class="form-check-input"
-                                                       type="checkbox"
-                                                       {% if droga.entidades.contains(entidad) %}checked{% endif %}
-                                                       value="{{ entidad.id }}"
-                                                />
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>{{ entidad.nombre }}</td>
-                                    <td>{{ entidad.detalle }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="3">
-                                        <div class="alert alert-info" role="alert">
-                                            <strong>Info!</strong> No hay entidades reguladoras registradas.
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">Imagenes GHS</h4>
-                    </div>
-                    <div class="card-block">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Seleccionada</th>
-                                <th>Imágen</th>
-                                <th>Nombre</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for image in ghs %}
-                                <tr>
-                                    <td>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input name="ghs[]" class="form-check-input"
-                                                       type="checkbox"
-                                                       {% if droga.ghs.contains(image) %}checked{% endif %}
-                                                       value="{{ image.id }}"
-                                                />
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td><img src="https://unsplash.it/64/64" alt=""/></td>
-                                    <td>{{ image.nombre }}</td>
-                                    <td>{{ c.sysDate | date('d/m/Y') }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="4">
-                                        <div class="alert alert-info" role="alert">
-                                            <strong>Info!</strong> No hay imagenes GHS registradas.
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">Sinónimos</h4>
-                    </div>
-                    <div class="card-block">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Seleccionado</th>
-                                <th>Nombre</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for sinonimo in sinonimos %}
-                                <tr>
-                                    <td>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input name="sinonimos[]" class="form-check-input"
-                                                       type="checkbox"
-                                                       {% if droga.sinonimos.contains(sinonimo) %}checked{% endif %}
-                                                       value="{{ sinonimo.id }}"
-                                                />
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>{{ sinonimo.nombre }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="3">
-                                        <div class="alert alert-info" role="alert">
-                                            <strong>Info!</strong> No hay sinónimos registrados.
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
-    </form>
+    </div>
 {% endblock %}
 
 
@@ -261,14 +88,10 @@
                 cas: {
                     required: true,
                 },
-                densidad: {
-                },
-                recAlm: {
-                },
-                desechos: {
-                },
-                emergencias: {
-                },
+                densidad: {},
+                recAlm: {},
+                desechos: {},
+                emergencias: {},
             },
             messages: {
                 nombre: {

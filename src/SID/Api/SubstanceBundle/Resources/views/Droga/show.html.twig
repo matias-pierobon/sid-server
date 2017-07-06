@@ -31,13 +31,13 @@
                 <div class="col col-sm-4">Sinónimos:</div>
                 <div class="col col-sm-8">
                     <ul class="chip-list">
-                    {% for sinonimo in droga.sinonimos %}
-                        <li class="alert-info">{{ sinonimo.nombre }}</li>
-                    {% else %}
-                        <div class="alert alert-info" role="alert">
-                            <strong>Info!</strong> No hay sinónimos registrados para esta sustancia.
-                        </div>
-                    {% endfor %}
+                        {% for sinonimo in droga.sinonimos %}
+                            <li class="alert-info">{{ sinonimo.nombre }}</li>
+                        {% else %}
+                            <div class="alert alert-info" role="alert">
+                                <strong>Info!</strong> No hay sinónimos registrados para esta sustancia.
+                            </div>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -49,13 +49,13 @@
                 <div class="col col-sm-4">Clases:</div>
                 <div class="col col-sm-8">
                     <ul class="chip-list">
-                    {% for clase in droga.clases %}
-                        <li class="alert-info">{{ clase.nombre }}</li>
-                    {% else %}
-                        <div class="alert alert-info" role="alert">
-                            <strong>Info!</strong> No hay clases registradas para esta sustancia.
-                        </div>
-                    {% endfor %}
+                        {% for clase in droga.clases %}
+                            <li class="alert-info">{{ clase.nombre }}</li>
+                        {% else %}
+                            <div class="alert alert-info" role="alert">
+                                <strong>Info!</strong> No hay clases registradas para esta sustancia.
+                            </div>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -63,13 +63,13 @@
                 <div class="col col-sm-4">Entidades reguladoras:</div>
                 <div class="col col-sm-8">
                     <ul class="chip-list">
-                    {% for entidad in droga.entidades %}
-                        <li class="alert-info">{{ entidad.nombre }}</li>
-                    {% else %}
-                        <div class="alert alert-info" role="alert">
-                            <strong>Info!</strong> No hay entidades reguladoras que requiera esta sustancia.
-                        </div>
-                    {% endfor %}
+                        {% for entidad in droga.entidades %}
+                            <li class="alert-info">{{ entidad.nombre }}</li>
+                        {% else %}
+                            <div class="alert alert-info" role="alert">
+                                <strong>Info!</strong> No hay entidades reguladoras que requiera esta sustancia.
+                            </div>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -77,7 +77,8 @@
                 <div class="col col-sm-4">Imágenes GHS:</div>
                 <div class="col col-sm-8">
                     {% for ghs in droga.ghs %}
-                        <img src="" alt=""/>
+                        <img class="img-thumbnail rounded" src="{{ path('ghs_sustancias_image', {'id': ghs.id}) }}"
+                             width="48px" alt="" data-toggle="tooltip" data-placement="top" title="{{ ghs.detalle }}"/>
                     {% else %}
                         <div class="alert alert-info" role="alert">
                             <strong>Info!</strong> No hay imagenes GHS registradas para esta sustancia.

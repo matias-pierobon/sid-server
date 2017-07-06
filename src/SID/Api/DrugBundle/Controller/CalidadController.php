@@ -42,7 +42,7 @@ class CalidadController extends Controller
             $em->persist($calidad);
             $em->flush();
 
-            return $this->redirectToRoute('calidades_show', array('id' => $calidad->getId()));
+            return $this->redirectToRoute('calidades_index');
         }
 
         return $this->render('DrugBundle:Calidad:new.html.twig', array(

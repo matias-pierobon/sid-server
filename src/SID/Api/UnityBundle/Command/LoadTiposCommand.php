@@ -1,23 +1,21 @@
 <?php
 
-namespace SID\Api\SubstanceBundle\Command;
+namespace SID\Api\UnityBundle\Command;
 use Doctrine\ORM\EntityManager;
-use SID\Api\SubstanceBundle\Entity\GHS;
+use SID\Api\MovementBundle\Entity\Motivo;
+use SID\Api\UnityBundle\Entity\Tipo;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\HttpFoundation\File\File;
 
-class LoadGHSCommand extends ContainerAwareCommand
+class LoadTiposCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('sid:ghs:load')
-            ->setDescription('Load ghs')
+            ->setName('sid:tipos:load')
+            ->setDescription('Load Tipos de Unidad')
             ->setHelp('This command lists all system users');
     }
     protected function getDoctrine()
@@ -32,26 +30,27 @@ class LoadGHSCommand extends ContainerAwareCommand
     {
         $io = new SymfonyStyle($input, $output);
         $io->newLine();
-        $io->block('Bienvenido al cargador de imgenes de GHS de SID', null, 'bg=blue;fg=white', ' ', true);
+        $io->block('Bienvenido al cargador de Tipos de Unidades SID', null, 'bg=blue;fg=white', ' ', true);
         $io->newLine();
         $em = $this->getManager();
 
-        $finder = new Finder();
-        $finder->files()->in(__DIR__ . '/../Resources/public/images/ghs');
+        $data = array(
+            array("Instituto", "Instituto"),
+            array("Laboratorio", "Laboratorio")
+        );
 
-        /* @var SplFileInfo $file */
-        foreach ($finder as $file) {
-            $ghs = new GHS();
-            $ghs
-                ->setDetalle(explode(".",$file->getBasename())[0])
-                ->setImageBlob($file);
-            $em->persist($ghs);
+        foreach ($data as $datum) {
+            $tipo = new Tipo();
+            $tipo
+                ->setNombre($datum[0])
+                ->setDetalle($datum[1]);
+            $em->persist($tipo);
         }
 
         $em->flush();
 
         $io->newLine();
-        $io->success("se han cargado las imagenes GHS con éxito!");
+        $io->success("se han cargado los tipos de unidades con éxito!");
         $io->newLine();
     }
 }

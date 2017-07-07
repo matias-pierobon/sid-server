@@ -35,40 +35,52 @@
                         <div class="col col-sm-4">Sustancia:</div>
                         <div class="col col-sm-8">{{ stock.droga.nombre }} ({{ stock.droga.formulaMolecular }} )</div>
                     </div>
-                    <div class="row">
-                        <div class="col col-sm-4">Calidad:</div>
-                        <div class="col col-sm-8">{{ stock.calidad.nombre }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-sm-4">Cantidad:</div>
-                        <div class="col col-sm-8">{{ stock.cantidad }} {{ stock.unidadMedida.sigla }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-sm-4">Marca:</div>
-                        <div class="col col-sm-8">{{ stock.marca }}</div>
-                    </div>
-                    {% if stock.fechaVencimiento %}
+                    {% if stock.calidad %}
                         <div class="row">
-                            <div class="col col-sm-4">Marca:</div>
-                            <div class="col col-sm-8">{{ stock.fechaVencimiento | date("d/m/Y") }}</div>
+                            <div class="col col-sm-4">Calidad:</div>
+                            <div class="col col-sm-8">{{ stock.calidad.nombre }}</div>
                         </div>
                     {% endif %}
                     <div class="row">
-                        <div class="col col-sm-4">Lote:</div>
-                        <div class="col col-sm-8">{{ stock.lote }}</div>
+                        <div class="col col-sm-4">Cantidad:</div>
+                        <div class="col col-sm-8">{{ stock.cantidad }}{{ stock.unidadMedida.sigla }}</div>
                     </div>
-                    <div class="row">
-                        <div class="col col-sm-4">Numero Interno:</div>
-                        <div class="col col-sm-8">{{ stock.numeroInterno }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-sm-4">Numero Envase:</div>
-                        <div class="col col-sm-8">{{ stock.numeroEvnase }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-sm-4">Numero de Producto:</div>
-                        <div class="col col-sm-8">{{ stock.numeroProducto }}</div>
-                    </div>
+                    {% if stock.numeroInterno %}
+                        <div class="row">
+                            <div class="col col-sm-4">Numero Interno:</div>
+                            <div class="col col-sm-8">{{ stock.numeroInterno }}</div>
+                        </div>
+                    {% endif %}
+                    {% if stock.numeroEvnase %}
+                        <div class="row">
+                            <div class="col col-sm-4">Numero Envase:</div>
+                            <div class="col col-sm-8">{{ stock.numeroEvnase }}</div>
+                        </div>
+                    {% endif %}
+                    {% if stock.numeroProducto %}
+                        <div class="row">
+                            <div class="col col-sm-4">Numero de Producto:</div>
+                            <div class="col col-sm-8">{{ stock.numeroProducto }}</div>
+                        </div>
+                    {% endif %}
+                    {% if stock.fechaVencimiento %}
+                        <div class="row">
+                            <div class="col col-sm-4">Fecha de Vencimiento:</div>
+                            <div class="col col-sm-8">{{ stock.fechaVencimiento | date("d/m/Y") }}</div>
+                        </div>
+                    {% endif %}
+                    {% if stock.marca %}
+                        <div class="row">
+                            <div class="col col-sm-4">Marca:</div>
+                            <div class="col col-sm-8">{{ stock.marca }}</div>
+                        </div>
+                    {% endif %}
+                    {% if stock.lote %}
+                        <div class="row">
+                            <div class="col col-sm-4">Lote:</div>
+                            <div class="col col-sm-8">{{ stock.lote }}</div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -78,13 +90,20 @@
     <section id="cd-timeline" class="cd-container">
         {% for movimiento in stock.movimientos %}
             <div class="cd-timeline-block">
-                <div class="cd-timeline-img bg-warning text-white">
+                <div class="cd-timeline-img bg-{% if movimiento.usuario == app.user %}info{% else %}warning{% endif %} text-white">
                     <i class="fa fa-circle"></i>
                 </div> <!-- cd-timeline-img -->
 
                 <div class="cd-timeline-content">
-                    <h2>{{ movimiento.motivo.nombre }}</h2>
-                    <p class="text-danger">{{ movimiento.cantidad }}</p>
+                    <h1>{{ movimiento.motivo.nombre }}</h1>
+                    {% if movimiento.usuario == app.user %}
+                        <p><span class="text-info">Movimiento mío</span></p>
+                    {% elseif is_granted('access', stock.division.droguero) %}
+                        <p>Usuario: <span class="text-info">{{ movimiento.usuario.lastname }}
+                                , {{ movimiento.usuario.name }}</span></p>
+                        <p>E-Mail: <a href="mailto:{{ movimiento.usuario.email }}" >{{ movimiento.usuario.email }}</a></p>
+                    {% endif %}
+                    <p>Cantidad: <span class="text-{% if movimiento.cantidad <= 0 %}danger{% else %}success{% endif %}">{{ movimiento.cantidad }}{{ stock.unidadMedida.sigla }}</span></p>
                     {% if movimiento.comentario %}<p>{{ movimiento.comentario }}</p>{% endif %}
                     <span class="cd-date">{{ movimiento.desde | date("d/m/Y") }}</span>
                 </div> <!-- cd-timeline-content -->

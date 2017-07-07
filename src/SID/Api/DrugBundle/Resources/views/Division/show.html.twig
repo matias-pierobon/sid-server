@@ -124,8 +124,7 @@
                                 <a href="{{ path('drug_drogueros_stock_show', {'stock': stock.id}) }}"
                                    class="btn btn-warning" data-toggle="tooltip" data-placement="top"
                                    title="Información"><i class="fa fa-info" aria-hidden="true"></i></a>
-                                {% if is_granted('movement', division.droguero) %}
-                                    {% if stock.isActive %}
+                                    {% if is_granted('movement', division.droguero) and stock.isActive %}
                                         <a href="{{ path('drug_drogueros_stock_movement', { 'stock': stock.id }) }}"
                                            class="btn btn-primary" data-toggle="tooltip" data-placement="top"
                                            title="Mover">
@@ -136,20 +135,25 @@
                                            title="Extraer">
                                             <i class="fa fa-sign-out" aria-hidden="true"></i>
                                         </a>
-                                    {% elseif stock.extraccionActiva.usuario.id == app.user.id %}
+                                    {% elseif not stock.isActive and stock.extraccionActiva.usuario == app.user %}
                                         <a href="{{ path('drug_drogueros_stock_movement', { 'stock': stock.id }) }}"
                                            class="btn btn-success" data-toggle="tooltip" data-placement="top"
                                            title="Devolver">
                                             <i class="fa fa-sign-in" aria-hidden="true"></i>
                                         </a>
-                                    {% else %}
-                                        <a href="#" class="btn btn-info" data-toggle="tooltip" data-placement="top"
-                                           title="Stock en posesión de {{ stock.extraccionActiva.usuario }}">
+                                    {% elseif not stock.isActive %}
+                                        <a href="#" class="btn btn-info"
+                                            {% if is_granted('access', stock.division.droguero) %}
+                                            data-toggle="popover" title="Stock en posesión de {{ stock.extraccionActiva.usuario }}" data-html="true"
+                                            data-content="E-mail: <a href='mailto:{{ stock.extraccionActiva.usuario.email }}'>{{ stock.extraccionActiva.usuario.email }}</a> <br/> Fecha: {{ stock.extraccionActiva.desde | date('d/m/Y h:s:m') }}"
+                                            {% endif %}
+                                            data-toggle="tooltip" data-placement="top"
+                                            title="Stock en posesión de {{ stock.extraccionActiva.usuario }}"
+                                                >
                                             <i class="fa fa-user" aria-hidden="true"></i>
                                         </a>
                                     {% endif %}
 
-                                {% endif %}
                             </div>
                         </td>
                     </tr>

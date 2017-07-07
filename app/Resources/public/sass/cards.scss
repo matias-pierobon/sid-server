@@ -1,6 +1,17 @@
 .card{
   margin-bottom: 15px;
 
+  &.droguero{
+    .card-block{
+      p{
+        word-spacing: normal;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+
   .card-block{
 
     .table.stocks {

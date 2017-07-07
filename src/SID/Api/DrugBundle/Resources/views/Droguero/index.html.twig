@@ -20,11 +20,16 @@
     <div class="row">
         {% for droguero in drogueros %}
             <div class="col col-sm-6 col-md-4">
-                <div class="card">
+                <div class="card droguero">
                     <div class="card-block">
                         <h4 class="card-title">{{ droguero.nombre }}</h4>
-                        <p class="card-text">{{ droguero.detalle }}</p>
-                        <p class="card-text">Responsable: {{ droguero.responsable.user.username }}</p>
+                        <p class="card-text"><small>{{ droguero.detalle | default("Sin detalle") }}</small></p>
+                        <p class="card-text">Responsable: <span class="text-info">{{ droguero.responsable.user }}</span></p>
+                        <p class="card-text">Unidades:
+                            {% for unidad in droguero.unidades %}
+                                <span class="text-primary"> {{ unidad.unidad.nombre }} </span>
+                            {% endfor %}
+                        </p>
                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                             {% if is_granted('entry', droguero) %}
                                 <a href="{{ path('drug_drogueros_show', {'droguero': droguero.id}) }}"

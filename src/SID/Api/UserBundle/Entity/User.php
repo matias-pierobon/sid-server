@@ -146,13 +146,13 @@ class User implements UserInterface{
 
     /**
      * One Movement has Many Users.
-     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Responsable", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Responsable", mappedBy="user")
      */
     private $droguerosResponsables;
 
     /**
      * One Movement has Many Users.
-     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Acceso", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Acceso", mappedBy="user")
      */
     private $misDrogueros;
 

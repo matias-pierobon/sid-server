@@ -157,7 +157,7 @@ class Droga
      * One Movement has Many Users.
      * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Stock", mappedBy="droga")
      */
-    private $stock;
+    private $stocks;
 
 
     /**
@@ -645,7 +645,7 @@ class Droga
      */
     public function addStock(\SID\Api\DrugBundle\Entity\Stock $stock)
     {
-        $this->stock[] = $stock;
+        $this->stocks[] = $stock;
 
         return $this;
     }
@@ -657,7 +657,7 @@ class Droga
      */
     public function removeStock(\SID\Api\DrugBundle\Entity\Stock $stock)
     {
-        $this->stock->removeElement($stock);
+        $this->stocks->removeElement($stock);
     }
 
     /**
@@ -667,6 +667,16 @@ class Droga
      */
     public function getStock()
     {
-        return $this->stock;
+        return $this->stocks;
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }

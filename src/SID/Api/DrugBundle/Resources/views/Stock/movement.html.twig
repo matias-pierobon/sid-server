@@ -35,21 +35,24 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col">
-                        <label for="cantidad">Cantidad ({{ stock.unidadMedida.sigla }})</label>
+                    <div class="form-group col col-md-6">
+                        <label for="cantidad">Cantidad</label>
                         <input name="cantidad" type="number" min="0" class="form-control" id="cantidad" required>
                     </div>
+                    <div class="form-group col col-md-6">
+                        <label for="motivo">Unidad</label>
+                        <select class="form-control" id="motivo" name="motivo">
+                            <option value="1">Litro (l)</option>
+                            <option value="2">Kilogramo (Kg)</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-check">
-                    {% if stock.cantidad <= 0 %}
-                        <span class="text-danger">Se sumará la cantidad al Stock</span>
-                        <input name="sum" type="hidden" value="on"/>
-                    {% else %}
-                    <label class="form-check-label">
-                        <input name="sum" class="form-check-input" type="checkbox" >
-                        Sumar cantidad al Stock
-                    </label>
-                    {% endif %}
+                <div class="form-group">
+                    <label for="motivo">Tipo</label>
+                    <select class="form-control" id="motivo" name="motivo">
+                        <option value="1">Parcial</option>
+                        <option value="2">Final</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="comentario">Comentario</label>

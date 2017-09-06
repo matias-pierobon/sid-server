@@ -36,6 +36,8 @@
     "lodash": "^4.17.4",
     "mathjax": "^2.7.1",
     "node-sass": "^4.5.3",
-    "select2": "^4.0.3"
+    "popper.js": "^1.12.5",
+    "select2": "^4.0.3",
+    "tooltip.js": "^1.1.5"
   }
 }

@@ -11,7 +11,8 @@ const nodeModules = `./node_modules/`
 const jsDirs = [
     './node_modules/jquery/dist/jquery.js',
     './node_modules/lodash/lodash.js',
-    './node_modules/tether/dist/js/tether.js',
+    './node_modules/tooltip.js/dist/tooltip.js',
+    './node_modules/popper.js/dist/popper.js',
     './node_modules/select2/dist/js/select2.full.js',
     './node_modules/bootstrap/dist/js/bootstrap.js',
     "./node_modules/jquery-validation/dist/additional-methods.js",

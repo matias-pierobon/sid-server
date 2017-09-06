@@ -3,6 +3,13 @@ $brand-success: #5cb85c;
 $brand-info: #458ab6;
 $brand-warning: #f0ad4e;
 $brand-danger: #e76462;
+$theme-colors: (
+        primary: $brand-primary,
+        success: $brand-success,
+        info: $brand-info,
+        warning: $brand-warning,
+        danger: $brand-danger
+);
 @import "bootstrap/scss/bootstrap";
 @import "font-awesome/scss/font-awesome";
 

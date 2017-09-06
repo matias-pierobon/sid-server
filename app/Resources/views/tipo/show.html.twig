@@ -1,0 +1,27 @@
+{% extends 'tipo/base.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('proveedores_provider_index') }}">Proveedores</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('tipos_provider_index') }}">Tipos</a></li>
+        <li class="breadcrumb-item active">{{ tipo.nombre }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body row-details">
+        <h4 class="card-title">Tipo de Comprobante</h4>
+
+        <div class="row">
+            <div class="col col-sm-4">Nombre:</div>
+            <div class="col col-sm-8">{{ tipo.nombre }}</div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-4">Detalle:</div>
+            <div class="col col-sm-8">{{ tipo.detalle }}</div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

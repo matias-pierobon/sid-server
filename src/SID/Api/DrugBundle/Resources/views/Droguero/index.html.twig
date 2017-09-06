@@ -21,7 +21,7 @@
         {% for droguero in drogueros %}
             <div class="col col-sm-6 col-md-4">
                 <div class="card droguero">
-                    <div class="card-block">
+                    <div class="card-body">
                         <h4 class="card-title">{{ droguero.nombre }}</h4>
                         <p class="card-text"><small>{{ droguero.detalle | default("Sin detalle") }}</small></p>
                         <p class="card-text">Responsable: <span class="text-info">{{ droguero.responsable.user }}</span></p>

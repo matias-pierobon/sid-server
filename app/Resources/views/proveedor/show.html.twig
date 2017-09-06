@@ -1,0 +1,45 @@
+{% extends 'proveedor/base.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('proveedores_provider_index') }}">Proveedores</a></li>
+        <li class="breadcrumb-item active">{{ proveedor.nombre }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body row-details">
+        <h4 class="card-title">Proveedor</h4>
+
+        <div class="row">
+            <div class="col col-sm-4">Nombre:</div>
+            <div class="col col-sm-8">{{ proveedor.nombre }}</div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-4">Cuit:</div>
+            <div class="col col-sm-8">{{ proveedor.cuit | default('-') }}</div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-4">Cufe:</div>
+            <div class="col col-sm-8">{{ proveedor.cufe | default('-') }}</div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-4">Teléfono:</div>
+            <div class="col col-sm-8">{{ proveedor.telefono | default('-') }}</div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-4">Contacto:</div>
+            <div class="col col-sm-8">{{ proveedor.contacto | default('-') }}</div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-4">Dirección:</div>
+            <div class="col col-sm-8">{{ proveedor.direccion | default('-') }}</div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-4">Detalle:</div>
+            <div class="col col-sm-8">{{ proveedor.detalle | default('-') }}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

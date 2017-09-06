@@ -1,0 +1,45 @@
+<?php
+
+namespace SID\Api\ProviderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Tipo
+ *
+ * @ORM\Table(name="tipo")
+ * @ORM\Entity(repositoryClass="SID\Api\ProviderBundle\Repository\TipoRepository")
+ */
+class Tipo
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255, unique=true)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="detalle", type="text", nullable=true)
+     */
+    private $detalle;
+
+    /**
+     * One Movement has Many Users.
+     * @ORM\OneToMany(targetEntity="Comprobante", mappedBy="tipo")
+     */
+    private $comprobantes;
+
+}
+

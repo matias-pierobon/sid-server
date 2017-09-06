@@ -1,0 +1,24 @@
+tipos_provider_index:
+    path:     /
+    defaults: { _controller: "ProviderBundle:Tipo:index" }
+    methods:  GET
+
+tipos_provider_show:
+    path:     /{id}/show
+    defaults: { _controller: "ProviderBundle:Tipo:show" }
+    methods:  GET
+
+tipos_provider_new:
+    path:     /new
+    defaults: { _controller: "ProviderBundle:Tipo:new" }
+    methods:  [GET, POST]
+
+tipos_provider_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ProviderBundle:Tipo:edit" }
+    methods:  [GET, POST]
+
+tipos_provider_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ProviderBundle:Tipo:delete" }
+    methods:  DELETE

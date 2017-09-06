@@ -36,7 +36,7 @@
                     </ul>
                 </div>
                 <form id="form" action="{{ path('sustancias_create') }}" method="post">
-                    <div class="card-block tab-content">
+                    <div class="card-body tab-content">
                         <div class="tab-pane active" id="general" role="tabpanel">
                             {{ tabs.general(unidadesMedida) }}
                         </div>
@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    <div class="card-block text-right">
+                    <div class="card-body text-right">
                         <a class="btn card-link" href="{{ path('sustancias_index') }}">Lista de Sustancias</a>
                         <button type="submit" class="btn btn-primary card-link">Crear</button>
                     </div>

@@ -1,0 +1,24 @@
+comprobantes_provider_index:
+    path:     /
+    defaults: { _controller: "ProviderBundle:Comprobante:index" }
+    methods:  GET
+
+comprobantes_provider_show:
+    path:     /{id}/show
+    defaults: { _controller: "ProviderBundle:Comprobante:show" }
+    methods:  GET
+
+comprobantes_provider_new:
+    path:     /new
+    defaults: { _controller: "ProviderBundle:Comprobante:new" }
+    methods:  [GET, POST]
+
+comprobantes_provider_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ProviderBundle:Comprobante:edit" }
+    methods:  [GET, POST]
+
+comprobantes_provider_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ProviderBundle:Comprobante:delete" }
+    methods:  DELETE

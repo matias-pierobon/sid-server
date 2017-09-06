@@ -35,7 +35,7 @@ class DrogueroVoter extends Voter
                 return $droguero->isResponsable($user);
             },
             "movement" => function(Droguero $droguero, User $user){
-                return $droguero->hasAccess($user);
+                return $droguero->hasInclusiveAccess($user);
             }
         ));
     }

@@ -1,0 +1,53 @@
+{% extends 'proveedor/base.html.twig' %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Proveedores</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">
+            Listado de Proveedores
+            <div class="btn-group pull-right">
+                <a class="btn btn-primary" href="{{ path('proveedores_provider_new') }}">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Agregar
+                </a>
+            </div>
+        </h4>
+    </div>
+    <div class="card-body">
+
+        <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Cuit</th>
+                <th>Nombre</th>
+                <th>Cufe</th>
+                <th>Teléfono</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for proveedor in proveedors %}
+            <tr>
+                <td><a href="{{ path('proveedores_provider_show', { 'id': proveedor.id }) }}">{{ proveedor.cuit }}</a></td>
+                <td>{{ proveedor.nombre }}</td>
+                <td>{{ proveedor.cufe }}</td>
+                <td>{{ proveedor.telefono }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="{{ path('proveedores_provider_show', { 'id': proveedor.id }) }}" class="btn btn-warning"><i class="fa fa-info" aria-hidden="true"></i></a>
+                        <a href="{{ path('proveedores_provider_edit', { 'id': proveedor.id }) }}" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

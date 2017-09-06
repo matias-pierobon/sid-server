@@ -32,7 +32,7 @@
 
     {% if is_granted('config', division.droguero) %}
         <div class="card">
-            <div class="card-block">
+            <div class="card-body">
                 <div class="card-title">Panel de Control</div>
                 <a class="card-link btn btn-primary"
                    href="{{ path('drug_drogueros_division_new', {'droguero': division.droguero.id, 'division': division.id}) }}">
@@ -57,7 +57,7 @@
         {% for subdivision in division.subdivisiones %}
             <div class="col col-md-4">
                 <div class="card">
-                    <div class="card-block">
+                    <div class="card-body">
                         <h4 class="card-title">{{ subdivision.nombre }}</h4>
 
                         <div class="btn-group" role="group" aria-label="Subdivisión">
@@ -80,10 +80,10 @@
         {% endfor %}
     </div>
     <div class="card">
-        <div class="card-block">
+        <div class="card-body">
             <h4 class="card-title">Stocks</h4>
         </div>
-        <div class="card-block">
+        <div class="card-body">
             <table class="table table-hover stocks">
                 <thead>
                 <tr>

@@ -1,3 +1,11 @@
-provider_homepage:
-    path:     /
-    defaults: { _controller: ProviderBundle:Default:index }
+provider_tipos:
+    resource: "@ProviderBundle/Resources/config/routing/tipo.yml"
+    prefix:   /tipos
+
+provider_comprobantes:
+        resource: "@ProviderBundle/Resources/config/routing/comprobante.yml"
+        prefix:   /comprobantes
+
+provider:
+    resource: "@ProviderBundle/Resources/config/routing/proveedor.yml"
+    prefix:   /

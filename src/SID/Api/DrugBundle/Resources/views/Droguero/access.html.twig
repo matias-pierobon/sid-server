@@ -13,10 +13,10 @@
 {% block content %}
     <form action="{{ path('drug_drogueros_grant_access', {'id': droguero.id }) }}" method="post">
         <div class="card">
-            <div class="card-block">
+            <div class="card-body">
                 <h4 class="card-title">Lista de Usuarios con acceso</h4>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -52,7 +52,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <a href="{{ path('drug_drogueros_index') }}" class="card-link">Mis Drogueros</a>
                 <button type="submit" class="card-link btn btn-primary">Guardar</button>
             </div>

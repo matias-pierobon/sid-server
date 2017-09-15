@@ -52,6 +52,13 @@ class Movimiento
     private $hasta;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="partial", type="boolean", nullable=true)
+     */
+    private $partial;
+
+    /**
      * Many Features have One Product.
      * @ORM\ManyToOne(targetEntity="SID\Api\UserBundle\Entity\User", inversedBy="movimientos")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -71,6 +78,13 @@ class Movimiento
      * @ORM\JoinColumn(name="motivo_id", referencedColumnName="id")
      */
     private $motivo;
+
+    /**
+     * Many Stocks have One UnidadMedida.
+     * @ORM\ManyToOne(targetEntity="SID\Api\SubstanceBundle\Entity\UnidadMedida", inversedBy="movimientos")
+     * @ORM\JoinColumn(name="medida_id", referencedColumnName="id")
+     */
+    private $unidadMedida;
 
 
     /**
@@ -258,5 +272,49 @@ class Movimiento
     public function getMotivo()
     {
         return $this->motivo;
+    }
+
+    /**
+     * Set unidadMedida
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\UnidadMedida $unidadMedida
+     *
+     * @return Movimiento
+     */
+    public function setUnidadMedida(\SID\Api\SubstanceBundle\Entity\UnidadMedida $unidadMedida = null)
+    {
+        $this->unidadMedida = $unidadMedida;
+
+        return $this;
+    }
+
+    /**
+     * Get unidadMedida
+     *
+     * @return \SID\Api\SubstanceBundle\Entity\UnidadMedida
+     */
+    public function getUnidadMedida()
+    {
+        return $this->unidadMedida;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getPartial(): bool
+    {
+        return $this->partial || false;
+    }
+
+    /**
+     * @param bool $partial
+     *
+     * @return self
+     */
+    public function setPartial($partial)
+    {
+        $this->partial = $partial;
+
+        return $this;
     }
 }

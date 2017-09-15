@@ -56,9 +56,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col">
+                    <div class="form-group col col-md-6">
                         <label for="cantidad">Cantidad</label>
                         <input name="cantidad" type="number" min="0" class="form-control" id="cantidad">
+                    </div>
+                    <div class="form-group col col-md-6">
+                        <label for="unidad">Unidad</label>
+                        <select class="form-control" id="unidad" name="unidad">
+                            {% for unidad in unidades %}
+                                <option value="{{ unidad.id }}">{{ unidad.detalle }} ({{ unidad.sigla }})</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="row">

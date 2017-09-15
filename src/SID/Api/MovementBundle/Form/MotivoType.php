@@ -13,7 +13,7 @@ class MotivoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')->add('detalle');
+        $builder->add('nombre')->add('detalle')->add('suma');
     }
     
     /**

@@ -1,3 +1,8 @@
+unidades_medidas_test:
+    path:     /test
+    defaults: { _controller: "SubstanceBundle:UnidadMedida:test" }
+    methods:  GET
+
 unidades_medidas_index:
     path:     /
     defaults: { _controller: "SubstanceBundle:UnidadMedida:index" }

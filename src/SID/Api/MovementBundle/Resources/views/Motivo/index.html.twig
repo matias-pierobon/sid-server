@@ -27,6 +27,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Detalle</th>
+                    <th>S/R</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
@@ -35,6 +36,7 @@
                     <tr>
                         <td>{{ motivo.nombre }}</td>
                         <td>{{ motivo.detalle }}</td>
+                        <td>{% if motivo.suma %}Suma{% else %}Resta{% endif %}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ path('motivo_edit', { 'id': motivo.id }) }}" class="btn btn-info"><i

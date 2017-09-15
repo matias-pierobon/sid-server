@@ -8,6 +8,7 @@ use SID\Api\MovementBundle\Entity\Movimiento;
 use SID\Api\MovementBundle\Entity\MovimientoFisico;
 use SID\Api\SubstanceBundle\Entity\Droga;
 use SID\Api\SubstanceBundle\Entity\UnidadMedida;
+use SID\Api\SubstanceBundle\Model\Cantidad;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -152,17 +153,24 @@ class Stock
      */
     private $calidad;
 
-
     /**
-     * Constructor
+     * Many Stocks have One UnidadMedida.
+     * @ORM\ManyToOne(targetEntity="SID\Api\SubstanceBundle\Entity\UnidadMedida", inversedBy="movimientos")
+     * @ORM\JoinColumn(name="medida_id", referencedColumnName="id")
      */
-    public function __construct()
-    {
-        $this->fechaIngreso = new \DateTime();
-        $this->movimientos = new ArrayCollection();
-        $this->extracciones = new ArrayCollection();
-    }
+    private $unidadMedida;
 
+
+    public function updateCantidad(Cantidad $cantidad, bool $partial=true)
+    {
+        $normCantidad = $cantidad->convertirA($this->getUnidadMedida());
+
+        if($partial){
+            $normCantidad->setValor($normCantidad->getValor() + $this->cantidad);
+        }
+
+        $this->setCantidad($normCantidad->getValor());
+    }
     /**
      * @return MovimientoFisico
      */
@@ -193,6 +201,14 @@ class Stock
 
 
     /**
+     * @return float
+     */
+    public function getDensidad()
+    {
+        return $this->getDroga()->getDensidad();
+    }
+
+    /**
      * @param UploadedFile $file
      * @return $this
      */
@@ -212,6 +228,15 @@ class Stock
         $this->setImagen($imageContent);
         $this->setImageMime($file->getMimeType());
         return $this;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fechaIngreso = new \DateTime();
+        $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->extracciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -270,30 +295,6 @@ class Stock
     public function getNumeroEvnase()
     {
         return $this->numeroEvnase;
-    }
-
-    /**
-     * Set numeroInterno
-     *
-     * @param string $numero
-     *
-     * @return Stock
-     */
-    public function setNumeroInterno($numero)
-    {
-        $this->numeroInterno = $numero;
-
-        return $this;
-    }
-
-    /**
-     * Get numeroInterno
-     *
-     * @return string
-     */
-    public function getNumeroInterno()
-    {
-        return $this->numeroInterno;
     }
 
     /**
@@ -465,9 +466,33 @@ class Stock
     }
 
     /**
+     * Set numeroInterno
+     *
+     * @param string $numeroInterno
+     *
+     * @return Stock
+     */
+    public function setNumeroInterno($numeroInterno)
+    {
+        $this->numeroInterno = $numeroInterno;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroInterno
+     *
+     * @return string
+     */
+    public function getNumeroInterno()
+    {
+        return $this->numeroInterno;
+    }
+
+    /**
      * Set cantidad
      *
-     * @param integer $cantidad
+     * @param float $cantidad
      *
      * @return Stock
      */
@@ -481,7 +506,7 @@ class Stock
     /**
      * Get cantidad
      *
-     * @return integer
+     * @return float
      */
     public function getCantidad()
     {
@@ -543,7 +568,7 @@ class Stock
      *
      * @return Stock
      */
-    public function setDivision(Division $division = null)
+    public function setDivision(\SID\Api\DrugBundle\Entity\Division $division = null)
     {
         $this->division = $division;
 
@@ -558,40 +583,6 @@ class Stock
     public function getDivision()
     {
         return $this->division;
-    }
-
-    /**
-     * Set calidad
-     *
-     * @param \SID\Api\DrugBundle\Entity\Calidad $calidad
-     *
-     * @return Stock
-     */
-    public function setCalidad(Calidad $calidad = null)
-    {
-        $this->calidad = $calidad;
-
-        return $this;
-    }
-
-    /**
-     * Get calidad
-     *
-     * @return \SID\Api\DrugBundle\Entity\Calidad
-     */
-    public function getCalidad()
-    {
-        return $this->calidad;
-    }
-
-    /**
-     * Get unidadMedida
-     *
-     * @return \SID\Api\SubstanceBundle\Entity\UnidadMedida
-     */
-    public function getUnidadMedida()
-    {
-        return $this->getDroga()->getUnidadMedida();
     }
 
     /**
@@ -629,6 +620,40 @@ class Stock
     }
 
     /**
+     * Add extraccione
+     *
+     * @param \SID\Api\MovementBundle\Entity\MovimientoFisico $extraccione
+     *
+     * @return Stock
+     */
+    public function addExtraccione(\SID\Api\MovementBundle\Entity\MovimientoFisico $extraccione)
+    {
+        $this->extracciones[] = $extraccione;
+
+        return $this;
+    }
+
+    /**
+     * Remove extraccione
+     *
+     * @param \SID\Api\MovementBundle\Entity\MovimientoFisico $extraccione
+     */
+    public function removeExtraccione(\SID\Api\MovementBundle\Entity\MovimientoFisico $extraccione)
+    {
+        $this->extracciones->removeElement($extraccione);
+    }
+
+    /**
+     * Get extracciones
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExtracciones()
+    {
+        return $this->extracciones;
+    }
+
+    /**
      * Set droga
      *
      * @param \SID\Api\SubstanceBundle\Entity\Droga $droga
@@ -653,36 +678,50 @@ class Stock
     }
 
     /**
-     * Add extraccion
+     * Set calidad
      *
-     * @param \SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion
+     * @param \SID\Api\DrugBundle\Entity\Calidad $calidad
      *
      * @return Stock
      */
-    public function addExtraccion(\SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion)
+    public function setCalidad(\SID\Api\DrugBundle\Entity\Calidad $calidad = null)
     {
-        $this->extracciones[] = $extraccion;
+        $this->calidad = $calidad;
 
         return $this;
     }
 
     /**
-     * Remove extraccion
+     * Get calidad
      *
-     * @param \SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion
+     * @return \SID\Api\DrugBundle\Entity\Calidad
      */
-    public function removeExtraccione(\SID\Api\MovementBundle\Entity\MovimientoFisico $extraccion)
+    public function getCalidad()
     {
-        $this->extracciones->removeElement($extraccion);
+        return $this->calidad;
     }
 
     /**
-     * Get extracciones
+     * Set unidadMedida
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param \SID\Api\SubstanceBundle\Entity\UnidadMedida $unidadMedida
+     *
+     * @return Stock
      */
-    public function getExtracciones()
+    public function setUnidadMedida(\SID\Api\SubstanceBundle\Entity\UnidadMedida $unidadMedida = null)
     {
-        return $this->extracciones;
+        $this->unidadMedida = $unidadMedida;
+
+        return $this;
+    }
+
+    /**
+     * Get unidadMedida
+     *
+     * @return \SID\Api\SubstanceBundle\Entity\UnidadMedida
+     */
+    public function getUnidadMedida()
+    {
+        return $this->unidadMedida;
     }
 }

@@ -41,6 +41,13 @@ class Motivo
      */
     private $movimientos;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suma", type="boolean", nullable=true)
+     */
+    private $suma;
+
 
     /**
      * Constructor
@@ -140,5 +147,29 @@ class Motivo
     public function getMovimientos()
     {
         return $this->movimientos;
+    }
+
+    /**
+     * Set suma
+     *
+     * @param float $suma
+     *
+     * @return self
+     */
+    public function setSuma($suma)
+    {
+        $this->suma = $suma;
+
+        return $this;
+    }
+
+    /**
+     * Get suma
+     *
+     * @return float
+     */
+    public function getSuma()
+    {
+        return $this->suma;
     }
 }

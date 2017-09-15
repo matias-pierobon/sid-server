@@ -43,7 +43,7 @@
                     {% endif %}
                     <div class="row">
                         <div class="col col-sm-4">Cantidad:</div>
-                        <div class="col col-sm-8">{{ stock.cantidad }}{{ stock.unidadMedida.sigla }}</div>
+                        <div class="col col-sm-8">{{ stock.cantidad }} {{ stock.unidadMedida.sigla }}</div>
                     </div>
                     {% if stock.numeroInterno %}
                         <div class="row">
@@ -103,7 +103,8 @@
                                 , {{ movimiento.usuario.name }}</span></p>
                         <p>E-Mail: <a href="mailto:{{ movimiento.usuario.email }}" >{{ movimiento.usuario.email }}</a></p>
                     {% endif %}
-                    <p>Cantidad: <span class="text-{% if movimiento.cantidad <= 0 %}danger{% else %}success{% endif %}">{{ movimiento.cantidad }}{{ stock.unidadMedida.sigla }}</span></p>
+                    <p>Cantidad: <span class="text-{% if movimiento.cantidad <= 0 %}danger{% else %}success{% endif %}">{{ movimiento.cantidad }} {{ movimiento.unidadMedida.sigla }}</span></p>
+                    {% if not movimiento.partial %}<p>Movimiento Final</p>{% endif %}
                     {% if movimiento.comentario %}<p>{{ movimiento.comentario }}</p>{% endif %}
                     <span class="cd-date">{{ movimiento.desde | date("d/m/Y") }}</span>
                 </div> <!-- cd-timeline-content -->

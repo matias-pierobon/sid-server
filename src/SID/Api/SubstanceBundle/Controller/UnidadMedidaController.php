@@ -3,8 +3,10 @@
 namespace SID\Api\SubstanceBundle\Controller;
 
 use SID\Api\SubstanceBundle\Entity\UnidadMedida;
+use SID\Api\SubstanceBundle\Model\Cantidad;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Unidadmedida controller.
@@ -12,6 +14,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UnidadMedidaController extends Controller
 {
+
+    public function testAction(){
+        $em = $this->getDoctrine()->getManager();
+
+        $kg  = $em->getRepository('SubstanceBundle:UnidadMedida')->find(1);
+        $g   = $em->getRepository('SubstanceBundle:UnidadMedida')->find(2);
+        $lts = $em->getRepository('SubstanceBundle:UnidadMedida')->find(3);
+        $ml  = $em->getRepository('SubstanceBundle:UnidadMedida')->find(4);
+
+        $cantidad = new Cantidad(50, $lts, 2);
+        dump($cantidad->convertirA($ml));
+        return new Response();
+
+    }
+
     /**
      * Lists all unidadMedida entities.
      *

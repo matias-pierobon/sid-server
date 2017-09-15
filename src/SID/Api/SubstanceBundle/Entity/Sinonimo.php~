@@ -24,7 +24,7 @@ class Sinonimo
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="nombre", type="string", length=255, unique=true)
      */
     private $nombre;
 
@@ -36,4 +36,79 @@ class Sinonimo
 
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->drogas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Sinonimo
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Add droga
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Droga $droga
+     *
+     * @return Sinonimo
+     */
+    public function addDroga(\SID\Api\SubstanceBundle\Entity\Droga $droga)
+    {
+        $this->drogas[] = $droga;
+
+        return $this;
+    }
+
+    /**
+     * Remove droga
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Droga $droga
+     */
+    public function removeDroga(\SID\Api\SubstanceBundle\Entity\Droga $droga)
+    {
+        $this->drogas->removeElement($droga);
+    }
+
+    /**
+     * Get drogas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDrogas()
+    {
+        return $this->drogas;
+    }
 }

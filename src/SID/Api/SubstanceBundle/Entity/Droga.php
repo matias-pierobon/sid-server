@@ -74,7 +74,7 @@ class Droga
     /**
      * @var string
      *
-     * @ORM\Column(name="densidad", type="string", length=255, nullable=true)
+     * @ORM\Column(name="densidad", type="float", length=255, nullable=true)
      */
     private $densidad;
 
@@ -383,7 +383,7 @@ class Droga
     /**
      * Set densidad
      *
-     * @param string $densidad
+     * @param float $densidad
      *
      * @return Droga
      */
@@ -397,7 +397,7 @@ class Droga
     /**
      * Get densidad
      *
-     * @return string
+     * @return float
      */
     public function getDensidad()
     {

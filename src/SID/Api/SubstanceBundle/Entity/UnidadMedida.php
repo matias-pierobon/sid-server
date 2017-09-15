@@ -4,6 +4,11 @@ namespace SID\Api\SubstanceBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ds\Set;
+use Ds\Queue;
+use Ds\Map;
+use Ds\Sequence;
+use Ds\Vector;
 
 /**
  * UnidadMedida
@@ -49,6 +54,76 @@ class UnidadMedida
      */
     protected $drogas;
 
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Stock", mappedBy="unidadMedida")
+     */
+    protected $stocks;
+
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="SID\Api\MovementBundle\Entity\Movimiento", mappedBy="unidadMedida")
+     */
+    protected $movimientos;
+
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="Conversion", mappedBy="de")
+     */
+    protected $conversionesOut;
+
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="Conversion", mappedBy="a")
+     */
+    protected $conversionesIn;
+
+
+
+    public function conversionPathTo(UnidadMedida $unidad)
+    {
+        if ($this->id == $unidad->id){
+            return new Vector();
+        }
+
+        $q = new Queue(); $set = new Set(); $hash = new Map();
+        foreach ($this->conversionesOut as $conversion) {
+            $set->add($conversion);
+            $q->push($conversion);
+            $hash->put($conversion, null);
+        }
+        $last = null;
+        while (!$q->isEmpty()){
+            /* @var Conversion $current */
+            $current = $q->pop();
+
+            if($current->getA()->getId() == $unidad->getId() ){
+                $last = $current;
+                break;
+            }
+
+            foreach ($current->getA()->getConversionesOut() as $conversion) {
+                if (!$set->contains($conversion)) {
+                    $set->add($conversion);
+                    $q->push($conversion);
+                    $hash->put($conversion, $current);
+                }
+
+            }
+
+
+        }
+
+
+        function sequence($hash, $nodo, Sequence $lista=null): Sequence{
+            if($nodo === null) return $lista;
+            if($lista === null){ $lista = new Vector(); }
+            $lista->push($nodo);
+            return sequence($hash, $hash->get($nodo, null), $lista);
+        };
+
+        return sequence($hash, $current)->reversed();
+    }
 
     /**
      * Constructor
@@ -56,13 +131,17 @@ class UnidadMedida
     public function __construct()
     {
         $this->fechaIngreso = new \DateTime();
-        $this->stocks = new ArrayCollection();
+        $this->drogas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->conversionesOut = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->conversionesIn = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -142,11 +221,45 @@ class UnidadMedida
     }
 
     /**
+     * Add droga
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Droga $droga
+     *
+     * @return UnidadMedida
+     */
+    public function addDroga(\SID\Api\SubstanceBundle\Entity\Droga $droga)
+    {
+        $this->drogas[] = $droga;
+
+        return $this;
+    }
+
+    /**
+     * Remove droga
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Droga $droga
+     */
+    public function removeDroga(\SID\Api\SubstanceBundle\Entity\Droga $droga)
+    {
+        $this->drogas->removeElement($droga);
+    }
+
+    /**
+     * Get drogas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDrogas()
+    {
+        return $this->drogas;
+    }
+
+    /**
      * Add stock
      *
      * @param \SID\Api\DrugBundle\Entity\Stock $stock
      *
-     * @return Calidad
+     * @return UnidadMedida
      */
     public function addStock(\SID\Api\DrugBundle\Entity\Stock $stock)
     {
@@ -174,5 +287,106 @@ class UnidadMedida
     {
         return $this->stocks;
     }
-}
 
+    /**
+     * Add movimiento
+     *
+     * @param \SID\Api\MovementBundle\Entity\Movimiento $movimiento
+     *
+     * @return UnidadMedida
+     */
+    public function addMovimiento(\SID\Api\MovementBundle\Entity\Movimiento $movimiento)
+    {
+        $this->movimientos[] = $movimiento;
+
+        return $this;
+    }
+
+    /**
+     * Remove movimiento
+     *
+     * @param \SID\Api\MovementBundle\Entity\Movimiento $movimiento
+     */
+    public function removeMovimiento(\SID\Api\MovementBundle\Entity\Movimiento $movimiento)
+    {
+        $this->movimientos->removeElement($movimiento);
+    }
+
+    /**
+     * Get movimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMovimientos()
+    {
+        return $this->movimientos;
+    }
+
+    /**
+     * Add conversionesOut
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Conversion $conversionesOut
+     *
+     * @return UnidadMedida
+     */
+    public function addConversionesOut(\SID\Api\SubstanceBundle\Entity\Conversion $conversionesOut)
+    {
+        $this->conversionesOut[] = $conversionesOut;
+
+        return $this;
+    }
+
+    /**
+     * Remove conversionesOut
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Conversion $conversionesOut
+     */
+    public function removeConversionesOut(\SID\Api\SubstanceBundle\Entity\Conversion $conversionesOut)
+    {
+        $this->conversionesOut->removeElement($conversionesOut);
+    }
+
+    /**
+     * Get conversionesOut
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConversionesOut()
+    {
+        return $this->conversionesOut;
+    }
+
+    /**
+     * Add conversionesIn
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Conversion $conversionesIn
+     *
+     * @return UnidadMedida
+     */
+    public function addConversionesIn(\SID\Api\SubstanceBundle\Entity\Conversion $conversionesIn)
+    {
+        $this->conversionesIn[] = $conversionesIn;
+
+        return $this;
+    }
+
+    /**
+     * Remove conversionesIn
+     *
+     * @param \SID\Api\SubstanceBundle\Entity\Conversion $conversionesIn
+     */
+    public function removeConversionesIn(\SID\Api\SubstanceBundle\Entity\Conversion $conversionesIn)
+    {
+        $this->conversionesIn->removeElement($conversionesIn);
+    }
+
+    /**
+     * Get conversionesIn
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConversionesIn()
+    {
+        return $this->conversionesIn;
+    }
+}

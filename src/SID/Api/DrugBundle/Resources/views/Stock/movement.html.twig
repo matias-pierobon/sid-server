@@ -40,18 +40,19 @@
                         <input name="cantidad" type="number" min="0" class="form-control" id="cantidad" required>
                     </div>
                     <div class="form-group col col-md-6">
-                        <label for="motivo">Unidad</label>
-                        <select class="form-control" id="motivo" name="motivo">
-                            <option value="1">Litro (l)</option>
-                            <option value="2">Kilogramo (Kg)</option>
+                        <label for="unidad">Unidad</label>
+                        <select class="form-control" id="unidad" name="unidad">
+                            {% for unidad in unidades %}
+                                <option value="{{ unidad.id }}" {% if unidad.id == stock.unidadMedida.id %} selected{% endif %}>{{ unidad.detalle }} ({{ unidad.sigla }})</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="motivo">Tipo</label>
-                    <select class="form-control" id="motivo" name="motivo">
-                        <option value="1">Parcial</option>
-                        <option value="2">Final</option>
+                    <label for="partial">Tipo</label>
+                    <select class="form-control" id="partial" name="partial">
+                        <option value="partial">Parcial</option>
+                        <option value="final">Final</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -63,7 +64,7 @@
                 >
                     Volver a {{ stock.division }}
                 </a>
-                <button type="submit" class="btn btn-primary">Crear</button>
+                <button type="submit" class="btn btn-primary">Realizar Movimiento</button>
             </form>
         </div>
     </div>

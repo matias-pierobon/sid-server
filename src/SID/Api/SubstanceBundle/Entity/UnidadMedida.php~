@@ -1,0 +1,93 @@
+<?php
+
+namespace SID\Api\SubstanceBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UnidadMedida
+ *
+ * @ORM\Table(name="unidad_medida")
+ * @ORM\Entity(repositoryClass="SID\Api\SubstanceBundle\Repository\UnidadMedidaRepository")
+ */
+class UnidadMedida
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaIngreso", type="datetimetz")
+     */
+    private $fechaIngreso;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sigla", type="string", length=255, unique=true)
+     */
+    private $sigla;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="detalle", type="text")
+     */
+    private $detalle;
+
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="Droga", mappedBy="unidadMedida")
+     */
+    protected $drogas;
+
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="SID\Api\DrugBundle\Entity\Stock", mappedBy="unidadMedida")
+     */
+    protected $stocks;
+
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="SID\Api\MovementBundle\Entity\Movimiento", mappedBy="unidadMedida")
+     */
+    protected $movimientos;
+
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="Conversion", mappedBy="de")
+     */
+    protected $conversionesOut;
+
+    /**
+     * One Calidad has Many Stocks.
+     * @ORM\OneToMany(targetEntity="Conversion", mappedBy="a")
+     */
+    protected $conversionesIn;
+
+    public function convertirA(UnidadMedida $unidad, float $value, float $densidad = null)
+    {
+        if ($this->id == $unidad->id){
+            return $this;
+        }
+
+        $q = array(); $hash = array();
+        array_push($q, ... $this->conversionesOut);
+        while ($q != []){
+            /* @var Conversion */
+            $current = array_shift($q);
+
+            if($current);
+        }
+
+    }
+}
+

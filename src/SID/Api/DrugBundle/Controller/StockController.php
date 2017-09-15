@@ -8,6 +8,7 @@ use SID\Api\DrugBundle\Entity\Droguero;
 use SID\Api\DrugBundle\Entity\Stock;
 use SID\Api\MovementBundle\Entity\Movimiento;
 use SID\Api\MovementBundle\Entity\MovimientoFisico;
+use SID\Api\SubstanceBundle\Model\Cantidad;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +22,14 @@ class StockController extends Controller
         $calidades = $this->findAll('Drug', 'Calidad');
         $sustancias = $this->findAll('Substance', 'Droga');
         $motivos = $this->findAll('Movement', 'Motivo');
+        $unidades = $this->findAll('Substance', 'UnidadMedida');
         return $this->render('DrugBundle:Stock:add.html.twig', array(
             'droguero' => $droguero,
             'division' => $division,
             'sustancias' => $sustancias,
             'calidades' => $calidades,
-            'motivos' => $motivos
+            'motivos' => $motivos,
+            'unidades' => $unidades
         ));
     }
 
@@ -47,6 +50,7 @@ class StockController extends Controller
         $droga = $em->getRepository('SubstanceBundle:Droga')->find($request->get('sustancia'));
         $motivo = $em->getRepository('MovementBundle:Motivo')->find($request->get('motivo'));
         $calidad = $em->getRepository('DrugBundle:Calidad')->find($request->get('calidad'));
+        $unidad = $em->getRepository('SubstanceBundle:UnidadMedida')->find($request->get('unidad'));
 
         $cantidad = $request->get('cantidad');
         $peso = $request->get('peso');
@@ -65,6 +69,7 @@ class StockController extends Controller
             ->setImageBlob($request->files->get('image'))
             ->setPesoBruto($peso)
             ->setPesoBrutoActual($peso)
+            ->setUnidadMedida($unidad)
             ->setStockActual($cantidad);
 
 
@@ -94,9 +99,11 @@ class StockController extends Controller
     public function movementAction(Stock $stock)
     {
         $motivos = $this->findAll('Movement', 'Motivo');
+        $unidades = $this->findAll('Substance', 'UnidadMedida');
         return $this->render('DrugBundle:Stock:movement.html.twig', array(
             'stock' => $stock,
-            'motivos' => $motivos
+            'motivos' => $motivos,
+            'unidades' => $unidades
         ));
     }
 
@@ -112,22 +119,27 @@ class StockController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $motivo = $em->getRepository('MovementBundle:Motivo')->find($request->get('motivo'));
+        $unidad = $em->getRepository('SubstanceBundle:UnidadMedida')->find($request->get('unidad'));
 
         $cantidad = floatval($request->get('cantidad'));
 
+        $partial = $request->get('partial', 'partial') == 'partial';
 
-        if ($request->get('sum', 'off') != 'on')
+        if ( $partial && !$motivo->getSuma())
             $cantidad = $cantidad * (-1);
 
-        $stock->setCantidad($stock->getCantidad() + $cantidad);
+        $cantidad = new Cantidad($cantidad, $unidad, $stock->getDensidad());
+        $stock->updateCantidad($cantidad, $partial);
 
         $movimiento = new Movimiento();
         $movimiento
-            ->setCantidad($cantidad)
+            ->setCantidad($cantidad->getValor())
             ->setDesde(new \DateTime())
             ->setHasta(new \DateTime())
             ->setMotivo($motivo)
             ->setStock($stock)
+            ->setPartial($partial)
+            ->setUnidadMedida($cantidad->getUnidad())
             ->setComentario($request->get('comentario'))
             ->setUsuario($this->getUser());
 

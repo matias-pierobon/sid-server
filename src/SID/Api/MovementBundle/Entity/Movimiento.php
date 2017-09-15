@@ -3,6 +3,7 @@
 namespace SID\Api\MovementBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\SubstanceBundle\Model\Cantidad;
 use SID\Api\UserBundle\Entity\User;
 use SID\Api\DrugBundle\Entity\Stock;
 
@@ -85,6 +86,20 @@ class Movimiento
      * @ORM\JoinColumn(name="medida_id", referencedColumnName="id")
      */
     private $unidadMedida;
+
+
+    public function getNormCantidad()
+    {
+        return new Cantidad($this->getCantidad(), $this->getUnidadMedida(), $this->getDroga()->getDensidad());
+    }
+
+    /**
+     * @return \SID\Api\SubstanceBundle\Entity\Droga
+     */
+    public function getDroga()
+    {
+        return $this->getStock()->getDroga();
+    }
 
 
     /**

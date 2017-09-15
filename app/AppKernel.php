@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new SID\Api\ProviderBundle\ProviderBundle(),
             new SID\Api\MovementBundle\MovementBundle(),
             new SID\Api\SecurityBundle\SidSecurityBundle(),
+            new SID\Api\ReportBundle\ReportBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

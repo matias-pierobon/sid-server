@@ -25,6 +25,16 @@ class Cantidad
         $this->valor = $valor;
     }
 
+    function __toString()
+    {
+        return $this->valor . " " . $this->unidad->getSigla();
+    }
+
+    public function add(Cantidad $cantidad)
+    {
+        $this->valor += $cantidad->convertirA($this->unidad)->valor;
+    }
+
     public function convertirA(UnidadMedida $unidadMedida){
         return $this->applyPath($this->unidad->conversionPathTo($unidadMedida));
     }

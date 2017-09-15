@@ -10,6 +10,13 @@ use Ds\Map;
 use Ds\Sequence;
 use Ds\Vector;
 
+function sequence($hash, $nodo, Sequence $lista=null): Sequence{
+    if($nodo === null) return $lista;
+    if($lista === null){ $lista = new Vector(); }
+    $lista->push($nodo);
+    return sequence($hash, $hash->get($nodo, null), $lista);
+};
+
 /**
  * UnidadMedida
  *
@@ -110,17 +117,7 @@ class UnidadMedida
                 }
 
             }
-
-
         }
-
-
-        function sequence($hash, $nodo, Sequence $lista=null): Sequence{
-            if($nodo === null) return $lista;
-            if($lista === null){ $lista = new Vector(); }
-            $lista->push($nodo);
-            return sequence($hash, $hash->get($nodo, null), $lista);
-        };
 
         return sequence($hash, $current)->reversed();
     }

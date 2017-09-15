@@ -2,7 +2,10 @@
 
 namespace SID\Api\MovementBundle\Entity;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use SID\Api\SubstanceBundle\Entity\Droga;
+use SID\Api\SubstanceBundle\Model\Cantidad;
 
 /**
  * Motivo
@@ -47,6 +50,25 @@ class Motivo
      * @ORM\Column(name="suma", type="boolean", nullable=true)
      */
     private $suma;
+
+    /**
+     * @param Droga $droga
+     */
+    public function total($droga)
+    {
+        $total = new Cantidad(0, $droga->getUnidadMedida(), $droga->getDensidad());
+        /* @var Movimiento $movimiento */
+        foreach ($this->movimientos as $movimiento) {
+            if($movimiento->getDroga()->getId() == $droga->getId()){
+                if($movimiento->getPartial()) {
+                    $total->add($movimiento->getNormCantidad());
+                }else{
+                    $total = $movimiento->getNormCantidad()->convertirA($droga->getUnidadMedida());
+                }
+            }
+        }
+        return $total;
+    }
 
 
     /**

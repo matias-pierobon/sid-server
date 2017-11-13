@@ -29,7 +29,7 @@ gulp.task('sass', () => gulp.src(sassSrc)
 )
 
 gulp.task('js', () => gulp.src(jsDirs)
-    .pipe(uglyfly())
+    // .pipe(uglyfly())
     .pipe(gulp.dest(`${buildSrc}/js`))
 )
 

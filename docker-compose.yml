@@ -1,37 +1,31 @@
-version: '2'
+version: '3'
 services:
     db:
         image: mysql
-        ports:
-            - "27017:27017"
         volumes:
             - data-mysql:/var/lib/mysql
-        environment:
-            - MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            - MYSQL_DATABASE: ${MYSQL_DATABASE}
-            - MYSQL_USER: ${MYSQL_USER}
-            - MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        env_file:
+            - .env
         restart: always
     php:
         build:
-            context: ./docker
-            dockerfile: php.Dockerfile
+            context: .
+            dockerfile: ./docker/php/Dockerfile
         links:
             - "db"
-        volumes:
-            - ./:/abipon
+        env_file:
+            - .env
         restart: always
     nginx:
-        image: nginx:latest
+        build:
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
         links:
             - php
         ports:
             - 8080:80
-        volumes_from:
-            - php
-        volumes:
-            - ./var/logs/nginx/:/var/log/nginx
-            - ./app/config/site.conf:/etc/nginx/conf.d/site.conf
         restart: always
+
 volumes:
     data-mysql:
+        driver: local

@@ -1,0 +1,15 @@
+version: '3'
+services:
+    php:
+        volumes:
+            - ./:/abipon
+    nginx:
+        volumes_from:
+            - php
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - "db"
+        ports:
+            - 8300:80

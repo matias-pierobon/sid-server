@@ -84,6 +84,7 @@ class StockController extends Controller
             ->setDesde(new \DateTime())
             ->setHasta(new \DateTime())
             ->setMotivo($motivo)
+            ->setUnidadMedida($unidad)
             ->setStock($stock)
             ->setUsuario($this->getUser());
 
@@ -123,23 +124,23 @@ class StockController extends Controller
 
         $cantidad = floatval($request->get('cantidad'));
 
-        $partial = $request->get('partial', 'partial') == 'partial';
+        $partial = true;
 
-        if ( $partial && !$motivo->getSuma())
-            $cantidad = $cantidad * (-1);
+        $cantidad = $cantidad * $motivo->getFactor();
 
-        $cantidad = new Cantidad($cantidad, $unidad, $stock->getDensidad());
-        $stock->updateCantidad($cantidad, $partial);
+        $cantidad1 = new Cantidad($cantidad, $unidad, $stock->getDensidad());
+        $cantidad2 = new Cantidad($cantidad, $unidad, $stock->getDensidad());
+        $stock->updateCantidad($cantidad2, $partial);
 
         $movimiento = new Movimiento();
         $movimiento
-            ->setCantidad($cantidad->getValor())
+            ->setCantidad($cantidad1->getValor())
             ->setDesde(new \DateTime())
             ->setHasta(new \DateTime())
             ->setMotivo($motivo)
             ->setStock($stock)
             ->setPartial($partial)
-            ->setUnidadMedida($cantidad->getUnidad())
+            ->setUnidadMedida($cantidad1->getUnidad())
             ->setComentario($request->get('comentario'))
             ->setUsuario($this->getUser());
 

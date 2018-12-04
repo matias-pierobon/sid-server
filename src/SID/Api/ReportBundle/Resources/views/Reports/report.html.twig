@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte</title>
+    <style>
+        body {
+            color: #314659;
+            font-size: 14px;
+            line-height: 2;
+            font-family: Chinese Quote, -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-variant: tabular-nums;
+        }
+
+        h2 {
+            color: #0d1a26;
+            font-family: Avenir, Chinese Quote, -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-variant: tabular-nums;
+            margin: 0;
+            font-weight: 500;
+            clear: both;
+            font-size: 24px;
+            line-height: 32px;
+        }
+
+        .header {
+            width: 100%;
+            margin: 20px 0 30px;
+        }
+
+        .header .logo {
+            width: 64px;
+            height: 64px;
+            text-align: center;
+        }
+
+        .header .info {
+            width: 250px;
+        }
+
+        .header tr td {
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .table {
+            border: 1px solid #e8e8e8;
+            border-radius: 4px 0 0 0;
+            font-family: Chinese Quote, -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            font-variant: tabular-nums;
+            line-height: 1.5;
+            color: rgba(0, 0, 0, .65);
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table > thead > tr > th {
+            border-right: 1px solid #e8e8e8;
+            padding: 5px;
+            word-break: break-word;
+            background: #fafafa;
+            -webkit-transition: background .3s ease;
+            transition: background .3s ease;
+            text-align: left;
+            color: rgba(0, 0, 0, .85);
+            font-weight: 500;
+            border-bottom: 1px solid #e8e8e8;
+            margin: 0;
+        }
+
+        .table > tbody > tr > td {
+            vertical-align: top;
+            border-right: 1px solid #e8e8e8;
+            border-bottom: 1px solid #e8e8e8;
+        }
+    </style>
+</head>
+<body>
+
+<table class="header">
+    <tr>
+        <td class="logo">
+            <img height="64px"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/UNLP_Logo.jpg/180px-UNLP_Logo.jpg"/>
+        </td>
+        <td>
+            <h2>{{ unity.detalle }}</h2>
+        </td>
+        <td class="info">
+            <span>Cufe: {{ unity.cufe }}</span> <br/>
+            <span>Período: {{ report.from | date('d/m/Y') }} - {{ report.to | date('d/m/Y') }}</span>
+        </td>
+    </tr>
+</table>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Sustancia</th>
+        <th>Inicial</th>
+        <th>Movimientos</th>
+        <th>Final</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for entry in report.substances %}
+        <tr>
+            <td>{{ entry.substance.nombre }}</td>
+            <td>{{ entry.report.initial }}</td>
+            <td>
+                <table>
+                    {% for movement in entry.report.movements %}
+                        {% if not movement.amount.valor == 0 %}
+                            <tr>
+                                <td>{{ movement.motive.nombre }}</td>
+                                <td>{{ movement.amount.valor }}</td>
+                                <td>{{ movement.amount.unidad.sigla }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </td>
+            <td>{{ entry.report.final }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<table class="table" style="width: 300px; margin:20px 0 0 auto;">
+    <tbody>
+    <tr>
+        <td style="height: 100px; vert-align: bottom;">Firma:</td>
+    </tr>
+    <tr>
+        <td>Aclaración:</td>
+    </tr>
+    </tbody>
+
+</table>
+
+</body>
+</html>

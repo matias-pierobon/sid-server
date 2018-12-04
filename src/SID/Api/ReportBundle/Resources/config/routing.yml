@@ -1,3 +1,14 @@
-report_homepage:
-    path:     /
-    defaults: { _controller: ReportBundle:Default:index }
+reports_index:
+  path: /
+  defaults: { _controller: "ReportBundle:Reports:index" }
+  methods: GET
+
+reports_new:
+  path: /new
+  defaults: { _controller: "ReportBundle:Reports:new" }
+  methods: GET
+
+reports_create:
+  path: /new
+  defaults: { _controller: "ReportBundle:Reports:create" }
+  methods: POST

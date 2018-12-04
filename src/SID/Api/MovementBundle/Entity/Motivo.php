@@ -52,6 +52,13 @@ class Motivo
     private $suma;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="factor", type="integer", options={"default": 1})
+     */
+    private $factor;
+
+    /**
      * @param Droga $droga
      */
     public function total($droga)
@@ -77,6 +84,7 @@ class Motivo
     public function __construct()
     {
         $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->factor = 1;
     }
 
     /**
@@ -193,5 +201,29 @@ class Motivo
     public function getSuma()
     {
         return $this->suma;
+    }
+
+    /**
+     * Set factor
+     *
+     * @param integer $factor
+     *
+     * @return self
+     */
+    public function setFactor($factor)
+    {
+        $this->factor = $factor;
+
+        return $this;
+    }
+
+    /**
+     * Get factor
+     *
+     * @return integer
+     */
+    public function getFactor()
+    {
+        return $this->factor;
     }
 }

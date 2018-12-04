@@ -1,0 +1,26 @@
+{% extends "ReportBundle:Reports:base.html.twig" %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Reports</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">
+            Lista de Reportes
+            <div class="btn-group pull-right">
+                <a class="btn btn-primary" href="{{ path('reports_new') }}">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Agregar
+                </a>
+            </div>
+        </h4>
+        <div class="card-body">
+
+            
+        </div>
+    </div>
+{% endblock %}

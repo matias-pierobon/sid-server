@@ -18,7 +18,7 @@ class Cantidad
     private $densidad;
     private $unidad;
 
-    public function __construct(float $valor, UnidadMedida $unidad, $densidad)
+    public function __construct(float $valor, UnidadMedida $unidad, $densidad=1)
     {
         $this->unidad = $unidad;
         $this->densidad = $densidad;

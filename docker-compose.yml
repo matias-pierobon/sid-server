@@ -1,31 +1,35 @@
-version: '3'
+version: "3"
 services:
-    db:
-        image: mysql:5.7
-        volumes:
-            - data-mysql:/var/lib/mysql
-        env_file:
-            - .env
-        restart: always
-    php:
-        build:
-            context: .
-            dockerfile: ./docker/php/Dockerfile
-        links:
-            - "db"
-        env_file:
-            - .env
-        restart: always
-    nginx:
-        build:
-            context: .
-            dockerfile: ./docker/nginx/Dockerfile
-        links:
-            - php
-        ports:
-            - 8080:80
-        restart: always
+  db:
+    image: mysql:5.7
+    volumes:
+      - data-mysql:/var/lib/mysql
+    env_file:
+      - .env
+    restart: always
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    links:
+      - "db"
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - .:/abipon
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    links:
+      - php
+    ports:
+      - 8080:80
+    restart: always
+    volumes:
+      - .:/abipon
 
 volumes:
-    data-mysql:
-        driver: local
+  data-mysql:
+    driver: local

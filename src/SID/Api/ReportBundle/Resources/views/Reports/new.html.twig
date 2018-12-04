@@ -1,0 +1,89 @@
+{% extends "ReportBundle:Reports:base.html.twig" %}
+
+{#% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %#}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('reports_index') }}">Reportes</a></li>
+        <li class="breadcrumb-item active">Nuevo</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    <form id="form" action="{{ path('reports_create') }}" method="post" enctype="multipart/form-data">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Nuevo Reporte</h4>
+
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="unidad">Unidad Ejectura:</label>
+                        <select class="form-control" id="unidad" name="unidad">
+                            {% for unidad in unidades %}
+                                <option value="{{ unidad.id }}">{{ unidad.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col col-sm-6">
+                        <label for="from">Desde</label>
+                        <input name="from" type="date" class="form-control" id="from">
+                    </div>
+                    <div class="form-group col col-sm-6">
+                        <label for="to">Hasta</label>
+                        <input name="to" type="date" class="form-control" id="to">
+                    </div>
+                </div>
+
+                <a class="btn card-link" href="{{ path('reports_index') }}">Mis Drogueros</a>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('dist/js/jquery.validate.js') }}"></script>
+    <script>
+
+        $('#form').validate({
+            rules: {
+                unidad: {
+                    required: true,
+                },
+                from: {
+                    required: true,
+                },
+                to: {
+                    required: true,
+                }
+            },
+            messages: {
+                unidad: {
+                    required: "Ingrese una unidad",
+                },
+                from: {
+                    required: "Ingrese una fecha de inicio",
+                },
+                to: {
+                    required: "Ingrese una fecha límite",
+                }
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-warning');
+                $(element).addClass('form-control-warning');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-warning');
+                $(element).removeClass('form-control-warning');
+                $(element).closest('.form-group').addClass('has-success');
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        })
+    </script>
+{% endblock %}

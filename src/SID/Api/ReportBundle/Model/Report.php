@@ -29,10 +29,10 @@ class Report
     private $to;
 
 
-    public function __construct($substances, $movements, $from, $to)
+    public function __construct($substances, $from, $to)
     {
         $this->substances = array();
-        $this->initializeSubstances($substances, $movements);
+        $this->initializeSubstances($substances);
         $this->from = $from;
         $this->to = $to;
     }
@@ -61,41 +61,16 @@ class Report
         return $this->to;
     }
 
-    private function initializeSubstances($substances, $movements)
+    private function initializeSubstances($substances)
     {
         foreach ($substances as $substance) {
             $this->substances[$substance->getId()] = array(
               'substance' => $substance,
-              'report' => array(
-                'initial' => $this->initUnit($substance),
-                'movements' => $this->initializeMovements($movements, $substance),
-                'final' => $this->initUnit($substance)
-              )
+              'report' => new SubstanceEntry($substance)
             );
         }
     }
 
-    /**
-     * @param Droga $substance
-     * @return Cantidad
-     */
-    private function initUnit(Droga $substance)
-    {
-        return new Cantidad(0, $substance->getUnidadMedida());
-    }
-
-    private function initializeMovements(array $movements, Droga $substance)
-    {
-        $entries = array();
-        /** @var Motivo $movement */
-        foreach ($movements as $movement) {
-            $entries[$movement->getId()] = array(
-              'motive' => $movement,
-              'amount' => $this->initUnit($substance)
-            );
-        }
-        return $entries;
-    }
 
     public function process(Droguero $droguero)
     {
@@ -110,49 +85,24 @@ class Report
         }
     }
 
-    private function getCantidad(Movimiento $movimiento)
-    {
-        return new Cantidad(floatval($movimiento->getCantidad()), $movimiento->getUnidadMedida());
-    }
-
     private function updateMovement(Movimiento $movimiento)
     {
-        $cantidad = $this->getCantidad($movimiento);
+        $report = $this->getReport($movimiento->getDroga());
         if ($movimiento->getDesde() < $this->from) {
-            $this->getInitial($movimiento->getDroga())->add($cantidad);
+            $report->init($movimiento);
         } else {
-            $this->getAmount($movimiento->getDroga(), $movimiento->getMotivo())->add($cantidad);
+            $report->add($movimiento);
         }
 
-        $this->getFinal($movimiento->getDroga())->add($cantidad);
+        $report->process($movimiento);
     }
 
     /**
      * @param Droga $substance
-     * @return Cantidad
+     * @return SubstanceEntry
      */
-    private function getInitial(Droga $substance)
-    {
-        return $this->substances[$substance->getId()]['report']['initial'];
-    }
-
-    /**
-     * @param Droga $substance
-     * @return Cantidad
-     */
-    private function getFinal(Droga $substance)
-    {
-        return $this->substances[$substance->getId()]['report']['final'];
-    }
-
-    /**
-     * @param Droga $substance
-     * @param Motivo $motivo
-     * @return Cantidad
-     */
-    private function getAmount(Droga $substance, Motivo $motivo)
-    {
-        return $this->substances[$substance->getId()]['report']['movements'][$motivo->getId()]['amount'];
+    private function getReport(Droga $substance){
+        return $this->substances[$substance->getId()]['report'];
     }
 
     /**

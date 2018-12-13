@@ -55,7 +55,8 @@ class LoadMotivosCommand extends ContainerAwareCommand
             $motivo = new Motivo();
             $motivo
                 ->setNombre($datum[0])
-                ->setDetalle($datum[1]);
+                ->setDetalle($datum[1])
+                ->setFactor($datum[2]);
             $em->persist($motivo);
         }
 

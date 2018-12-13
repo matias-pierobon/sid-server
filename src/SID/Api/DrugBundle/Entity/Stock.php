@@ -161,7 +161,7 @@ class Stock
     private $unidadMedida;
 
 
-    public function updateCantidad(Cantidad $cantidad, bool $partial=true)
+    public function updateCantidad(Cantidad $cantidad, $partial=true)
     {
         $normCantidad = $cantidad->convertirA($this->getUnidadMedida());
 

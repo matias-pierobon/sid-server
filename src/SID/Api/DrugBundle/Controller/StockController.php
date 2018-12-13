@@ -23,13 +23,15 @@ class StockController extends Controller
         $sustancias = $this->findAll('Substance', 'Droga');
         $motivos = $this->findAll('Movement', 'Motivo');
         $unidades = $this->findAll('Substance', 'UnidadMedida');
+        $comprobantes = $this->findAll('Provider', 'Comprobante');
         return $this->render('DrugBundle:Stock:add.html.twig', array(
             'droguero' => $droguero,
             'division' => $division,
             'sustancias' => $sustancias,
             'calidades' => $calidades,
             'motivos' => $motivos,
-            'unidades' => $unidades
+            'unidades' => $unidades,
+            'comprobantes' => $comprobantes
         ));
     }
 
@@ -87,6 +89,11 @@ class StockController extends Controller
             ->setUnidadMedida($unidad)
             ->setStock($stock)
             ->setUsuario($this->getUser());
+
+        $comprobante = $em->getRepository('ProviderBundle:Comprobante')->find($request->get('comprobante'));
+        if($comprobante){
+            $movimiento->setComprobante($comprobante);
+        }
 
         $em->persist($movimiento);
         $em->flush();

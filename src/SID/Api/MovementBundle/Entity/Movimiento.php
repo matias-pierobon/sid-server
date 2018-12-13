@@ -81,6 +81,13 @@ class Movimiento
     private $motivo;
 
     /**
+     * Many Movimientos have One Comprobante.
+     * @ORM\ManyToOne(targetEntity="SID\Api\ProviderBundle\Entity\Comprobante", inversedBy="movimientos")
+     * @ORM\JoinColumn(name="comprobante_id", referencedColumnName="id", nullable=true)
+     */
+    private $comprobante;
+
+    /**
      * Many Stocks have One UnidadMedida.
      * @ORM\ManyToOne(targetEntity="SID\Api\SubstanceBundle\Entity\UnidadMedida", inversedBy="movimientos")
      * @ORM\JoinColumn(name="medida_id", referencedColumnName="id")
@@ -287,6 +294,30 @@ class Movimiento
     public function getMotivo()
     {
         return $this->motivo;
+    }
+
+    /**
+     * Set Motivo
+     *
+     * @param \SID\Api\ProviderBundle\Entity\Comprobante $comprobante
+     *
+     * @return Movimiento
+     */
+    public function setComprobante(\SID\Api\ProviderBundle\Entity\Comprobante $comprobante = null)
+    {
+        $this->comprobante = $comprobante;
+
+        return $this;
+    }
+
+    /**
+     * Get Comprobante
+     *
+     * @return \SID\Api\ProviderBundle\Entity\Comprobante
+     */
+    public function getComprobante()
+    {
+        return $this->comprobante;
     }
 
     /**

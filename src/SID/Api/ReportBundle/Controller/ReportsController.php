@@ -42,14 +42,10 @@ class ReportsController extends Controller
         $substanceRepository = $doctrine->getRepository('SubstanceBundle:Droga');
         $substances = $substanceRepository->findAll();
 
-        /** @var MotivoRepository $motiveRepository */
-        $motiveRepository = $doctrine->getRepository('MovementBundle:Motivo');
-        $motives = $motiveRepository->findAll();
-
         $from = new \DateTime($request->request->get('from'));
         $to = new \DateTime($request->request->get('to'));
 
-        $report = new Report($substances, $motives, $from, $to);
+        $report = new Report($substances, $from, $to);
 
         /** @var DrogueroUnidad $du */
         foreach ($unity->getDrogueros() as $du) {

@@ -49,6 +49,21 @@ class Comprobante
      */
     private $tipo;
 
+    /**
+     * One Movement has Many Users.
+     * @ORM\OneToMany(targetEntity="\SID\Api\MovementBundle\Entity\Movimiento", mappedBy="comprobante")
+     */
+    private $movimientos;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -154,5 +169,39 @@ class Comprobante
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    /**
+     * Add movimiento
+     *
+     * @param \SID\Api\MovementBundle\Entity\Movimiento $movimiento
+     *
+     * @return Comprobante
+     */
+    public function addMovimiento(\SID\Api\MovementBundle\Entity\Movimiento $movimiento)
+    {
+        $this->movimientos[] = $movimiento;
+
+        return $this;
+    }
+
+    /**
+     * Remove movimiento
+     *
+     * @param \SID\Api\MovementBundle\Entity\Movimiento $movimiento
+     */
+    public function removeMovimiento(\SID\Api\MovementBundle\Entity\Movimiento $movimiento)
+    {
+        $this->movimientos->removeElement($movimiento);
+    }
+
+    /**
+     * Get movimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMovimientos()
+    {
+        return $this->movimientos;
     }
 }

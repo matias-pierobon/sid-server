@@ -18,7 +18,7 @@ class Cantidad
     private $densidad;
     private $unidad;
 
-    public function __construct(float $valor, UnidadMedida $unidad, $densidad=1)
+    public function __construct($valor, UnidadMedida $unidad, $densidad=1)
     {
         $this->unidad = $unidad;
         $this->densidad = $densidad;
@@ -88,7 +88,7 @@ class Cantidad
     /**
      * @return mixed
      */
-    public function getValor() : float
+    public function getValor()
     {
         return $this->valor;
     }
@@ -96,7 +96,7 @@ class Cantidad
     /**
      * @param mixed $valor
      */
-    public function setValor(float $valor)
+    public function setValor( $valor)
     {
         $this->valor = $valor;
     }
